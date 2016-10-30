@@ -1,0 +1,194 @@
+<section class="content">   
+<div layout="column" ng-cloak class="md-inline-form" ng-controller="UpdateUserProfileController" ng-init="initializeUpdateUserProfilePage()">
+
+<form name="updateUserProfileForm" id="updateUserProfileForm" ng-submit="submitEditApplicationForm()">
+
+<md-content layout-padding>
+
+
+
+   <div class="row">  
+   <div class="col-md-6">        
+ <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>usrmgt.security_user.label.TITLE</label>
+			           	<md-select ng-model="securityUserProfileUpdateRequest1.person.prefix.code" name="code" required >
+			              <md-option ng-repeat="prefix in prefixes" value="{{prefix.code}}" ng-selected="securityUserProfileUpdateRequest1.person.prefix.code==prefix.code">
+			                 {{prefix.name}}
+			              </md-option>
+			            </md-select>
+			           	<span ng-show="updateUserProfileForm.code.$dirty"> 
+							<span ng-show="updateUserProfileForm.code.$error.required">
+								<span class="md-input-message-animation" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        			       
+          <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>usrmgt.security_user.label.FULL_NAME</label>
+			           	<input ng-model="securityUserProfileUpdateRequest1.person.fullName" name="fullName" md-maxlength="240" required />
+			           	<span ng-show="updateUserProfileForm.fullName.$dirty"> 
+							<span ng-show="updateUserProfileForm.fullName.$error.required">
+								<span class="md-input-message-animation" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+							<span ng-show="updateUserProfileForm.fullName.$error['md-maxlength']">
+								<span class="md-input-message-animation" translate>usrmgt.security_user.validation.message.FULL_NAME_LENGTH</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>	
+		        
+		         <div layout-gt-sm="row">
+  <md-input-container class="md-block" flex-gt-sm>
+          <label translate>usrmgt.security_user.label.DATE_OF_BIRTH</label>
+          <md-datepicker ng-model="securityUserProfileUpdateRequest1.person.dateOfBirth" name="dateOfBirth"></md-datepicker>
+          	<span ng-show="updateUserProfileForm.dateOfBirth.$dirty"> 
+          	<span ng-show="updateUserProfileForm.dateOfBirth.$error.required">
+          		<span class="md-input-message-animation" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+          		</span>
+          	<span ng-show="updateUserProfileForm.dateOfBirth.$error.valid">
+          	<span class="md-input-message-animation" translate>usrmgt.security_user.validation.message.NOT_VALID_DATE</span>
+          	</span>	
+          	</span>
+   </md-input-container>
+          </div>
+          
+		        </div> 
+		        <div class="col-md-6">
+		        <div class="box box-primary">
+<div class="box-body box-profile">
+<div class="row">
+<div class="col-md-6">
+   <!--<input type="text" ng-model="refkey"/>    --> 
+   			<div ng-show="uploadImage">
+            <a href="" id="upload_link"><img class="profile-user-img img-responsive img-circle" id="profileimage" ng-src="{{downloadurl}}" alt="User profile picture"></a>
+            </div>
+            <div ng-show="defaultImage">
+            <img class="profile-user-img img-responsive img-circle" id="profileimage" src="assets/app/images/avatar_2x.png" alt="User profile picture">
+            </div>
+              <h3 class="profile-username text-center">{{securityUserProfileUpdateRequest1.userName}}</h3>
+</div>
+<div class="col-md-6">
+<input type="file" file-model="myFile"/> 
+<br/>
+       <md-button class="md-fab md-primary" aria-label="Upload" ng-click="uploadFile()">
+          <md-icon md-svg-src="assets/app/styles/_/images/icons/ic_file_upload_black_24px.svg"></md-icon>
+        </md-button>
+</div>
+</div>
+</div>
+</div>
+		        </div> 
+</div>        
+
+		        
+ 
+          
+<div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.NIC</label>
+				           	<input ng-model="securityUserProfileUpdateRequest1.person.nic" name="nic" md-minlength="10" md-maxlength="12" required />
+				           	<span ng-show="updateUserProfileForm.nic.$dirty"> 
+								<span ng-show="updateUserProfileForm.nic.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="updateUserProfileForm.nic.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.NIC_MAX_LENGTH</span>
+								</span>	
+								<span ng-show="updateUserProfileForm.nic.$error['md-minlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.NIC_MIN_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+			        
+
+			        
+<div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.MOBILE_NUMBER</label>
+				           	<input ng-model="securityUserProfileUpdateRequest1.person.mobileNumber" name="mobileNumber" md-maxlength="10" required />
+				           	<span ng-show="updateUserProfileForm.mobileNumber.$dirty"> 
+								<span ng-show="updateUserProfileForm.mobileNumber.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="updateUserProfileForm.mobileNumber.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.MOBILE_NUMBER_MAX_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+			        
+			        <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.LAND_NUMBER</label>
+				           	<input ng-model="securityUserProfileUpdateRequest1.person.landNumber" name="landNumber" md-maxlength="10" required />
+				           	<span ng-show="updateUserProfileForm.landNumber.$dirty"> 
+								<span ng-show="updateUserProfileForm.landNumber.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="updateUserProfileForm.landNumber.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.LAND_NUMBER_MAX_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+			        
+ 
+			        
+  <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.EMAIL</label>
+				           	<input ng-model="securityUserProfileUpdateRequest1.person.email" name="email" md-maxlength="100" required ng-pattern="/^.+@.+\..+$/" />
+				           	<span ng-show="updateUserProfileForm.email.$dirty"> 
+								<span ng-show="updateUserProfileForm.email.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="updateUserProfileForm.email.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.EMAIL_LENGTH</span>
+								</span>	
+								<span ng-show="updateUserProfileForm.email.$error['pattern']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.EMAIL_FORMAT</span>
+								</span>					
+							</span>	
+				         </md-input-container>
+			        </div>
+			        
+			       <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>usrmgt.security_user.label.CIVIL_STATUS</label>
+			           	<md-select ng-model="securityUserProfileUpdateRequest1.person.maritalStatus.code" name="code" required >
+			              <md-option ng-repeat="maritalStatus in maritalStatusList" value="{{maritalStatus.code}}" ng-selected="securityUserProfileUpdateRequest1.person.maritalStatus.code==maritalStatus.code">
+			                 {{maritalStatus.name}}
+			              </md-option>
+			            </md-select>
+			           	<span ng-show="updateUserProfileForm.code.$dirty"> 
+							<span ng-show="updateUserProfileForm.code.$error.required">
+								<span class="md-input-message-animation" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>			       
+			         </md-input-container>
+		        </div>  
+		        
+		         <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.ADDRESS</label>
+				           	<textarea ng-model="securityUserProfileUpdateRequest1.person.address" name="address"  md-maxlength="240" rows="5" md-select-on-focus required></textarea>
+				           	<span ng-show="updateUserProfileForm.address.$dirty"> 
+								<span ng-show="updateUserProfileForm.address.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="updateUserProfileForm.address.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.ADDRESS_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+			        			        
+</md-content>
+<input type="hidden" ng-model="formKey" />
+</form>
+</div>
+</section>

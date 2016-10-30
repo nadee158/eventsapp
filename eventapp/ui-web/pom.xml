@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>ui-web</artifactId>
+  <packaging>war</packaging>
+  <name>ui-web Maven Webapp</name>
+  
+  <inceptionYear>2016</inceptionYear>
+  
+       <parent>
+		<groupId>com.janaka.projects</groupId>
+		<artifactId>eventapp</artifactId>
+		<version>1.0</version>
+	</parent>
+  
+  
+  <dependencies>
+   	
+  </dependencies>
+  <build>
+  		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${mvn.compiler.plugin-version}</version>
+					<configuration>
+						<source>${java.build-version}</source>
+						<target>${java.build-version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${mvn.surefire.plugin-version}</version>
+					<configuration>
+						<skipTests>${skipTests}</skipTests>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.wildfly.plugins</groupId>
+					<artifactId>wildfly-maven-plugin</artifactId>
+					<version>1.1.0.Alpha5</version>
+					<configuration>
+					    <skip>false</skip>
+						<hostname>${wildfly-host}</hostname>
+						<port>${wildfly-port}</port>
+						<username>${wildfly-admin-username}</username>
+						<password>${wildfly-admin-password}</password>						
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+  
+    <finalName>ui-web</finalName>
+  </build>
+</project>

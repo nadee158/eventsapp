@@ -1,0 +1,165 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.janaka.projects</groupId>
+	<artifactId>eventapp</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>Event App Solution</name>
+
+	<inceptionYear>2016</inceptionYear>
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.2.RELEASE</version>
+	</parent>
+
+	<properties>
+		<commons.lang3-version>3.4</commons.lang3-version>
+		<commons-io.version>2.4</commons-io.version>
+		<commons-logging.version>1.1.3</commons-logging.version>
+		<commons-fileupload.version>1.3.1</commons-fileupload.version>
+		<javax.mail.version>1.4.7</javax.mail.version>
+		<skipTests>true</skipTests>
+		<java.version>1.8</java.version>
+		<jminix-version>1.2.0</jminix-version>
+		<activiti.version>5.19.0.2</activiti.version>
+		<spring-data-jpa-datatables-version>2.3</spring-data-jpa-datatables-version>
+		<apache-log4j-extras-version>1.2.17</apache-log4j-extras-version>
+		
+		<java.build-version>1.8</java.build-version>
+		<mvn.compiler.plugin-version>3.3</mvn.compiler.plugin-version>
+		<mvn.surefire.plugin-version>2.16</mvn.surefire.plugin-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
+		<wildfly-host>10.161.121.15</wildfly-host>
+		<wildfly-port>9990</wildfly-port>
+		<wildfly-admin-username>wildflyadmin</wildfly-admin-username>
+		<wildfly-admin-password>1qaz2wsx!@#</wildfly-admin-password>
+	</properties>
+	
+	<modules>		
+		<module>ui-web</module>
+		<module>services-web</module>
+		<module>datatransferobjects</module>
+		<module>services-business</module>
+		<module>services-reports</module>
+		<module>entitymanagement</module>
+		<module>common</module>
+	</modules>
+	
+	<dependencies>
+	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- ######################################### APACHE COMMONS LANG DEPENDENCY ###################################### -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang3-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${commons-logging.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
+			<version>${apache-log4j-extras-version}</version>
+		</dependency>
+		
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+		
+		<!-- ######################################### SERVLET DEPENDENCY ###################################### -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- start of spring-data-jpa-datatables -->
+		<dependency>
+			<groupId>com.github.darrachequesne</groupId>
+			<artifactId>spring-data-jpa-datatables</artifactId>
+			<version>${spring-data-jpa-datatables-version}</version>
+		</dependency>
+		<!-- end of spring-data-jpa-datatables -->
+		
+				
+		
+	</dependencies>
+	
+	<build>
+  		<pluginManagement>
+			<plugins>				
+				<plugin>
+					<groupId>org.wildfly.plugins</groupId>
+					<artifactId>wildfly-maven-plugin</artifactId>
+					<version>1.1.0.Alpha5</version>
+					<configuration>
+						<skip>true</skip>					
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+  
+    <finalName>eventapp</finalName>
+  </build>
+	
+	
+</project>

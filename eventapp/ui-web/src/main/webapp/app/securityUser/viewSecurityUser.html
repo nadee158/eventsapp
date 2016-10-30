@@ -1,0 +1,108 @@
+<section class="content">    
+			
+	<div layout="column" ng-cloak class="md-inline-form" ng-controller="ViewSecurityUserController" ng-init="initViewSecurityUserPage()">	
+		<form name="securityUserForm" id="securityUserForm" ng-submit="return false;">
+			<md-content layout-padding>
+				<section>
+      				<md-subheader class="md-primary"><span translate>usrmgt.security_user.label.ORGANIZATION</span></md-subheader>
+					<div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           <label translate>usrmgt.security_user.label.ORGANIZATION</label>
+				           <md-icon><i class="fa fa-building" aria-hidden="true"></i></md-icon>
+				           <input ng-readonly="true" ng-model="securityuserDto.organization.organizationName" name="organizationName"/>		
+				         </md-input-container>
+			        </div>
+				</section>
+				<section>
+      				<md-subheader class="md-primary"><span translate>usrmgt.security_user.label.PERSONAL_DETAILS</span></md-subheader>      
+					<div layout-gt-sm="row">
+				         <md-input-container class="md-block">
+				           <label translate>usrmgt.security_user.label.PREFIX</label>
+				           <md-icon><i class="fa fa-asterisk" aria-hidden="true"></i></md-icon>
+				           <input ng-readonly="true" ng-model="securityuserDto.person.prefix.name" name="prefix"/>		       
+				         </md-input-container>
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.FULL_NAME</label>
+				           	<md-icon><i class="fa fa-user" aria-hidden="true"></i></md-icon>
+				           	<input ng-readonly="true" ng-model="securityuserDto.person.fullName" name="fullName"/>	
+				         </md-input-container>
+			        </div>
+			        <div layout-gt-sm="row">
+				         <md-input-container class="md-block">
+				           	<label translate>usrmgt.security_user.label.EMAIL</label>
+				           	<md-icon><i class="fa fa-envelope" aria-hidden="true"></i></md-icon>
+				           	<input ng-readonly="true" ng-model="securityuserDto.person.email" name="email"/>	
+				         </md-input-container>
+				         <md-input-container class="md-block">
+				           	<label translate>usrmgt.security_user.label.NIC</label>
+				           	<md-icon><i class="fa fa-info" aria-hidden="true"></i></md-icon>
+				           	<input ng-readonly="true" ng-model="securityuserDto.person.nic" name="nic"/>	
+				         </md-input-container>
+				         <md-input-container class="md-block">
+				           	<label translate>usrmgt.security_user.label.MOBILE_NUMBER</label>
+				           	<md-icon><i class="fa fa-mobile" aria-hidden="true"></i></md-icon>
+				           	<input ng-readonly="true" ng-model="securityuserDto.person.mobileNumber" name="mobileNumber"/>	       
+				         </md-input-container>
+			        </div>
+			        <div layout-gt-sm="row">
+				          <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.ADDRESS</label>
+				           	<md-icon><i class="fa fa-home" aria-hidden="true"></i></md-icon>
+				           	<textarea ng-readonly="true" ng-model="securityuserDto.person.address" name="address"></textarea>
+				         </md-input-container>
+			        </div>
+			    </section>
+		        <section>
+		        	<md-subheader class="md-primary"><span translate>usrmgt.security_user.label.LOGIN_DETAILS</span></md-subheader>  
+		        	<div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.USER_NAME</label>
+				           	<md-icon><i class="fa fa-sign-in" aria-hidden="true"></i></md-icon>
+				           	<input ng-readonly="true" ng-model="securityuserDto.userName" name="userName"/>
+				         </md-input-container>
+				     </div>
+		        </section>
+	            <section>
+		        	<md-subheader class="md-primary"><label translate>usrmgt.security_user.label.text.USER_ROLES</label></md-subheader>  
+		        		<md-whiteframe class="md-whiteframe-3dp" flex-sm="95" flex-gt-sm="85" flex-gt-md="75" layout layout-align="left center">
+				          <md-chips ng-model="securityuserDto.userRoles" name="userRole" md-removable="false"
+				             class="custom-chips"
+				             md-chips-disable-input>
+					        <md-chip-template>
+					          <strong>{{$chip.userRoleName}}</strong>
+					        </md-chip-template>
+					      </md-chips>
+				      </md-whiteframe>
+		        </section>
+		         <section>
+		        	<md-subheader class="md-primary"><label translate>usrmgt.security_user.label.text.GRANTED_PERMISSIONS</label></md-subheader>  
+		        		<md-whiteframe class="md-whiteframe-3dp" flex-sm="95" flex-gt-sm="85" flex-gt-md="75" layout layout-align="left center">
+				          <md-chips ng-model="securityuserDto.explicitlyGrantedPermissions" name="grantedScreenPermission" md-removable="false"
+				             class="custom-chips"
+				             md-chips-disable-input>
+					        <md-chip-template>
+					          <strong>{{$chip.permissionName}}</strong>
+					        </md-chip-template>
+					      </md-chips>
+				      </md-whiteframe>
+		        </section>
+		         <section>
+		        	<md-subheader class="md-primary"><label translate>usrmgt.security_user.label.text.DENIED_PERMISSIONS</label></md-subheader>  
+		        		<md-whiteframe class="md-whiteframe-3dp" flex-sm="95" flex-gt-sm="85" flex-gt-md="75" layout layout-align="left center">
+				          <md-chips ng-model="securityuserDto.explicitlyDeniedPermissions" name="deniedScreenPermission" md-removable="false"
+				             class="custom-chips"
+				             md-chips-disable-input>
+					        <md-chip-template>
+					          <strong>{{$chip.permissionName}}</strong>
+					        </md-chip-template>
+					      </md-chips>
+				      </md-whiteframe>
+		        </section>
+		        
+	        </md-content>
+       		<input type="hidden" ng-model="formKey" />
+       	</form>
+       	
+	</div>
+
+</section>

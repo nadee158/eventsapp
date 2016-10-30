@@ -1,0 +1,43 @@
+<section class="content">    
+			
+	<div ng-controller="AddUserRolesToSecurityUserController as listUserRoles" ng-init="initializeUserRoleforSecurityUserPage()">
+	 <form name="securityUserForUserroles" id="securityUserForUserroles">
+	   <table datatable="" dt-instance="listUserRoles.dtInstance" dt-options="listUserRoles.dtOptions" dt-columns="listUserRoles.dtColumns" class="mdl-data-table"></table>  
+	    <input type="hidden" ng-model="formKey" />
+	   
+	 
+	    <div layout-gt-sm="row" ng-show="existingUserRoleListShow">
+			         <md-input-container class="md-block" flex-gt-sm>
+			         <label translate>usrmgt.user_role.label.EXISTING_USER_ROLES</label>	
+			       <md-chips class="custom-chips" md-on-remove="hideExistingUserrole()" ng-model="existingUserRoleList" name="userRolesList" md-chips-disable-input >
+			        <md-chip-template>
+			        <em>({{$chip.id}})</em>
+			          <strong>{{$chip.userRoleName}}</strong>
+			        </md-chip-template>
+			        <button md-chip-remove class="md-primary vegetablechip">
+						        <i class="fa fa-times" style="color:#ffffff;" aria-hidden="true"></i>
+						    </button>
+			      </md-chips>
+			     </md-input-container>
+			     </div>
+			    
+	       <div ng-show="selectedUserRoles">
+	    <label translate>usrmgt.user_role.label.NEW_USER_ROLES</label>
+	    <md-chips class="custom-chips" md-on-remove="removeElement($index)" ng-model="listUserRoles.userRoleList" name="userRoles" md-chips-disable-input>
+			        <md-chip-template>
+			         <span>
+			        <em>({{$chip.id}})</em> 
+			          <strong>{{$chip.userRoleName}}</strong>
+			          </span>
+			        </md-chip-template>
+	   <button md-chip-remove class="md-primary vegetablechip" >
+       <i class="fa fa-times" style="color:#ffffff;" aria-hidden="true"></i>
+      </button>
+			      </md-chips>
+	    </div>
+			     
+	 
+	  </form>  
+	</div>
+	
+</section>

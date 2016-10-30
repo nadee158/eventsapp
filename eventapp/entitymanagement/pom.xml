@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>entitymanagement</artifactId>
+	<packaging>jar</packaging>
+
+	<name>entitymanagement</name>
+
+	<inceptionYear>2016</inceptionYear>
+
+	<parent>
+		<groupId>com.janaka.projects</groupId>
+		<artifactId>eventapp</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<dependencies>
+		<!-- ################################## START OF SPRING DATA DEPENDENCIES ########################################## -->
+		 <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>	
+				
+		<!-- ################################## END OF SPRING DATA DEPENDENCIES ########################################## -->
+		<dependency>
+			<groupId>com.janaka.projects</groupId>
+			<artifactId>common</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-jpamodelgen</artifactId>
+		    <scope>compile</scope>
+		    <optional>true</optional>
+		</dependency>
+		
+		
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${mvn.compiler.plugin-version}</version>
+					<configuration>
+						<source>${java.build-version}</source>
+						<target>${java.build-version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${mvn.surefire.plugin-version}</version>
+					<configuration>
+						<skipTests>${skipTests}</skipTests>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<finalName>entitymanagement</finalName>
+	</build>
+
+
+</project>

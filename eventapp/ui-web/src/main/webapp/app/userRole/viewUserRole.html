@@ -1,0 +1,30 @@
+<section class="content">    
+			
+	<div layout="column" ng-cloak class="md-inline-form" ng-controller="ViewUserRoleController" ng-init="initializeUserRolePage()">
+	
+		<form name="userRoleForm" id="userRoleForm">
+		
+			<md-content layout-padding>
+			
+				<div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>usrmgt.user_role.label.USER_ROLE_NAME</label>
+			           	<input ng-readonly="true" ng-model="userRoleDto.userRoleName" name="userRoleName" md-maxlength="240" required />
+			         </md-input-container>
+		        </div>
+			     
+			     <md-chips ng-model="userRoleDto.permissions" name="screenPermissions" md-min-chips="1" md-chips-disable-input readonly="true">
+			        <md-chip-template>
+			          <strong>{{$chip.permissionName}}</strong>
+			          <em>({{$chip.permissionCode}})</em>
+			        </md-chip-template>
+			      </md-chips>
+				    
+		        
+	        </md-content>
+       		<input type="hidden" ng-model="formKey" />
+       	</form>
+       	
+	</div>
+
+</section>

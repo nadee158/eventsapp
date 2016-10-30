@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>services-web</artifactId>
+	<packaging>war</packaging>
+	<name>services-web Maven Webapp</name>
+	
+	<inceptionYear>2016</inceptionYear>
+
+	<parent>
+		<groupId>com.janaka.projects</groupId>
+		<artifactId>eventapp</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<properties>
+			<java.version>1.8</java.version>
+			<start-class>com.janaka.projects.eventapp.Application</start-class>
+			<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+			<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+	
+	<dependencies>
+		
+		<!-- ############################################ SERVLET  ################################################# -->
+		<dependency>
+			<groupId>com.janaka.projects</groupId>
+			<artifactId>services-business</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.6.0</version>
+		</dependency>
+		
+		 <dependency>
+		   <groupId>commons-fileupload</groupId>
+		   <artifactId>commons-fileupload</artifactId>
+		   <version>${commons-fileupload.version}</version> <!-- makesure correct version here -->
+		</dependency>
+		
+		
+
+	</dependencies>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>	
+					<configuration>
+	                    <executable>true</executable>
+	                </configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>springloaded</artifactId>
+							<version>${spring-loaded.version}</version>
+						</dependency>
+					</dependencies>				
+				</plugin>
+				<plugin>
+					<groupId>org.wildfly.plugins</groupId>
+					<artifactId>wildfly-maven-plugin</artifactId>
+					<version>1.1.0.Alpha5</version>
+					<configuration>
+					    <skip>false</skip>
+						<hostname>${wildfly-host}</hostname>
+						<port>${wildfly-port}</port>
+						<username>${wildfly-admin-username}</username>
+						<password>${wildfly-admin-password}</password>						
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<finalName>eventappservices</finalName>
+	</build>
+	
+</project>

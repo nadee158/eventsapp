@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC  
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
+ 
+<tiles-definitions>  
+  
+   <!-- Base Definition -->
+   <definition name="base-definition"
+       template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">  
+       <put-attribute name="title" value="" />  
+       <put-attribute name="header" value="/WEB-INF/views/tiles/template/header.jsp" />  
+       <put-attribute name="menu" value="/WEB-INF/views/tiles/template/menu.jsp" />  
+       <put-attribute name="body" value="" />  
+       <put-attribute name="footer" value="/WEB-INF/views/tiles/template/footer.jsp" />  
+   </definition> 
+   
+   <!-- Login Definition -->
+   <definition name="login-definition"
+       template="/WEB-INF/views/tiles/layouts/loginLayout.jsp">  
+       <put-attribute name="title" value="" />  
+       <put-attribute name="header" value="/WEB-INF/views/tiles/template/loginHeader.jsp" />  
+       <put-attribute name="body" value="" />  
+   </definition>   
+  
+   <!-- Home Page -->
+   <definition name="home" extends="base-definition">  
+       <put-attribute name="title" value="Welcome" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/home.jsp" />  
+   </definition>  
+   
+    <!-- Add Page -->
+   <definition name="addReportTemplate" extends="base-definition">  
+       <put-attribute name="title" value="Add Report Template" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/addReportTemplate.jsp" />  
+   </definition> 
+   
+    <!-- Edit Page -->
+   <definition name="editReportTemplate" extends="base-definition">  
+       <put-attribute name="title" value="Edit Report Template" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/editReportTemplate.jsp" />  
+   </definition> 
+ 
+   <!-- login Page -->
+   <definition name="login" extends="login-definition">  
+       <put-attribute name="title" value="Login" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/login.jsp" />  
+   </definition>  
+   
+    <!-- signup Page -->
+   <definition name="signUp" extends="login-definition">  
+       <put-attribute name="title" value="Sign Up" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/signUp.jsp" />  
+   </definition>  
+   
+   <!-- Param Page -->
+   <definition name="paramManager" extends="base-definition">  
+       <put-attribute name="title" value="Welcome" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/paramManager.jsp" />  
+   </definition> 
+  
+</tiles-definitions>

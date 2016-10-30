@@ -1,0 +1,18 @@
+@CHARSET "ISO-8859-1";
+
+#header{
+	padding:10px;
+}
+#link{
+	padding:10px;
+}
+#tablebody{
+	width:600px;
+}
+#span{
+	color:red;
+}
+#dropdown{
+	padding:15px;
+	min-width:250px;
+}

@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>common</artifactId>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>com.janaka.projects</groupId>
+		<artifactId>eventapp</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<name>common</name>
+	<url>http://maven.apache.org</url>
+
+	<inceptionYear>2016</inceptionYear>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spymemcached.version>2.8.4</spymemcached.version>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.code.simple-spring-memcached</groupId>
+			<artifactId>spymemcached</artifactId>
+			<version>${spymemcached.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+		<dependency>
+		       <groupId>org.springframework.boot</groupId>
+		       <artifactId>spring-boot-starter-mail</artifactId>
+	        </dependency>
+
+	</dependencies>
+
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${mvn.compiler.plugin-version}</version>
+					<configuration>
+						<source>${java.build-version}</source>
+						<target>${java.build-version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${mvn.surefire.plugin-version}</version>
+					<configuration>
+						<skipTests>${skipTests}</skipTests>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<finalName>common</finalName>
+	</build>
+
+</project>

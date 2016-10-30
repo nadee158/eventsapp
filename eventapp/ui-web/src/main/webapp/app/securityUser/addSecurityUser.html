@@ -1,0 +1,199 @@
+<section class="content">    
+			
+	<div layout="column" ng-cloak class="md-inline-form" ng-controller="AddSecurityUserController" ng-init="initializeSecurityUserPage()">
+	
+		<form name="securityUserForm" id="securityUserForm" ng-submit="submitApplicationForm()">
+		
+			<md-content layout-padding>
+				<section>
+      				<md-subheader class="md-primary"><span translate>usrmgt.security_user.label.ORGANIZATION</span></md-subheader>
+					<div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           <label translate>usrmgt.security_user.label.ORGANIZATION</label>
+				           <md-icon><i class="fa fa-building" aria-hidden="true"></i></md-icon>
+				           <md-select ng-model="securityUserCreationRequest.organizationId" name="organizationId" required >
+				              <md-option ng-repeat="organization in organizations" value="{{organization.id}}">
+				                {{organization.organizationName}}
+				              </md-option>
+				            </md-select>
+				            <span ng-show="securityUserForm.organizationId.$dirty"> 
+								<span ng-show="securityUserForm.organizationId.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+							</span>
+							 <div ng-messages="securityUserForm.organizationId.$error">
+					          <div ng-message="required">This is required.</div>
+					          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+					        </div>				       
+				         </md-input-container>
+			        </div>
+				</section>
+				<section>
+      				<md-subheader class="md-primary"><span translate>usrmgt.security_user.label.PERSONAL_DETAILS</span></md-subheader>      
+					<div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           <label translate>usrmgt.security_user.label.PREFIX</label>
+				           <md-icon><i class="fa fa-asterisk" aria-hidden="true"></i></md-icon>
+				           <md-select ng-model="securityUserCreationRequest.prefixCode" name="prefixCode" required >
+				              <md-option ng-repeat="prefix in prefixes" value="{{prefix.code}}">
+				                {{prefix.name}}
+				              </md-option>
+				            </md-select>
+				            <span ng-show="securityUserForm.prefixCode.$dirty"> 
+								<span ng-show="securityUserForm.prefixCode.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+							</span>				       
+				         </md-input-container>
+			        </div>
+					<div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.FULL_NAME</label>
+				           	<md-icon><i class="fa fa-user" aria-hidden="true"></i></md-icon>
+				           	<input ng-model="securityUserCreationRequest.fullName" name="fullName" md-maxlength="240" required />
+				           	<span ng-show="securityUserForm.fullName.$dirty"> 
+								<span ng-show="securityUserForm.fullName.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="securityUserForm.fullName.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.FULL_NAME_LENGTH</span>
+								</span>					
+							</span>	
+							<div ng-messages="securityUserCreationRequest.fullName.$error">
+					          <div ng-message="required">This is required.</div>
+					          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+					        </div>			       
+				         </md-input-container>
+			        </div>
+			        <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.EMAIL</label>
+				           	<md-icon><i class="fa fa-envelope" aria-hidden="true"></i></md-icon>
+				           	<input ng-model="securityUserCreationRequest.email" name="email" md-maxlength="100" required ng-pattern="/^.+@.+\..+$/" />
+				           	<span ng-show="securityUserForm.email.$dirty"> 
+								<span ng-show="securityUserForm.email.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="securityUserForm.email.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.EMAIL_LENGTH</span>
+								</span>	
+								<span ng-show="securityUserForm.email.$error['pattern']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.EMAIL_FORMAT</span>
+								</span>	
+												
+							</span>	
+				         </md-input-container>
+			        </div>
+			        <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.NIC</label>
+				           	<md-icon><i class="fa fa-info" aria-hidden="true"></i></md-icon>
+				           	<input ng-model="securityUserCreationRequest.nic" name="nic" md-minlength="10" md-maxlength="12" required />
+				           	<span ng-show="securityUserForm.nic.$dirty"> 
+								<span ng-show="securityUserForm.nic.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="securityUserForm.nic.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.NIC_MAX_LENGTH</span>
+								</span>	
+								<span ng-show="securityUserForm.nic.$error['md-minlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.NIC_MIN_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+			        <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.MOBILE_NUMBER</label>
+				           	<md-icon><i class="fa fa-mobile" aria-hidden="true"></i></md-icon>
+				           	<input ng-model="securityUserCreationRequest.mobileNumber" name="mobileNumber" md-maxlength="10" required />
+				           	<span ng-show="securityUserForm.mobileNumber.$dirty"> 
+								<span ng-show="securityUserForm.mobileNumber.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="securityUserForm.mobileNumber.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.MOBILE_NUMBER_MAX_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+			        <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.ADDRESS</label>
+				           	<md-icon><i class="fa fa-home" aria-hidden="true"></i></md-icon>
+				           	<textarea ng-model="securityUserCreationRequest.address" name="address"  md-maxlength="240" rows="5" md-select-on-focus required></textarea>
+				           	<span ng-show="securityUserForm.address.$dirty"> 
+								<span ng-show="securityUserForm.address.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="securityUserForm.address.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.ADDRESS_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+			    </section>
+		        <section>
+		        	<md-subheader class="md-primary"><span translate>usrmgt.security_user.label.LOGIN_DETAILS</span></md-subheader>  
+		        	<div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.USER_NAME</label>
+				           	<md-icon><i class="fa fa-sign-in" aria-hidden="true"></i></md-icon>
+				           	<input ng-model="securityUserCreationRequest.userName" name="userName" md-maxlength="30" minlength="8" required />
+				           	<span ng-show="securityUserForm.userName.$dirty"> 
+								<span ng-show="securityUserForm.userName.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="securityUserForm.userName.$error['minlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.USER_NAME_LENGTH</span>
+								</span>
+								<span ng-show="securityUserForm.userName.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.USER_NAME_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+				     </div>
+				     <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.PASSWORD</label>
+				           	<md-icon><i class="fa fa-key" aria-hidden="true"></i></md-icon>
+				           	<input type="password" ng-model="securityUserCreationRequest.secret" name="secret" md-maxlength="20" minlength="8" required />
+				           	<span ng-show="securityUserForm.secret.$dirty"> 
+								<span ng-show="securityUserForm.secret.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="securityUserForm.secret.$error['minlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.PASSWORD_LENGTH</span>
+								</span>
+								<span ng-show="securityUserForm.secret.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.PASSWORD_LENGTH</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+			        <div layout-gt-sm="row">
+				         <md-input-container class="md-block" flex-gt-sm>
+				           	<label translate>usrmgt.security_user.label.CONFIRM_PASSWORD</label>
+				           	<md-icon><i class="fa fa-check" aria-hidden="true"></i></md-icon>
+				           	<input type="password" ng-model="confirmSecret" name="confirmSecret" md-maxlength="20" required data-password-verify="securityUserCreationRequest.secret" />
+				           	<span ng-show="securityUserForm.confirmSecret.$dirty"> 
+								<span ng-show="securityUserForm.confirmSecret.$error.required">
+									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+								</span>
+								<span ng-show="securityUserForm.confirmSecret.$error['md-maxlength']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.PASSWORD_LENGTH</span>
+								</span>
+								<span ng-show="securityUserForm.confirmSecret.$error['passwordVerify']">
+									<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.PASSWORD_NOT_SAME</span>
+								</span>					
+							</span>			       
+				         </md-input-container>
+			        </div>
+		        </section>
+	        </md-content>
+       		<input type="hidden" ng-model="formKey" />
+       	</form>
+       	
+	</div>
+
+</section>
