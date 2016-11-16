@@ -1,6 +1,6 @@
 require
 		.config({
-			baseUrl : '/rdd-usermanagement-ui-web/app',
+			baseUrl : '/ui-web/app',
 			urlArgs : "v=" + APP_VERSION,
 			paths : {
 				'require-domready' : '../assets/lib/requirejs-domready-2.0.1/domReady',
@@ -41,7 +41,8 @@ require
 				'pdf':'../assets/lib/angular-pdf-1.3.0/angular-pdf.min',
 				'pdfjs':'../assets/lib/angular-pdf-1.3.0/pdf',
 				'pdfworker':'../assets/lib/angular-pdf-1.3.0/pdf.worker',
-				'visualcaptcha.angular':'../assets/lib/visual-captcha-0.0.7/visualcaptcha.angular'	
+				'visualcaptcha.angular':'../assets/lib/visual-captcha-0.0.7/visualcaptcha.angular',
+				'angular-cookies':'../assets/lib/angular-cookies-1.5.8/angular-cookies.min'
 			},			
 			shim : {
 				'apptheme' : {
@@ -145,13 +146,16 @@ require
 				},
 				'visualcaptcha.angular':{
 					  deps:['angular','jquery']					 
-				}
+				},
+				'angular-cookies' : {
+					deps : [ 'angular' ]
+				},
 			},
 			priority : [ "angular" ]
 		});
 
 require([ 'app', 'require-domready', 'angular-datatables', 'angular-loading-bar','angular-translate-loader-static-files',
-          'ngStorage', 'angular-translate', 'dropzone', 'ngDropzone',
+          'ngStorage', 'angular-translate', 'dropzone', 'ngDropzone', 'angular-cookies',
           'pdf', 'ngMessages', 
           '../common/services/common-service',
           '../common/services/commonstorage-service',

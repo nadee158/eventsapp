@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
-@ComponentScan(basePackages = {"lk.pwc.projects.rdd.rims.*"})
+@ComponentScan(basePackages = {"com.janaka.projects.*"})
 @EnableAutoConfiguration
 public class Application extends SpringBootServletInitializer {
 

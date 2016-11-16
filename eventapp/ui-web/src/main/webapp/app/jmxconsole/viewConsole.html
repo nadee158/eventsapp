@@ -1,0 +1,69 @@
+<section class="content">   
+
+<div ng-controller="ViewConsoleController" ng-init="initializeViewConsolePage()" layout="column" ng-cloak class="md-inline-form">
+
+ 
+  <md-content layout-padding>
+    <div>
+      <form name="viewConsoleForm" id="viewConsoleForm">	
+
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            	<label translate>Base URL</label>
+            	<input ng-model="serverUrl" name="serverUrl" required />
+		       <span ng-show="serverUrl.$dirty"> 
+					<span ng-show="serverUrl.$error.required">
+						<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+					</span>
+			   </span>	
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-sm>
+             <label translate>Endpoint</label>
+	         	  <md-select ng-model="endPoint" name="endPoint" required >
+		            <md-option ng-repeat="endPoint in endpointList" value="{{endPoint.id}}" >
+		              {{endPoint.id}}	              
+		            </md-option>
+		          </md-select>
+         	<span ng-show="endPoint.$dirty"> 
+				<span ng-show="endPoint.$error.required">
+					<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+				</span>
+			</span>		
+          </md-input-container>
+
+          <md-input-container class="md-block" flex-gt-sm>
+            <md-button class="md-raised md-primary" ng-click="viewConsole()">
+		      		<i class="fa fa-search" aria-hidden="true"></i>&nbsp;View
+		      </md-button>
+          </md-input-container>
+        </div>       
+
+      </form>
+    </div>
+    
+			
+	 <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Json Output">
+        <md-content class="md-padding">
+          <pre>{{jsonOutput | json}}</pre>
+        </md-content>
+      </md-tab>
+       <md-tab label="Processed Output">
+        <md-content class="md-padding">
+          	<div ng-bind-html="formattedJosn"></div>
+         </md-content>
+      </md-tab>      
+	 </md-tabs>
+     
+     
+    
+  </md-content>
+
+</div>
+
+ 
+			
+	
+
+</section>

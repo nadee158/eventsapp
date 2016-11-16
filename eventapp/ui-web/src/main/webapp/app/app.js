@@ -3,7 +3,7 @@ define(['routes','dependencyResolverFor','datatables','ngMaterial','select2','Pu
 {
     var app = angular.module('app', ['ngRoute','angular-themer','datatables',
                                      'ngMaterial','PubSub', 'lfNgMdFileInput','angular-loading-bar',
-                                     	'ngAnimate','pascalprecht.translate', 'pdf', 'thatisuday.dropzone','visualCaptcha']);
+                                     	'ngAnimate','pascalprecht.translate', 'pdf', 'thatisuday.dropzone','visualCaptcha','ngCookies']);
 
     app.config(
     [
@@ -122,7 +122,7 @@ define(['routes','dependencyResolverFor','datatables','ngMaterial','select2','Pu
        
     	var rootPath = $location.protocol() + '://' + $location.host() + ':' + $location.port();
         $rootScope.baseUrl =  rootPath + '/eventappservices';     
-        $rootScope.reportBaseUrl = rootPath + '/ventappservices-reports';
+        $rootScope.reportBaseUrl = rootPath + '/eventappservices-reports';
         
 		
 		$rootScope.$on('$routeChangeStart', function (event, next, current) {

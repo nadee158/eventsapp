@@ -1,13 +1,21 @@
 'use strict';
 
 define(['app'], function (app) {
-  app.factory('TokenAuthInterceptorFactory', ['$q','CommonStorageFactory','Constants', function($q, CommonStorageFactory,Constants) {
+  app.factory('TokenAuthInterceptorFactory', ['$q','$cookies','$log','CommonStorageFactory','Constants', 
+                                              function($q,$cookies,$log, CommonStorageFactory,Constants) {
   
       var storageKey = Constants.Keys.authtoken;
       
       var TokenAuthInterceptorFactory = {};
       
       TokenAuthInterceptorFactory.request = function (config) {
+    	 var token = $cookies.get('XSRF-TOKEN');
+
+         if (token) {
+            config.headers['X-XSRF-TOKEN'] = token;
+            $log.info("X-XSRF-TOKEN: " + token);
+         }  
+    	  
         var authToken = CommonStorageFactory.retrieve(storageKey);
         //console.log("authToken--"+authToken);
         if (authToken) {

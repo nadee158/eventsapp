@@ -74,13 +74,16 @@ public class StatelessAuthenticationSecurityConfig extends WebSecurityConfigurer
         
         // allow anonymous POSTs or gets to captcha
         .antMatchers("/captcha/**").permitAll()
+        
+        // allow anonymous POSTs or gets to captcha
+        .antMatchers("/managecontext/**").permitAll()
 
         // defined Admin only API area
         .antMatchers("/" + ServiceEndpoints.ADMIN_NAMESAPCE + "/**").hasRole("ADMIN")
 
         // all other request need to be authenticated
-        .anyRequest().authenticated().and()
-//        .anyRequest().permitAll().and()
+//        .anyRequest().authenticated().and()
+        .anyRequest().permitAll().and() //permitted all requests!, to enable security, comment this line and uncomment above line
 
         // custom JSON based authentication by POST of {"username":"<name>","password":"<password>"}
         // which sets the token header upon authentication

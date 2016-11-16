@@ -10,10 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.hibernate.envers.Audited;
+
 import com.janaka.projects.entitymanagement.enums.Language;
 import com.janaka.projects.entitymanagement.enums.SMSType;
 import com.janaka.projects.entitymanagement.enums.YesNoStatus;
 
+@Audited
 @Entity
 @Table(name = "sms_notification")
 public class SMSNotification extends BaseDomain {

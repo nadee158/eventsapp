@@ -27,18 +27,17 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 
 
 
-  public StatelessLoginFilter(String urlMapping,
-      TokenAuthenticationHandler tokenAuthenticationService, AuthenticationManager authManager) {
+  public StatelessLoginFilter(String urlMapping, TokenAuthenticationHandler tokenAuthenticationService,
+      AuthenticationManager authManager) {
     super(new AntPathRequestMatcher(urlMapping));
     setAuthenticationManager(authManager);
-    setAuthenticationSuccessHandler(
-        new RestAuthenticationSuccessHandler(tokenAuthenticationService));
+    setAuthenticationSuccessHandler(new RestAuthenticationSuccessHandler(tokenAuthenticationService));
     setAuthenticationFailureHandler(new RestAuthenticationFailureHandler());
   }
 
   @Override
-  public Authentication attemptAuthentication(HttpServletRequest request,
-      HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+  public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+      throws AuthenticationException, IOException, ServletException {
 
     Session session = null;
 

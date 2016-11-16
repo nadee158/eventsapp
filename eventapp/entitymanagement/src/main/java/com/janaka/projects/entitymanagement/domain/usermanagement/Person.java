@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 
 import com.janaka.projects.entitymanagement.domain.common.BaseDomain;
@@ -23,6 +24,7 @@ import com.janaka.projects.entitymanagement.enums.MaritalStatus;
 import com.janaka.projects.entitymanagement.enums.Prefix;
 
 
+@Audited
 @Entity
 @Table(name = "person",
     indexes = {@Index(name = "person_id_pk_index", unique = true, columnList = "id"),

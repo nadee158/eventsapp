@@ -12,6 +12,13 @@ define(['app'], function (app) {
    	    
       var updateItems = function() {
         	alertTitles={};
+        	
+        	$translate('common.notification.message.NOTIFY_401_TITLE').then(function(label) {
+            	alertTitles['401_TITLE']=label;
+            });
+            $translate('common.notification.message.NOTIFY_401_CONTENT').then(function(label) {
+            	alertTitles['401_CONTENT']=label;
+            });
             
             $translate('common.notification.message.NOTIFY_403_TITLE').then(function(label) {
             	alertTitles['403_TITLE']=label;

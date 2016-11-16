@@ -6,6 +6,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +46,7 @@ public class TokenAuthenticationHandler {
     return saveSessionDetailsResponse.getUser();
   }
 
-  public Authentication getAuthentication(HttpServletRequest request) {
+  public Authentication getAuthentication(HttpServletRequest request) throws BadCredentialsException {
     Authentication authentication = null;
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
     final String token = securityContext.getToken();

@@ -9,11 +9,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableAutoConfiguration
-@EntityScan(basePackages = {"com.janaka.projects.services.reports.domains",
-    "com.janaka.projects.entitymanagement.domain"})
-@EnableJpaRepositories(basePackages = {"com.janaka.projects.services.reports.dao",
-    "com.janaka.projects.entitymanagement.dataaccessobjects"},
-      repositoryFactoryBeanClass = DataTablesRepositoryFactoryBean.class)
+@EntityScan(
+    basePackages = {"com.janaka.projects.services.reports.domains", "com.janaka.projects.entitymanagement.domain"})
+@EnableJpaRepositories(
+    basePackages = {"com.janaka.projects.services.reports.dao",
+        "com.janaka.projects.entitymanagement.dataaccessobjects"},
+    repositoryFactoryBeanClass = DataTablesRepositoryFactoryBean.class)
 @EnableTransactionManagement
 public class RepositoryConfiguration {
 

@@ -24,11 +24,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.envers.Audited;
 
 import com.janaka.projects.common.security.Authority;
 import com.janaka.projects.common.security.User;
 import com.janaka.projects.entitymanagement.domain.common.BaseDomain;
 
+@Audited
 @Entity
 @Table(name = "security_user",
     indexes = {@Index(name = "security_user_id_pk_index", unique = true, columnList = "id"),

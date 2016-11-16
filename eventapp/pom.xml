@@ -140,6 +140,13 @@
 		</dependency>
 		<!-- end of spring-data-jpa-datatables -->
 		
+		<!-- https://mvnrepository.com/artifact/org.jminix/jminix -->
+		<dependency>
+		    <groupId>org.jminix</groupId>
+		    <artifactId>jminix</artifactId>
+		    <version>${jminix-version}</version>
+		</dependency>
+		
 				
 		
 	</dependencies>

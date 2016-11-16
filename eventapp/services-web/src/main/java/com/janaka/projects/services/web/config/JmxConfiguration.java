@@ -1,6 +1,8 @@
 package com.janaka.projects.services.web.config;
 
+import org.jminix.console.servlet.MiniConsoleServlet;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -9,7 +11,7 @@ import org.springframework.jmx.support.ConnectorServerFactoryBean;
 import org.springframework.remoting.rmi.RmiRegistryFactoryBean;
 
 @Configuration
-@EnableMBeanExport(defaultDomain = "RIMS")
+@EnableMBeanExport(defaultDomain = "com.janaka.projects.eventsapp")
 public class JmxConfiguration {
 
   @Value("${jmx.rmi.host:localhost}")
@@ -36,6 +38,11 @@ public class JmxConfiguration {
     return connectorServerFactoryBean;
   }
 
+
+  @Bean
+  public ServletRegistrationBean jmxMiniConsoleServletRegistrationBean() {
+    return new ServletRegistrationBean(new MiniConsoleServlet(), "/jmx/*");
+  }
 
 
 }

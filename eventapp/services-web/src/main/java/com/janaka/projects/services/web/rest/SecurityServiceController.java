@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.janaka.projects.common.security.AuditContext;
 import com.janaka.projects.common.security.SecurityContext;
 import com.janaka.projects.common.security.SecurityHelper;
+import com.janaka.projects.common.security.Session;
 import com.janaka.projects.dtos.requests.common.ChangePasswordRequest;
 import com.janaka.projects.dtos.requests.common.ResetPasswordRequest;
 import com.janaka.projects.dtos.requests.common.SignOutRequest;
@@ -58,6 +59,13 @@ public class SecurityServiceController {
     AuditContext auditContext = SecurityHelper.getAuditContext();
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
     return this.service.changePassword(securityContext, auditContext, request);
+  }
+
+  @RequestMapping(ServiceEndpoints.VALIDATE_SESSION)
+  public Session ensureSessionValidity() {
+    AuditContext auditContext = SecurityHelper.getAuditContext();
+    SecurityContext securityContext = SecurityHelper.getSecurityContext();
+    return this.service.ensureSessionValidity(securityContext, auditContext);
   }
 
 

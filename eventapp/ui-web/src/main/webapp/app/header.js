@@ -2,16 +2,20 @@
 
 define(['app'], function (app) {
 	
-	app.controller('HeaderController', ['$scope', '$rootScope','$location','PubSub','Constants',
-	                                    'CommonStorageFactory','SecurityServiceFactory','NotificationServiceFactory','$translate',
-	    function ($scope, $rootScope,$location, PubSub, Constants,
-	    								 CommonStorageFactory,SecurityServiceFactory,NotificationServiceFactory,$translate) {
+	app.controller('HeaderController', ['$scope', '$rootScope','$location', '$interval','PubSub','Constants',
+	                                    'CommonStorageFactory','SecurityServiceFactory','NotificationServiceFactory','$translate','CommonServiceFactory',
+	    function ($scope, $rootScope,$location, $interval, PubSub, Constants,
+	    								 CommonStorageFactory,SecurityServiceFactory,NotificationServiceFactory,$translate,CommonServiceFactory) {
 		var userDTOObject;
+		
+		var baseUrl=$rootScope.baseUrl;
 		
 		$scope.setLang = function(langKey) {
 		    // You can change the language during runtime
 		    $translate.use(langKey);
 		};
+		
+		
 		
 		$scope.fn_load = function () {	
 			  PubSub.unsubscribe(Constants.Events.loggedin);
@@ -96,10 +100,8 @@ define(['app'], function (app) {
 		
 		
   	    $scope.logout = function () {
-	        
+  	    	var userStorageKey= Constants.Keys.userobject; 
   	    	var userDTOObject=CommonStorageFactory.retrieve(userStorageKey);
-  	    	
-  	    	var baseUrl=$rootScope.baseUrl;
   	    	
   	    	var SignOutRequest={"userName":userDTOObject.uN,"securityUserId":userDTOObject.suuid};
   	    	 
@@ -119,7 +121,7 @@ define(['app'], function (app) {
 	        });
   		 
          
-     };
+        };
 		
 		function checkAndLoadUser(){
 			if(!(userDTOObject)){
@@ -139,6 +141,7 @@ define(['app'], function (app) {
 		    userDTOObject=data.userObject;
 		    $scope.userDTO=userDTOObject;
 		    modifyUiElementsOnLogIn();
+		    setSessionValidatorTimer();
 		}
 
 		function listenerlogout(topic, data) {	
@@ -184,6 +187,57 @@ define(['app'], function (app) {
 			$('#dataTable_filter').show();
 			$('#closeWindow').show();	
 		}
+		
+		    var check;
+	        function setSessionValidatorTimer(){
+	           if ( angular.isDefined(check) ) return;
+
+	               check = $interval(function() {
+	        	   
+	        	     validateSession();
+	        	   
+	               }, 300000);
+	        }
+	          
+	        function validateSession(){
+	        	var storageKey = Constants.Keys.authtoken;
+	 	        var userStorageKey= Constants.Keys.userobject;
+	        	var isValidSession=true;
+	        	var userObject=CommonStorageFactory.retrieve(userStorageKey);
+	        	var token=CommonStorageFactory.retrieve(storageKey);
+	        	if(token && userObject){
+	        		var response=SecurityServiceFactory.validateSession(baseUrl);
+	        		response.success(function(data, status, headers, config) {
+	        			if(status==200){
+	        				console.log(data);
+	        				if(data && data.authenticated){
+	        					console.log('Valid Session!');
+	        				}else{
+	        					isValidSession=false;
+	        					CommonServiceFactory.handleResponseError(401);
+	        				}
+	        			}else{
+	        				isValidSession=false;
+	        				CommonServiceFactory.handleResponseError(status);
+	        			}	        			
+	        		}).error(function(data, status, headers, config){
+	        			isValidSession=false;
+		            	CommonServiceFactory.handleResponseError(data.status);
+		            	console.error('Error while authenticating user ' + data.message);
+		            })
+	        	}else{
+	        		isValidSession=false;
+	        	}
+	        	
+	        	if(!(isValidSession)){
+	        		if (angular.isDefined(check)) {
+	 	               $interval.cancel(check);
+	 	              check = undefined;
+	 	            }
+	        	}
+	        	
+	        }
+		
 	  }
 	]);
 });

@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +37,6 @@ public class UserRoleController {
   @Autowired
   private UserRoleService service = null;
 
-  @PreAuthorize("hasRole('ROLE_A_UM_UR_AUR_UDT')")
   @RequestMapping(value = ServiceEndpoints.CREATE_USER_ROLE, method = RequestMethod.POST)
   public UserRoleCreationResponse createUserRole(@Valid @RequestBody UserRoleCreationRequest request) {
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
@@ -46,7 +44,6 @@ public class UserRoleController {
     return service.createUserRole(auditContext, securityContext, request);
   }
 
-  @PreAuthorize("hasRole('ROLE_A_UM_UR_UUR_UDT')")
   @RequestMapping(value = ServiceEndpoints.UPDATE_USER_ROLE, method = RequestMethod.POST)
   public UserRoleUpdateResponse updateUserRole(@Valid @RequestBody UserRoleUpdateRequest request) {
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
@@ -54,7 +51,6 @@ public class UserRoleController {
     return service.updateUserRole(auditContext, securityContext, request);
   }
 
-  @PreAuthorize("hasRole('ROLE_A_UM_UR_LUR_UDT')")
   @RequestMapping(value = ServiceEndpoints.DELETE_USER_ROLE, method = RequestMethod.POST)
   public ObjectDeletionResponse deleteUserRole(@RequestBody ObjectDeletionRequest request) {
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
@@ -62,7 +58,6 @@ public class UserRoleController {
     return service.deleteUserRole(auditContext, securityContext, request);
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_A_UM_UR_VUR_VWE','ROLE_A_UM_UR_AUR_UDT','ROLE_A_UM_UR_UUR_UDT','ROLE_A_UM_UR_LUR_UDT','ROLE_A_UM_UR_VUR_VWE')")
   @RequestMapping(value = ServiceEndpoints.GET_ACTIVE_USER_ROLES, method = RequestMethod.GET)
   public ObjectListResponse<UserRoleDTO> getActiveUserRoles() {
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
@@ -70,7 +65,6 @@ public class UserRoleController {
     return service.getActiveUserRoles(auditContext, securityContext);
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_A_UM_UR_LUR_VWE','ROLE_A_UM_UR_AUR_UDT','ROLE_A_UM_UR_UUR_UDT','ROLE_A_UM_UR_LUR_UDT','ROLE_A_UM_UR_VUR_VWE','ROLE_A_UM_UR_AUR_VWE') ")
   @RequestMapping(value = ServiceEndpoints.GET_USER_ROLE_BY_ID, method = RequestMethod.POST)
   public ObjectRetrievalResponse<UserRoleDTO> getActiveUserRoleById(@RequestBody ObjectRetrievalRequest request) {
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
@@ -78,7 +72,6 @@ public class UserRoleController {
     return service.getUserRoleById(auditContext, securityContext, request);
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_A_UM_UR_LUR_VWE','ROLE_A_UM_UR_AUR_UDT','ROLE_A_UM_UR_UUR_UDT','ROLE_A_UM_UR_LUR_UDT','ROLE_A_UM_UR_VUR_VWE')")
   @RequestMapping(value = ServiceEndpoints.GET_USER_ROLES, method = RequestMethod.POST)
   public TabularDataResponseModel<UserRoleDTO> getActiveUserRoles(@RequestBody TabularDataRequestModel request) {
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
@@ -86,7 +79,6 @@ public class UserRoleController {
     return service.getUserRoles(auditContext, securityContext, request);
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_A_UM_UR_LUR_VWE','ROLE_A_UM_UR_VUR_VWE','ROLE_A_UM_UR_UUR_VWE')")
   @RequestMapping(value = ServiceEndpoints.GET_USER_ROLES_BY_SECURITY_USER_ID, method = RequestMethod.POST)
   public ObjectListResponse<UserRoleDTO> getUserRolesBySecurityUserId(
       @RequestBody UserRoleListRetrievalRequest request) {

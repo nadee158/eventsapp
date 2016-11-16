@@ -13,9 +13,11 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.envers.Audited;
 
 import com.janaka.projects.entitymanagement.domain.common.BaseDomain;
 
+@Audited
 @Entity
 @Table(name = "user_role"/* , schema = ApplicationConstants.SCHEMA_USERMANAGEMENT */,
     indexes = {@Index(name = "user_role_id_pk_index", unique = true, columnList = "id"),

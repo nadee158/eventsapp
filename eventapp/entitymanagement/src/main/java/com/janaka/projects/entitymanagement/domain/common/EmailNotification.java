@@ -10,12 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.hibernate.envers.Audited;
+
 import com.janaka.projects.common.util.EmailMessage;
 import com.janaka.projects.common.util.NotificationRecipient;
 import com.janaka.projects.entitymanagement.enums.EmailType;
 import com.janaka.projects.entitymanagement.enums.Language;
 import com.janaka.projects.entitymanagement.enums.YesNoStatus;
 
+@Audited
 @Entity
 @Table(name = "email_notification")
 public class EmailNotification extends BaseDomain {

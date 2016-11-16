@@ -16,13 +16,15 @@
 	</parent>
 
 	<dependencies>
-		<!-- ################################## START OF SPRING DATA DEPENDENCIES ########################################## -->
-		 <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>	
-				
-		<!-- ################################## END OF SPRING DATA DEPENDENCIES ########################################## -->
+		<!-- ################################## START OF SPRING DATA DEPENDENCIES 
+			########################################## -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+		<!-- ################################## END OF SPRING DATA DEPENDENCIES 
+			########################################## -->
 		<dependency>
 			<groupId>com.janaka.projects</groupId>
 			<artifactId>common</artifactId>
@@ -30,13 +32,19 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-jpamodelgen</artifactId>
-		    <scope>compile</scope>
-		    <optional>true</optional>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
-		
-		
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-envers</artifactId>
+			<version>1.0.5.RELEASE</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

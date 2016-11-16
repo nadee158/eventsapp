@@ -12,13 +12,11 @@ define(['app'], function (app) {
 			$scope.token; // For display purposes only
 	  
 	        var baseUrl=$rootScope.baseUrl;
+	        var storageKey = Constants.Keys.authtoken;
+	        var userStorageKey= Constants.Keys.userobject;
 	        
 	        $scope.login = function() {
 	        
-	          
-	          var storageKey = Constants.Keys.authtoken;
-	          var userStorageKey= Constants.Keys.userobject;
-	          
 	          var response=SecurityServiceFactory.signIn($scope.user,baseUrl);
 	         
 	                      
@@ -58,8 +56,7 @@ define(['app'], function (app) {
 	            	console.error('Error while authenticating user ' + data.message);
 	            })
 	        }
-	          
-	          
+	        
 	  } 
 	
 	]);

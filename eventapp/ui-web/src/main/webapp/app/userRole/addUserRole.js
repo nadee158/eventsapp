@@ -4,10 +4,20 @@ define(['app'], function (app) {
 	
 	app.controller('AddUserRoleController', ['$scope', '$rootScope','$location','$filter', 'PubSub','Constants',
 	                                            'CommonStorageFactory','NotificationServiceFactory','Page','ModalDialogServiceFactory',
+	                                            'ApplicationServiceFactory',
+	                                            'ApplicationModuleServiceFactory',
+	                                            'ApplicationModuleServiceServiceFactory',
+	                                            'ScreenServiceFactory',
+	                                            'ScreenPermissionServiceFactory',
 	                                            'UserRoleServiceFactory','CommonServiceFactory',
 	                                            
 	    function ($scope, $rootScope,$location,$filter, PubSub,Constants,
                 	CommonStorageFactory,NotificationServiceFactory, Page,ModalDialogServiceFactory,
+                	ApplicationServiceFactory,
+                	ApplicationModuleServiceFactory,
+                	ApplicationModuleServiceServiceFactory,
+                	ScreenServiceFactory,
+                	ScreenPermissionServiceFactory,
                 	UserRoleServiceFactory,CommonServiceFactory) {
 		
 			$scope.screenPermissionList=[];

@@ -40,6 +40,7 @@ public class SecurityUserController {
   @Autowired
   private SecurityUserService service = null;
 
+  // @PreAuthorize("hasRole('ROLE_A_UM_SU_ASU_UDT')")
   @RequestMapping(value = ServiceEndpoints.CREATE_SECURITY_USER, method = RequestMethod.POST)
   public SecurityUserCreationResponse createSecurityUser(@Valid @RequestBody SecurityUserCreationRequest request) {
     SecurityContext securityContext = SecurityHelper.getSecurityContext();

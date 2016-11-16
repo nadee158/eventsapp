@@ -33,7 +33,11 @@ define(['app'], function (app) {
 	        return $http.post(url, changePasswordRequest);
 	    };
 	    
-	
+	    SecurityServiceFactory.validateSession = function (baseUrl) {
+	    	var url = baseUrl + '/SecurityService/ValidateSession';
+	        return $http.post(url);
+	    };
+	    
 	    return SecurityServiceFactory;
 	}]);
 

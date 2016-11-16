@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
-@ComponentScan(basePackages = {"com.janaka.projects.*", "com.janaka.projects.common.*"})
+@ComponentScan(basePackages = {"com.janaka.projects.*"})
 @EnableAutoConfiguration()
 @EnableAsync
 public class Application extends SpringBootServletInitializer {
