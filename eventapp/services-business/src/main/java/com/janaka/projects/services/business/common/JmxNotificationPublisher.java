@@ -17,8 +17,14 @@ public class JmxNotificationPublisher implements NotificationPublisherAware {
   private static int sequenceNumber = 0;
 
   public void notifyEventToJMX(String type, String msg) {
-    sequenceNumber = sequenceNumber + 1;
-    notificationPublisher.sendNotification(new Notification(type, this, sequenceNumber, msg));
+    try {
+      if (!(notificationPublisher == null)) {
+        sequenceNumber = sequenceNumber + 1;
+        notificationPublisher.sendNotification(new Notification(type, this, sequenceNumber, msg));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.janaka.projects.entitymanagement.domain.common;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -68,6 +70,18 @@ public class BaseDomain implements Serializable {
   @PrePersist
   public void onPrePersist() {
     this.uuId = UUID.randomUUID().toString();
+    if (StringUtils.isEmpty(this.createdByUser)) {
+      this.createdByUser = "UNKNOWN";
+    }
+    if (StringUtils.isEmpty(this.modifiedByUser)) {
+      this.modifiedByUser = "UNKNOWN";
+    }
+    if (this.creationTime == null) {
+      this.creationTime = Calendar.getInstance().getTime();
+    }
+    if (this.modificationTime == null) {
+      this.modificationTime = Calendar.getInstance().getTime();
+    }
     audit("INSERT");
   }
 

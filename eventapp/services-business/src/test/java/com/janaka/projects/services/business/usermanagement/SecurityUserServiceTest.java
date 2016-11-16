@@ -3,6 +3,7 @@ package com.janaka.projects.services.business.usermanagement;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -43,7 +44,7 @@ public class SecurityUserServiceTest {
   @Autowired
   private SecurityUserService securityUserService;
 
-  // @Test
+  @Test
   public void testCreateSecurityUser() {
     SecurityUserCreationRequest request = MockSecurityUserServiceUtil.getSecurityUserCreationRequest();
     AuditContext auditContext = SecurityHelper.getAuditContext();

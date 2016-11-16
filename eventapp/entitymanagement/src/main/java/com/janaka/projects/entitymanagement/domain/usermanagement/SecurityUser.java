@@ -46,12 +46,12 @@ public class SecurityUser extends BaseDomain {
   private long id = 0;
 
   @NotNull
-  @Size(min = 4, max = 30)
+  @Size(min = 3, max = 30)
   @Column(name = "user_name")
   private String userName = StringUtils.EMPTY;
 
   @NotNull
-  @Size(min = 6, max = 20)
+  @Size(min = 6, max = 120)
   @Column(name = "secret")
   private String secret = StringUtils.EMPTY;
 

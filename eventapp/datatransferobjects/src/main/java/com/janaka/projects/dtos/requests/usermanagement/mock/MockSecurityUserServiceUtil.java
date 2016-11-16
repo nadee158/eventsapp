@@ -10,38 +10,20 @@ public class MockSecurityUserServiceUtil {
 
   public static SecurityUserCreationRequest getSecurityUserCreationRequest() {
     SecurityUserCreationRequest request = new SecurityUserCreationRequest();
-    request.setAddress("Test Address vggg");
+    request.setAddress("Test Address");
     request.setEmail("nadee158@gmail.com");
-    request.setExplicitlyDeniedPermissions(getExplicitlyDeniedPermissions());
-    request.setExplicitlyGrantedPermissions(getExplicitlyGrantedPermissions());
-    request.setFullName("User full name testing fv ");
+    request.setFullName("Super user Testing");
     request.setMobileNumber("0712186182");
     request.setNic("865480433v");
-    request.setOrganizationId(1);
     request.setPrefixCode(1);
-    request.setSecret("user@123");
-    request.setUserName("Nadee1582");
+    request.setSecret("eventsappuser@123");
+    request.setUserName("eventsappuser");
     List<Long> urlist = new ArrayList<Long>();
     urlist.add(1l);
     request.setUserRoles(urlist);
     return request;
   }
 
-  private static List<Long> getExplicitlyGrantedPermissions() {
-    List<Long> list = new ArrayList<Long>();
-    for (long i = 5; i < 10; i++) {
-      list.add(i);
-    }
-    return list;
-  }
-
-  private static List<Long> getExplicitlyDeniedPermissions() {
-    List<Long> list = new ArrayList<Long>();
-    for (long i = 1; i < 5; i++) {
-      list.add(i);
-    }
-    return list;
-  }
 
   private static List<Long> getUserRoles() {
     List<Long> list = new ArrayList<Long>();
@@ -59,7 +41,6 @@ public class MockSecurityUserServiceUtil {
     request.setFullName("User full name testing fv ");
     request.setMobileNumber("0712186182");
     request.setNic("865480483v");
-    request.setOrganizationId(1);
     request.setPrefixCode(1);
     request.setUserName("nadee158");
     request.setVersionNumber(1);
@@ -74,7 +55,6 @@ public class MockSecurityUserServiceUtil {
     request.setFullName("User Management Super Administrator");
     request.setMobileNumber("0771234560");
     request.setNic("123456789V");
-    request.setOrganizationId(1);
     request.setPrefixCode(1);
     request.setSecret("umgtadmin@123");
     request.setUserName("umgtadmin");

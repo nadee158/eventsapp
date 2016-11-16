@@ -17,8 +17,6 @@ public class SecurityUserUpdateRequest implements Serializable {
   @Size(min = 8, max = 30)
   private String userName = StringUtils.EMPTY;
 
-  private long organizationId;
-
   private int prefixCode;
 
   private String fullName = StringUtils.EMPTY;
@@ -51,14 +49,6 @@ public class SecurityUserUpdateRequest implements Serializable {
 
   public void setUserName(String userName) {
     this.userName = userName;
-  }
-
-  public long getOrganizationId() {
-    return organizationId;
-  }
-
-  public void setOrganizationId(long organizationId) {
-    this.organizationId = organizationId;
   }
 
   public int getPrefixCode() {

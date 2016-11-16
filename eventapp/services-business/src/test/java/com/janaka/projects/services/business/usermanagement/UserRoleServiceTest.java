@@ -38,7 +38,7 @@ public class UserRoleServiceTest {
   @Autowired
   private UserRoleService userRoleService;
 
-  // @Test
+  @Test
   public void testCreateUserRole() {
     AuditContext auditContext = SecurityHelper.getAuditContext();
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
@@ -107,7 +107,7 @@ public class UserRoleServiceTest {
     Assert.assertEquals(response.getDraw(), 1);
   }
 
-  @Test
+  // @Test
   public void testGetUserRolesBySecurityUserId() {
     AuditContext auditContext = SecurityHelper.getAuditContext();
     SecurityContext securityContext = SecurityHelper.getSecurityContext();

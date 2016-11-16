@@ -23,8 +23,6 @@ public class SecurityUserCreationRequest implements Serializable {
   @Size(min = 8, max = 100)
   private String secret = StringUtils.EMPTY;
 
-  private long organizationId;
-
   private int prefixCode;
 
   private String fullName = StringUtils.EMPTY;
@@ -40,10 +38,6 @@ public class SecurityUserCreationRequest implements Serializable {
   private String address;
 
   private List<Long> userRoles = null;
-
-  private List<Long> explicitlyGrantedPermissions = null;
-
-  private List<Long> explicitlyDeniedPermissions = null;
 
   public String getUserName() {
     return userName;
@@ -61,13 +55,6 @@ public class SecurityUserCreationRequest implements Serializable {
     this.secret = secret;
   }
 
-  public long getOrganizationId() {
-    return organizationId;
-  }
-
-  public void setOrganizationId(long organizationId) {
-    this.organizationId = organizationId;
-  }
 
   public int getPrefixCode() {
     return prefixCode;
@@ -123,22 +110,6 @@ public class SecurityUserCreationRequest implements Serializable {
 
   public void setUserRoles(List<Long> userRoles) {
     this.userRoles = userRoles;
-  }
-
-  public List<Long> getExplicitlyGrantedPermissions() {
-    return explicitlyGrantedPermissions;
-  }
-
-  public void setExplicitlyGrantedPermissions(List<Long> explicitlyGrantedPermissions) {
-    this.explicitlyGrantedPermissions = explicitlyGrantedPermissions;
-  }
-
-  public List<Long> getExplicitlyDeniedPermissions() {
-    return explicitlyDeniedPermissions;
-  }
-
-  public void setExplicitlyDeniedPermissions(List<Long> explicitlyDeniedPermissions) {
-    this.explicitlyDeniedPermissions = explicitlyDeniedPermissions;
   }
 
 

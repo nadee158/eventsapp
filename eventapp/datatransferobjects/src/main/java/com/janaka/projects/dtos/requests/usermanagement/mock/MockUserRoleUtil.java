@@ -12,7 +12,7 @@ public class MockUserRoleUtil {
 
   public static UserRoleCreationRequest getCreateUserRoleRequest() {
     UserRoleCreationRequest request = new UserRoleCreationRequest();
-    request.setUserRoleName("Test User Role Name new 2");
+    request.setUserRoleName("ROLE_SUPER_ADMIN");
     return request;
   }
 
