@@ -154,6 +154,14 @@ define([], function()
                 	              access:{
                 	            	  isFree:false
                 	              }
+                },'/eventsetup':{
+                	templateUrl:'app/eventSetup/eventsetup.html',
+                	dependencies:[
+                	              '../app/eventSetup/eventsetup',
+                	              '../common/services/events/event-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
                 }
          }
     };

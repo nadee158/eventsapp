@@ -35,40 +35,7 @@ define(['app'], function (app) {
 	  
 	        var baseUrl=$rootScope.baseUrl;
 	        
-	        $scope.initializeUserRolePage = function() {
-	        	displayTopMenuButtons();
-	        	subscribeToTopMenuButtonEvents();
-	        	getApplications();
-	        };
-	        
-	       	function displayTopMenuButtons(){
-	       		var formKey='add_user_role_screen';
-	       	    $scope.formKey=formKey;
-	        	var topMenuButtonDisplay={
-	        			formKey:formKey,
-					    showMenu:true,
-					    showNext:false,
-					    showPrevious:false,
-					    showPrint:false,
-					    showCopy:false,
-					    showEdit:false,
-					    showSearch:false,
-					    showSave:CommonServiceFactory.checkIfPermitted("ROLE_A_UM_UR_AUR_UDT"),
-					    showCancel:CommonServiceFactory.checkIfPermitted("ROLE_A_UM_UR_LUR_VWE ROLE_A_UM_UR_LUR_UDT"),
-					    showAddNew:false,
-	        	};
-	        	PubSub.publish(Constants.Events.displayheaderbuttons,topMenuButtonDisplay);
-	        }
-	       	
-	       	function subscribeToTopMenuButtonEvents(){
-	       		//first unsubscribe from previous subscribed events
-	       		PubSub.unsubscribe(Constants.Events.saved);
-	       		PubSub.unsubscribe(Constants.Events.cancel);
-	       		//then subscribe to new events
-	        	var subTopMenuSaveButton = PubSub.subscribe(Constants.Events.saved, listenerSaveClicked);
-	        	var subTopMenuCancelButton = PubSub.subscribe(Constants.Events.cancel, listenerCancelClicked);
-	        }
-	       	
+	       
 	        $scope.addScreenPermission= function(screenPermission) {
 	        	appendToPermissions(screenPermission);
 	        	removeFromExistingPermissionList(screenPermission);
