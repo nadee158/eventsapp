@@ -8,7 +8,7 @@ define(['app'], function (app) {
 	    								 CommonStorageFactory,CommonServiceFactory) {
 	
 		
-		$scope.hasUserAnyRole = function (permissions) {	
+		$scope.hasUserAnyRole = function (permissions) {
 			 return CommonServiceFactory.checkIfPermitted(permissions);
 		};
 		

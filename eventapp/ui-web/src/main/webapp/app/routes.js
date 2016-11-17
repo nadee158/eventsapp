@@ -1,7 +1,7 @@
 define([], function()
 {
     return {
-        defaultRoutePath: '/rdd-usermanagement-ui-web/',
+        defaultRoutePath: '/ui-web/',
         routes: {
             '/home': {
 				templateUrl: 'app/dashboard/dashboard.html',

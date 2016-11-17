@@ -1,46 +1,52 @@
-<aside class="main-sidebar">
+
 	<!-- sidebar: style can be found in sidebar.less -->
 	<!--Left sidebar menu-->
 	<!-- /.sidebar -->
-	<section class="sidebar" style="height:auto;" ng-controller="SideBarController">
+	<section class="sidebar"  ng-controller="SideBarController">
 		<!-- Sidebar user panel -->
 
 		<!-- sidebar menu: : style can be found in sidebar.less -->
 		<ul class="sidebar-menu" id="sidebar">
 			<li><a href="#home"><i class="fa fa-dashboard"></i>
 			<span id="ellipsis">Dashboard</span></a></li>
-				<li class="treeview" ng-show="hasUserAnyRole('ROLE_A_UM_UR_LUR_VWE ROLE_A_UM_UR_LUR_UDT ROLE_A_UM_UR_AUR_VWE ROLE_A_UM_UR_AUR_UDT')">
-					<a href="#"> 
-						<i class="fa fa-table"></i>
-							<span id="ellipsis" translate>usrmgt.side_bar.label.USER_ROLES</span> 
-						<i class="fa fa-angle-left pull-right"></i>
-					</a>
-					<ul class="treeview-menu">
-						<li ng-show="hasUserAnyRole('ROLE_A_UM_UR_AUR_VWE ROLE_A_UM_UR_AUR_UDT')"><a href="#adduserrole"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>usrmgt.side_bar.label.ADD_USER_ROLE</span></a></li>
-						<li ng-show="hasUserAnyRole('ROLE_A_UM_UR_LUR_VWE ROLE_A_UM_UR_LUR_UDT')"><a href="#listuserroles"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>usrmgt.side_bar.label.LIST_USER_ROLES</span></a></li>
-					</ul>
-				</li>
-				<li class="treeview" ng-show="hasUserAnyRole('ROLE_A_UM_SU_LSU_VWE ROLE_A_UM_SU_LSU_UDT ROLE_A_UM_SU_ASU_VWE ROLE_A_UM_SU_ASU_UDT')">
-					<a href="#"> 
-						<i class="fa fa-table"></i>
-							<span id="ellipsis" translate>usrmgt.side_bar.label.SECURITY_USERS</span> 
-						<i class="fa fa-angle-left pull-right"></i>
-					</a>
-					<ul class="treeview-menu">
-						<li ng-show="hasUserAnyRole('ROLE_A_UM_SU_ASU_VWE ROLE_A_A_UM_SU_ASU_UDT')"><a href="#addsecurityuser"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>usrmgt.side_bar.label.ADD_SECURITY_USER</span></a></li>
-						<li ng-show="hasUserAnyRole('ROLE_A_UM_SU_LSU_VWE ROLE_A_UM_SU_LSU_UDT')"><a href="#listsecurityusers"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>usrmgt.side_bar.label.LIST_SECURITY_USERS</span></a></li>
-					</ul>
-				</li>
-				<li class="treeview" ng-show="hasUserAnyRole('ROLE_A_UM_SU_LSU_VWE ROLE_A_UM_SU_LSU_UDT ROLE_A_UM_SU_ASU_VWE ROLE_A_UM_SU_ASU_UDT')">
-					<a href="#"> 
-						<i class="fa fa-table"></i>
-							<span id="ellipsis" translate>Admin Functions</span> 
-						<i class="fa fa-angle-left pull-right"></i>
-					</a>
-					<ul class="treeview-menu">
-						<li ng-show="hasUserAnyRole('ROLE_A_UM_SU_ASU_VWE ROLE_A_A_UM_SU_ASU_UDT')"><a href="#viewjmxconsole"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>View JMX Console</span></a></li>
-					</ul>
-				</li>
+			 <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">
+		          <a href="#">
+		            <i class="fa fa-files-o"></i>
+		            <span translate>usrmgt.side_bar.label.USER_ROLES</span> 
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#adduserrole"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>usrmgt.side_bar.label.ADD_USER_ROLE</span></a></li>
+					<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#listuserroles"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>usrmgt.side_bar.label.LIST_USER_ROLES</span></a></li>
+		          </ul>
+		      </li>
+		      <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">
+		          <a href="#">
+		            <i class="fa fa-files-o"></i>
+		            <span translate>usrmgt.side_bar.label.SECURITY_USERS</span> 
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		          	 <li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#addsecurityuser"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>usrmgt.side_bar.label.ADD_SECURITY_USER</span></a></li>
+					 <li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#listsecurityusers"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>usrmgt.side_bar.label.LIST_SECURITY_USERS</span></a></li>
+		          </ul>
+		      </li>
+		      <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">
+		          <a href="#">
+		            <i class="fa fa-files-o"></i>
+		            <span translate>Admin Functions</span> 
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		          	 <li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#viewjmxconsole"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>View JMX Console</span></a></li>
+		          </ul>
+		      </li>
+		      
 		</ul>
 	</section>
-</aside>

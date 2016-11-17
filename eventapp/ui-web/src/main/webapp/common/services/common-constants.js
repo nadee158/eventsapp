@@ -20,8 +20,8 @@ define(['app'], function (app) {
 	        displayheaderbuttons:'DISPLAY_HEADER_BUTTONS',
 	    },
 	    Keys: {
-	    	authtoken: 'AUTH_TOKEN',
-	    	userobject:'LOGGED_IN_USER'
+	    	authtoken: 'AUTH_TOKEN_EVENTSAPP',
+	    	userobject:'LOGGED_IN_USER_EVENTSAPP'
 	    },
 	    Headers: {
 	    	xauthtoken: 'X-AUTH-TOKEN'

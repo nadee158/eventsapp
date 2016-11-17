@@ -49,27 +49,27 @@ define(['routes','dependencyResolverFor','datatables','ngMaterial','select2','Pu
                 $routeProvider.otherwise({redirectTo:config.defaultRoutePaths});
             }
             
-            var styles = [
-          		{ key: 'DEFAULT', label: 'Default Theme', href: ['assets/app/styles/_/color.css','assets/app/styles/_/structure.css']},
-          		{ key: 'DARK', label: 'Dark Theme', href: ['assets/app/styles/theme-dark/color.css','assets/app/styles/theme-dark/structure.css']},
-          		{ key: 'LIGHT', label: 'LIGHT Theme', href: ['assets/app/styles/theme-light/color.css','assets/app/styles/theme-light/structure.css']}
-          	];
-
-          	themerProvider.setStyles(styles);
-          	themerProvider.setSelected(styles[0].key);
+//            var styles = [
+//          		{ key: 'DEFAULT', label: 'Default Theme', href: ['assets/app/styles/_/color.css','assets/app/styles/_/structure.css']},
+//          		{ key: 'DARK', label: 'Dark Theme', href: ['assets/app/styles/theme-dark/color.css','assets/app/styles/theme-dark/structure.css']},
+//          		{ key: 'LIGHT', label: 'LIGHT Theme', href: ['assets/app/styles/theme-light/color.css','assets/app/styles/theme-light/structure.css']}
+//          	];
+//
+//          	themerProvider.setStyles(styles);
+//          	themerProvider.setSelected(styles[1].key);
           	
           	
             //change default color for primary
-            var green = $mdThemingProvider.extendPalette('green', {
+            var green = $mdThemingProvider.extendPalette('blue', {
                 '500': '4CAF50'
             });
-            $mdThemingProvider.definePalette('green', green);
+            $mdThemingProvider.definePalette('blue', green);
             //change default color for warn
             var red = $mdThemingProvider.extendPalette('red', {
                 '500': 'ff5800'
             });
             $mdThemingProvider.definePalette('red', red);
-            $mdThemingProvider.theme('default').primaryPalette('green').warnPalette('red').accentPalette('teal');  
+            $mdThemingProvider.theme('default').primaryPalette('blue').warnPalette('red').accentPalette('teal');  
             //here you change placeholder/foreground color.
             $mdThemingProvider.theme('default').foregroundPalette[3] = "rgba(0, 0, 0, 1)";
             

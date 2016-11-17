@@ -7,8 +7,8 @@ import org.springframework.jmx.export.notification.NotificationPublisher;
 import org.springframework.jmx.export.notification.NotificationPublisherAware;
 import org.springframework.stereotype.Component;
 
-@ManagedResource(objectName = "mbeans:name=RIMSJmxNotificationPublisherBean",
-    description = "JmxNotificationPublisher RIMS.")
+@ManagedResource(objectName = "mbeans:name=EVENTSJmxNotificationPublisherBean",
+    description = "JmxNotificationPublisher EVENTS.")
 @Component("jmxNotificationPublisher")
 public class JmxNotificationPublisher implements NotificationPublisherAware {
 
