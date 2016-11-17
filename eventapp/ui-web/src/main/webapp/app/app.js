@@ -61,7 +61,7 @@ define(['routes','dependencyResolverFor','datatables','ngMaterial','select2','Pu
           	
             //change default color for primary
             var green = $mdThemingProvider.extendPalette('blue', {
-                '500': '4CAF50'
+                '500': '0041E8'
             });
             $mdThemingProvider.definePalette('blue', green);
             //change default color for warn
