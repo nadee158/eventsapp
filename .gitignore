@@ -1,0 +1,13 @@
+/eventapp/*.project
+/eventapp/.settings
+/eventapp/ui-web/.settings
+/eventapp/services-reports/.settings
+/eventapp/datatransferobjects/.settings
+/eventapp/common/.settings
+/eventapp/entitymanagement/.settings
+/eventapp/services-business/.settings
+/eventapp/services-web/.settings
+/eventapp/common/*.classpath
+*.project
+*.classpath
+*.tern-project
