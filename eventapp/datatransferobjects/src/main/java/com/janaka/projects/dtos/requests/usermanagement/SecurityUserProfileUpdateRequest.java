@@ -1,7 +1,7 @@
 package com.janaka.projects.dtos.requests.usermanagement;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
@@ -12,8 +12,8 @@ import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.janaka.projects.common.util.CustomJsonDateDeserializer;
-import com.janaka.projects.common.util.CustomJsonDateSerializer;
+import com.janaka.projects.common.util.CustomJsonDateTimeDeserializer;
+import com.janaka.projects.common.util.CustomJsonDateTimeSerializer;
 import com.janaka.projects.dtos.domain.usermanagement.MaritalStatusDTO;
 import com.janaka.projects.dtos.domain.usermanagement.PrefixDTO;
 
@@ -41,9 +41,9 @@ public class SecurityUserProfileUpdateRequest implements Serializable {
   private String fullName = StringUtils.EMPTY;
 
 
-  @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-  @JsonSerialize(using = CustomJsonDateSerializer.class)
-  private Date dateOfBirth = null;
+  @JsonDeserialize(using = CustomJsonDateTimeDeserializer.class)
+  @JsonSerialize(using = CustomJsonDateTimeSerializer.class)
+  private LocalDateTime dateOfBirth = null;
 
   @NotNull
   @Size(min = 10, max = 12)
@@ -97,11 +97,12 @@ public class SecurityUserProfileUpdateRequest implements Serializable {
     this.fullName = fullName;
   }
 
-  public Date getDateOfBirth() {
+
+  public LocalDateTime getDateOfBirth() {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(Date dateOfBirth) {
+  public void setDateOfBirth(LocalDateTime dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 

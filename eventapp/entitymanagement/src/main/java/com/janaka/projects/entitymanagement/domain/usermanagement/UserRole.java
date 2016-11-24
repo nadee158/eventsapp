@@ -9,21 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.envers.Audited;
 
-import com.janaka.projects.entitymanagement.domain.common.BaseDomain;
+import com.janaka.projects.entitymanagement.domain.common.AuditEntity;
 
 @Audited
 @Entity
-@Table(name = "user_role"/* , schema = ApplicationConstants.SCHEMA_USERMANAGEMENT */,
+@Table(name = "user_role",
     indexes = {@Index(name = "user_role_id_pk_index", unique = true, columnList = "id"),
         @Index(name = "user_role_id_index", unique = true, columnList = "uuid"),
         @Index(name = "user_role_name_index", unique = true, columnList = "user_role_name")})
-public class UserRole extends BaseDomain implements Serializable {
+public class UserRole extends AuditEntity implements Serializable {
 
 
   private static final long serialVersionUID = 1L;
@@ -37,10 +36,6 @@ public class UserRole extends BaseDomain implements Serializable {
   @Column(name = "user_role_name")
   private String userRoleName = StringUtils.EMPTY;
 
-
-  @Version
-  @Column(name = "version_number")
-  private long versionNumber = 0;
 
   public long getId() {
     return id;
@@ -58,18 +53,9 @@ public class UserRole extends BaseDomain implements Serializable {
     this.userRoleName = userRoleName;
   }
 
-
-  public long getVersionNumber() {
-    return versionNumber;
-  }
-
-  public void setVersionNumber(long versionNumber) {
-    this.versionNumber = versionNumber;
-  }
-
   @Override
   public String toString() {
-    return "UserRole [id=" + id + ", userRoleName=" + userRoleName + ", versionNumber=" + versionNumber + "]";
+    return "Event [id=" + id + ", userRoleName=" + userRoleName + "]";
   }
 
 

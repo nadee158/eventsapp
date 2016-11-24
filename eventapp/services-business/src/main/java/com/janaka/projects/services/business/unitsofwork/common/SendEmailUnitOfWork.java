@@ -9,13 +9,10 @@ import org.springframework.scheduling.annotation.Async;
 import com.janaka.projects.common.constant.ApplicationConstants;
 import com.janaka.projects.common.security.AuditContext;
 import com.janaka.projects.common.security.SecurityContext;
-import com.janaka.projects.common.security.User;
 import com.janaka.projects.common.util.MailUtil;
 import com.janaka.projects.common.util.NotificationRecipient;
 import com.janaka.projects.common.util.NotificationSentStatus;
-import com.janaka.projects.dtos.requests.common.GetSessionDetailsRequest;
 import com.janaka.projects.dtos.requests.common.SendEmailRequest;
-import com.janaka.projects.dtos.responses.common.GetSessionDetailsResponse;
 import com.janaka.projects.dtos.responses.common.SendEmailResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.common.EmailNotificationRepository;
 import com.janaka.projects.entitymanagement.domain.common.EmailNotification;
@@ -23,7 +20,6 @@ import com.janaka.projects.entitymanagement.enums.EmailType;
 import com.janaka.projects.entitymanagement.enums.Language;
 import com.janaka.projects.entitymanagement.enums.YesNoStatus;
 import com.janaka.projects.services.business.common.JmxNotificationPublisher;
-import com.janaka.projects.services.common.SecurityService;
 
 public class SendEmailUnitOfWork extends UnitOfWork {
 
@@ -35,28 +31,14 @@ public class SendEmailUnitOfWork extends UnitOfWork {
 
   private EmailNotificationRepository emailNotificationRepository;
 
-  private SecurityService securityService = null;
-
   private AuditContext auditContext;
 
   private SecurityContext securityContext;
-
-  private User userFromSession = null;
 
   private List<EmailNotification> emailNotifications;
 
   @Override
   protected void preExecute() {
-    if (!(securityContext == null || securityContext.getToken() == null)) {
-      GetSessionDetailsRequest getSessionDetailsRequest = new GetSessionDetailsRequest();
-      getSessionDetailsRequest.setToken(securityContext.getToken());
-      GetSessionDetailsResponse getSessionDetailsResponse = securityService.getSessionDetails(getSessionDetailsRequest);
-      if (!(getSessionDetailsResponse == null)) {
-        userFromSession = getSessionDetailsResponse.getUser();
-      }
-      super.preExecute();
-    }
-
 
     if (!(emailRequest == null || emailRequest.getRecepients() == null || emailRequest.getRecepients().isEmpty())) {
       emailNotifications = new ArrayList<EmailNotification>();
@@ -69,10 +51,6 @@ public class SendEmailUnitOfWork extends UnitOfWork {
         emailNotification.setRecipientAddress(notificationRecipient.getRecipientAddress());
         emailNotification.setRecipientName(notificationRecipient.getRecipientName());
         emailNotification.setTitle(emailRequest.getTitle());
-        emailNotification.setDeleted(false);
-        if (!(userFromSession == null)) {
-          emailNotification.setCreatedByUser(userFromSession.getSecurityUserId().toString());
-        }
         emailNotifications.add(emailNotification);
       }
     }
@@ -113,13 +91,12 @@ public class SendEmailUnitOfWork extends UnitOfWork {
 
 
   public SendEmailUnitOfWork(SendEmailRequest emailRequest, MailUtil mailUtil,
-      EmailNotificationRepository emailNotificationRepository, SecurityService securityService,
-      AuditContext auditContext, SecurityContext securityContext, JmxNotificationPublisher jmxNotificationPublisher) {
+      EmailNotificationRepository emailNotificationRepository, AuditContext auditContext,
+      SecurityContext securityContext, JmxNotificationPublisher jmxNotificationPublisher) {
     super(jmxNotificationPublisher);
     this.emailRequest = emailRequest;
     this.mailUtil = mailUtil;
     this.emailNotificationRepository = emailNotificationRepository;
-    this.securityService = securityService;
     this.auditContext = auditContext;
     this.securityContext = securityContext;
   }

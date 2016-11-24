@@ -1,7 +1,7 @@
 package com.janaka.projects.dtos.domain.common;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class BaseDTO implements Serializable {
 
@@ -12,15 +12,15 @@ public class BaseDTO implements Serializable {
 
   private String uuId = null;
 
-  private Date creationTime;
+  private LocalDateTime creationTime;
 
-  private Date modificationTime;
+  private LocalDateTime modificationTime;
 
   private String createdByUser;
 
   private String modifiedByUser;
 
-  private boolean isDeleted;
+  private String recordStatus;
 
 
   public String getUuId() {
@@ -31,19 +31,20 @@ public class BaseDTO implements Serializable {
     this.uuId = uuId;
   }
 
-  public Date getCreationTime() {
+
+  public LocalDateTime getCreationTime() {
     return creationTime;
   }
 
-  public void setCreationTime(Date creationTime) {
+  public void setCreationTime(LocalDateTime creationTime) {
     this.creationTime = creationTime;
   }
 
-  public Date getModificationTime() {
+  public LocalDateTime getModificationTime() {
     return modificationTime;
   }
 
-  public void setModificationTime(Date modificationTime) {
+  public void setModificationTime(LocalDateTime modificationTime) {
     this.modificationTime = modificationTime;
   }
 
@@ -63,12 +64,12 @@ public class BaseDTO implements Serializable {
     this.modifiedByUser = modifiedByUser;
   }
 
-  public boolean isDeleted() {
-    return isDeleted;
+  public String getRecordStatus() {
+    return recordStatus;
   }
 
-  public void setDeleted(boolean isDeleted) {
-    this.isDeleted = isDeleted;
+  public void setRecordStatus(String recordStatus) {
+    this.recordStatus = recordStatus;
   }
 
 

@@ -1,7 +1,7 @@
 package com.janaka.projects.common.security;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +25,7 @@ public class User implements UserDetails {
 
   private String profileImagePath = StringUtils.EMPTY;
 
-  private Date dateOfBirth = null;
+  private LocalDateTime dateOfBirth = null;
 
   private String cotactNumber = StringUtils.EMPTY;
 
@@ -51,7 +51,7 @@ public class User implements UserDetails {
 
 
 
-  public User(long id, UUID securityUserId, String userFullName, String profileImagePath, Date dateOfBirth,
+  public User(long id, UUID securityUserId, String userFullName, String profileImagePath, LocalDateTime dateOfBirth,
       String cotactNumber, String email, String userName, String secret, Set<Authority> authorities,
       boolean accountExpired, boolean accountLocked, boolean credentialsExpired, boolean accountEnabled) {
     this();
@@ -201,13 +201,18 @@ public class User implements UserDetails {
     this.profileImagePath = profileImagePath;
   }
 
-  public Date getDateOfBirth() {
+
+  public LocalDateTime getDateOfBirth() {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(Date dateOfBirth) {
+
+
+  public void setDateOfBirth(LocalDateTime dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
+
+
 
   public String getCotactNumber() {
     return cotactNumber;

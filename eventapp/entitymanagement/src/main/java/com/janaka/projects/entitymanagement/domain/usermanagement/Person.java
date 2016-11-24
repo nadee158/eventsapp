@@ -1,6 +1,6 @@
 package com.janaka.projects.entitymanagement.domain.usermanagement;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,7 +18,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Email;
 
-import com.janaka.projects.entitymanagement.domain.common.BaseDomain;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.janaka.projects.common.constant.ApplicationConstants;
+import com.janaka.projects.entitymanagement.domain.common.AuditEntity;
 import com.janaka.projects.entitymanagement.enums.MaritalStatus;
 import com.janaka.projects.entitymanagement.enums.Prefix;
 
@@ -30,7 +31,7 @@ import com.janaka.projects.entitymanagement.enums.Prefix;
     indexes = {@Index(name = "person_id_pk_index", unique = true, columnList = "id"),
         @Index(name = "person_person_id_index", unique = true, columnList = "uuid"),
         @Index(name = "person_nic_index", unique = true, columnList = "nic")})
-public class Person extends BaseDomain {
+public class Person extends AuditEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -46,8 +47,9 @@ public class Person extends BaseDomain {
   @Column(name = "full_name")
   private String fullName = StringUtils.EMPTY;
 
-  @Column(name = "date_of_birth")
-  private Date dateOfBirth = null;
+  @Column(name = "date_of_birth", nullable = true)
+  @JsonFormat(pattern = ApplicationConstants.GLOBAL_DATE_TIME_FORMAT)
+  private LocalDateTime dateOfBirth;
 
   @NotNull
   @Size(min = 10, max = 12)
@@ -74,11 +76,6 @@ public class Person extends BaseDomain {
   @Column(name = "address")
   private String address;
 
-
-  @Version
-  @Column(name = "version_number")
-  private long versionNumber = 0;
-
   public long getId() {
     return id;
   }
@@ -103,11 +100,12 @@ public class Person extends BaseDomain {
     this.fullName = fullName;
   }
 
-  public Date getDateOfBirth() {
+
+  public LocalDateTime getDateOfBirth() {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(Date dateOfBirth) {
+  public void setDateOfBirth(LocalDateTime dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
@@ -167,21 +165,11 @@ public class Person extends BaseDomain {
     this.address = address;
   }
 
-
-  public long getVersionNumber() {
-    return versionNumber;
-  }
-
-  public void setVersionNumber(long versionNumber) {
-    this.versionNumber = versionNumber;
-  }
-
   @Override
   public String toString() {
     return "Person [id=" + id + ", prefix=" + prefix + ", fullName=" + fullName + ", dateOfBirth=" + dateOfBirth
         + ", nic=" + nic + ", mobileNumber=" + mobileNumber + ", landNumber=" + landNumber + ", email=" + email
-        + ", profileImagePath=" + profileImagePath + ", maritalStatus=" + maritalStatus + ", address=" + address
-        + ", versionNumber=" + versionNumber + "]";
+        + ", profileImagePath=" + profileImagePath + ", maritalStatus=" + maritalStatus + ", address=" + address + "]";
   }
 
 

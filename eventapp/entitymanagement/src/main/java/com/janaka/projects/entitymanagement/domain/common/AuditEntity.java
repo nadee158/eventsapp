@@ -1,18 +1,19 @@
 package com.janaka.projects.entitymanagement.domain.common;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.envers.Audited;
@@ -22,9 +23,13 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.janaka.projects.common.constant.ApplicationConstants;
+import com.janaka.projects.entitymanagement.enums.RecordStatus;
+
 @MappedSuperclass
 @EntityListeners(value = {AuditingEntityListener.class})
-public class BaseDomain implements Serializable {
+public class AuditEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -34,15 +39,16 @@ public class BaseDomain implements Serializable {
 
   @Audited
   @Column(name = "creation_time", nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
   @CreatedDate
-  private Date creationTime;
+  @JsonFormat(pattern = ApplicationConstants.GLOBAL_DATE_TIME_FORMAT)
+  private LocalDateTime creationTime;
 
   @Audited
-  @Column(name = "modification_time")
-  @Temporal(TemporalType.TIMESTAMP)
   @LastModifiedDate
-  private Date modificationTime;
+  @Column(name = "modification_time", nullable = true)
+  @JsonFormat(pattern = ApplicationConstants.GLOBAL_DATE_TIME_FORMAT)
+  private LocalDateTime modificationTime;
+
 
   @Audited
   @Column(name = "created_by_user", nullable = false)
@@ -50,13 +56,14 @@ public class BaseDomain implements Serializable {
   private String createdByUser;
 
   @Audited
-  @Column(name = "modified_by_user", nullable = false)
+  @Column(name = "modified_by_user", nullable = true)
   @LastModifiedBy
   private String modifiedByUser;
 
   @Audited
-  @Column(name = "is_deleted")
-  private boolean isDeleted;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "record_status")
+  private RecordStatus recordStatus;
 
   @Audited
   @Column(name = "operation")
@@ -65,6 +72,10 @@ public class BaseDomain implements Serializable {
   @Audited
   @Column(name = "timestamp")
   private Long timestamp;
+
+  @Version
+  @Column(name = "version", nullable = true)
+  private long version = 0;
 
 
   @PrePersist
@@ -77,10 +88,10 @@ public class BaseDomain implements Serializable {
       this.modifiedByUser = "UNKNOWN";
     }
     if (this.creationTime == null) {
-      this.creationTime = Calendar.getInstance().getTime();
+      this.creationTime = LocalDateTime.now();
     }
     if (this.modificationTime == null) {
-      this.modificationTime = Calendar.getInstance().getTime();
+      this.modificationTime = LocalDateTime.now();
     }
     audit("INSERT");
   }
@@ -116,43 +127,12 @@ public class BaseDomain implements Serializable {
     this.modifiedByUser = modifiedByUser;
   }
 
-  public Date getCreationTime() {
-    return creationTime;
-  }
-
-  public void setCreationTime(Date creationTime) {
-    this.creationTime = creationTime;
-  }
-
-  public Date getModificationTime() {
-    return modificationTime;
-  }
-
-  public void setModificationTime(Date modificationTime) {
-    this.modificationTime = modificationTime;
-  }
-
-
   public String getUuId() {
     return uuId;
   }
 
   public void setUuId(String uuId) {
     this.uuId = uuId;
-  }
-
-  public boolean isDeleted() {
-    return isDeleted;
-  }
-
-  public void setDeleted(boolean isDeleted) {
-    this.isDeleted = isDeleted;
-  }
-
-  @Override
-  public String toString() {
-    return "BaseDomain [uuId=" + uuId + ", creationTime=" + creationTime + ", modificationTime=" + modificationTime
-        + ", createdByUser=" + createdByUser + ", modifiedByUser=" + modifiedByUser + ", isDeleted=" + isDeleted + "]";
   }
 
   public String getOperation() {
@@ -169,6 +149,38 @@ public class BaseDomain implements Serializable {
 
   public void setTimestamp(Long timestamp) {
     this.timestamp = timestamp;
+  }
+
+  public LocalDateTime getCreationTime() {
+    return creationTime;
+  }
+
+  public void setCreationTime(LocalDateTime creationTime) {
+    this.creationTime = creationTime;
+  }
+
+  public LocalDateTime getModificationTime() {
+    return modificationTime;
+  }
+
+  public void setModificationTime(LocalDateTime modificationTime) {
+    this.modificationTime = modificationTime;
+  }
+
+  public RecordStatus getRecordStatus() {
+    return recordStatus;
+  }
+
+  public void setRecordStatus(RecordStatus recordStatus) {
+    this.recordStatus = recordStatus;
+  }
+
+  public long getVersion() {
+    return version;
+  }
+
+  public void setVersion(long version) {
+    this.version = version;
   }
 
 

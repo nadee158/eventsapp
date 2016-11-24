@@ -16,7 +16,7 @@ public class ReportTemplateResponse {
 
   private ReportType reportType;
 
-  private int version;
+  private long version;
 
   public long getId() {
     return id;
@@ -66,11 +66,13 @@ public class ReportTemplateResponse {
     this.reportType = reportType;
   }
 
-  public int getVersion() {
+
+
+  public long getVersion() {
     return version;
   }
 
-  public void setVersion(int version) {
+  public void setVersion(long version) {
     this.version = version;
   }
 

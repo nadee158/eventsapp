@@ -2,6 +2,7 @@ package com.janaka.projects.services.reports.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -137,7 +138,7 @@ public class IndexController {
           if (!(auth == null)) {
             reportTemplate.setCreatedByUser(auth.getName());
           }
-          reportTemplate.setCreationTime(Calendar.getInstance().getTime());
+          reportTemplate.setCreationTime(LocalDateTime.now());
 
           reportService.saveReportTemplate(reportTemplate);
         } catch (IOException e) {
@@ -192,7 +193,7 @@ public class IndexController {
       if (!(auth == null)) {
         reportTemplate.setModifiedByUser(auth.getName());
       }
-      reportTemplate.setModificationTime(Calendar.getInstance().getTime());
+      reportTemplate.setModificationTime(LocalDateTime.now());
       reportService.updateReportTemplate(reportTemplate);
     } catch (Exception e) {
       e.printStackTrace();

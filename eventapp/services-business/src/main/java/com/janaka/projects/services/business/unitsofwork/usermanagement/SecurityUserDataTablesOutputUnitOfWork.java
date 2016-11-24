@@ -11,15 +11,12 @@ import com.janaka.projects.common.security.AuditContext;
 import com.janaka.projects.common.security.SecurityContext;
 import com.janaka.projects.common.security.User;
 import com.janaka.projects.dtos.domain.usermanagement.SecurityUserDTO;
-import com.janaka.projects.dtos.requests.common.GetSessionDetailsRequest;
-import com.janaka.projects.dtos.responses.common.GetSessionDetailsResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.SecurityUserRepository;
 import com.janaka.projects.entitymanagement.domain.usermanagement.SecurityUser;
 import com.janaka.projects.entitymanagement.specifications.usermanagement.SecurityUserSpecifications;
 import com.janaka.projects.services.business.common.JmxNotificationPublisher;
 import com.janaka.projects.services.business.domaindtoconverter.usermanagement.SecurityUserDTOConverter;
 import com.janaka.projects.services.business.unitsofwork.common.UnitOfWork;
-import com.janaka.projects.services.common.SecurityService;
 
 public class SecurityUserDataTablesOutputUnitOfWork extends UnitOfWork {
 
@@ -29,8 +26,6 @@ public class SecurityUserDataTablesOutputUnitOfWork extends UnitOfWork {
   private TabularDataResponseModel<SecurityUserDTO> response = null;
 
   private DataTablesOutput<SecurityUser> domainResponse = null;
-
-  private SecurityService securityService = null;
 
   private long securityUserId = 0;
 
@@ -43,14 +38,7 @@ public class SecurityUserDataTablesOutputUnitOfWork extends UnitOfWork {
   protected void preExecute() {
     setAuditContext(auditContext);
     setSecurityContext(securityContext);
-    if (!(securityContext == null || securityContext.getToken() == null)) {
-      GetSessionDetailsRequest getSessionDetailsRequest = new GetSessionDetailsRequest();
-      getSessionDetailsRequest.setToken(securityContext.getToken());
-      GetSessionDetailsResponse getSessionDetailsResponse = securityService.getSessionDetails(getSessionDetailsRequest);
-      if (!(getSessionDetailsResponse == null)) {
-        userFromSession = getSessionDetailsResponse.getUser();
-      }
-    }
+
 
     if (!(userFromSession == null)) {
       this.securityUserId = userFromSession.getId();
@@ -88,12 +76,12 @@ public class SecurityUserDataTablesOutputUnitOfWork extends UnitOfWork {
 
 
   public SecurityUserDataTablesOutputUnitOfWork(SecurityUserRepository repository, TabularDataRequestModel request,
-      SecurityService securityService, AuditContext auditContext, SecurityContext securityContext,
-      JmxNotificationPublisher jmxNotificationPublisher) {
+      AuditContext auditContext, SecurityContext securityContext, JmxNotificationPublisher jmxNotificationPublisher,
+      User userFromSession) {
     super(jmxNotificationPublisher);
     this.repository = repository;
     this.request = request;
-    this.securityService = securityService;
+    this.userFromSession = userFromSession;
     this.auditContext = auditContext;
     this.securityContext = securityContext;
   }

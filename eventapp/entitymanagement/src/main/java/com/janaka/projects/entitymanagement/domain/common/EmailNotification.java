@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 import org.hibernate.envers.Audited;
 
@@ -21,7 +20,7 @@ import com.janaka.projects.entitymanagement.enums.YesNoStatus;
 @Audited
 @Entity
 @Table(name = "email_notification")
-public class EmailNotification extends BaseDomain {
+public class EmailNotification extends AuditEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -59,10 +58,6 @@ public class EmailNotification extends BaseDomain {
 
   @Column(name = "recipient_address")
   private String recipientAddress;
-
-  @Version
-  @Column(name = "version_id")
-  private long versionId = 0;
 
   @Column(name = "exception")
   private String exception;
@@ -159,14 +154,6 @@ public class EmailNotification extends BaseDomain {
     this.recipientAddress = recipientAddress;
   }
 
-  public long getVersionId() {
-    return versionId;
-  }
-
-  public void setVersionId(long versionId) {
-    this.versionId = versionId;
-  }
-
   public String getException() {
     return exception;
   }
@@ -181,6 +168,14 @@ public class EmailNotification extends BaseDomain {
 
   public void setExceptionMesssage(String exceptionMesssage) {
     this.exceptionMesssage = exceptionMesssage;
+  }
+
+  @Override
+  public String toString() {
+    return "EmailNotification [id=" + id + ", title=" + title + ", emailSubject=" + emailSubject + ", bodyText="
+        + bodyText + ", language=" + language + ", emailType=" + emailType + ", sentStatus=" + sentStatus
+        + ", retryCount=" + retryCount + ", recipientName=" + recipientName + ", recipientAddress=" + recipientAddress
+        + ", exception=" + exception + ", exceptionMesssage=" + exceptionMesssage + "]";
   }
 
 

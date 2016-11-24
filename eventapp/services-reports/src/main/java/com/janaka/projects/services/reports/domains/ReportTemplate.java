@@ -10,12 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.janaka.projects.entitymanagement.domain.common.BaseDomain;
+import com.janaka.projects.entitymanagement.domain.common.AuditEntity;
 import com.janaka.projects.services.reports.util.GeneralEnumConstants.ReportType;
 
 @Entity
@@ -23,7 +22,7 @@ import com.janaka.projects.services.reports.util.GeneralEnumConstants.ReportType
     indexes = {@Index(name = "report_template_id_pk_index", unique = true, columnList = "id"),
         @Index(name = "report_name_index", unique = true, columnList = "report_name"),
         @Index(name = "uploaded_file_name_index", unique = true, columnList = "uploaded_file_name")})
-public class ReportTemplate extends BaseDomain {
+public class ReportTemplate extends AuditEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -46,9 +45,6 @@ public class ReportTemplate extends BaseDomain {
 
   @Enumerated(EnumType.ORDINAL)
   private ReportType reportType;
-
-  @Version
-  private int version;
 
   @Transient
   private MultipartFile file;
@@ -105,14 +101,6 @@ public class ReportTemplate extends BaseDomain {
 
   public void setOriginalFileName(String originalFileName) {
     this.originalFileName = originalFileName;
-  }
-
-  public int getVersion() {
-    return version;
-  }
-
-  public void setVersion(int version) {
-    this.version = version;
   }
 
   public ReportType getReportType() {

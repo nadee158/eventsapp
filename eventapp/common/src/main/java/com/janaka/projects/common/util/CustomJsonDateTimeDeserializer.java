@@ -1,9 +1,8 @@
 package com.janaka.projects.common.util;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Component;
 
@@ -11,18 +10,19 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.janaka.projects.common.constant.ApplicationConstants;
 
 @Component
-public class CustomJsonDateDeserializer extends JsonDeserializer<Date> {
+public class CustomJsonDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
   @Override
-  public Date deserialize(JsonParser jsonparser, DeserializationContext ctxt)
+  public LocalDateTime deserialize(JsonParser jsonparser, DeserializationContext ctxt)
       throws IOException, JsonProcessingException {
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(ApplicationConstants.GLOBAL_DATE_TIME_FORMAT);
     String date = jsonparser.getText();
     try {
-      return format.parse(date);
-    } catch (ParseException e) {
+      return LocalDateTime.parse(date, dateTimeFormatter);
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }

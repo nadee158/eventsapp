@@ -7,10 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.janaka.projects.common.constant.ApplicationConstants;
 import com.janaka.projects.common.security.AuditContext;
 import com.janaka.projects.common.security.SecurityContext;
-import com.janaka.projects.common.security.User;
-import com.janaka.projects.dtos.requests.common.GetSessionDetailsRequest;
 import com.janaka.projects.dtos.requests.usermanagement.SecurityUserUpdateRequest;
-import com.janaka.projects.dtos.responses.common.GetSessionDetailsResponse;
 import com.janaka.projects.dtos.responses.usermanagement.SecurityUserUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.SecurityUserRepository;
 import com.janaka.projects.entitymanagement.domain.usermanagement.SecurityUser;
@@ -33,8 +30,6 @@ public class SecurityUserUpdateUnitOfWork extends UnitOfWork {
   private AuditContext auditContext = null;
   private SecurityContext securityContext = null;
 
-  private User userFromSession = null;
-
   private String message = StringUtils.EMPTY;
 
   private boolean isExists = false;
@@ -43,15 +38,6 @@ public class SecurityUserUpdateUnitOfWork extends UnitOfWork {
   protected void preExecute() {
     setAuditContext(auditContext);
     setSecurityContext(securityContext);
-    if (!(securityContext == null || securityContext.getToken() == null)) {
-      GetSessionDetailsRequest getSessionDetailsRequest = new GetSessionDetailsRequest();
-      getSessionDetailsRequest.setToken(securityContext.getToken());
-      GetSessionDetailsResponse getSessionDetailsResponse = securityService.getSessionDetails(getSessionDetailsRequest);
-      if (!(getSessionDetailsResponse == null)) {
-        userFromSession = getSessionDetailsResponse.getUser();
-      }
-      super.preExecute();
-    }
 
     if (!(request == null)) {
       // check if the application name and code already exists
@@ -75,9 +61,6 @@ public class SecurityUserUpdateUnitOfWork extends UnitOfWork {
 
         this.securityUser = SecurityUserDTOConverter.updateDomainFromRequest(this.request, securityUser);
 
-        if (!(userFromSession == null)) {
-          this.securityUser.setModifiedByUser(userFromSession.getSecurityUserId().toString());
-        }
       }
     }
   }
@@ -104,12 +87,10 @@ public class SecurityUserUpdateUnitOfWork extends UnitOfWork {
     super.postExecute(isSuccessful);
   }
 
-  public SecurityUserUpdateUnitOfWork(SecurityUserRepository securityUserRepository, SecurityService securityService,
-      SecurityUserUpdateRequest request, AuditContext auditContext, SecurityContext securityContext,
-      JmxNotificationPublisher jmxNotificationPublisher) {
+  public SecurityUserUpdateUnitOfWork(SecurityUserRepository securityUserRepository, SecurityUserUpdateRequest request,
+      AuditContext auditContext, SecurityContext securityContext, JmxNotificationPublisher jmxNotificationPublisher) {
     super(jmxNotificationPublisher);
     this.securityUserRepository = securityUserRepository;
-    this.securityService = securityService;
     this.request = request;
     this.auditContext = auditContext;
     this.securityContext = securityContext;
