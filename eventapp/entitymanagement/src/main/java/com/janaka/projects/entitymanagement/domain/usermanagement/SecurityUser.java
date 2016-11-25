@@ -42,8 +42,8 @@ public class SecurityUser extends AuditEntity {
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id = 0;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
   @NotNull
   @Size(min = 3, max = 30)

@@ -3,7 +3,8 @@ define(['routes','dependencyResolverFor','datatables','ngMaterial','select2','Pu
 {
     var app = angular.module('app', ['ngRoute','angular-themer','datatables',
                                      'ngMaterial','PubSub', 'lfNgMdFileInput','angular-loading-bar',
-                                     	'ngAnimate','pascalprecht.translate', 'pdf', 'thatisuday.dropzone','visualCaptcha','ngCookies']);
+                                     	'ngAnimate','pascalprecht.translate', 'pdf', 'thatisuday.dropzone','visualCaptcha','ngCookies',
+                                     	'ngMaterialDatePicker']);
 
     app.config(
     [
@@ -19,17 +20,22 @@ define(['routes','dependencyResolverFor','datatables','ngMaterial','select2','Pu
         '$translateProvider',
         'dropzoneOpsProvider',
         '$mdThemingProvider',
+        '$mdDateLocaleProvider',
         
 
         function($routeProvider, $httpProvider, $locationProvider, $controllerProvider, $compileProvider,
         		$filterProvider, $provide,themerProvider,cfpLoadingBarProvider,
-        		$translateProvider,dropzoneOpsProvider,$mdThemingProvider)
+        		$translateProvider,dropzoneOpsProvider,$mdThemingProvider,$mdDateLocaleProvider)
         {
           app.controller = $controllerProvider.register;
           app.directive  = $compileProvider.directive;
           app.filter     = $filterProvider.register;
           app.factory    = $provide.factory;
           app.service    = $provide.service;
+          
+          $mdDateLocaleProvider.formatDate = function(date) {
+              return moment(date).format('MM/DD/YYYY');
+           };
 
             $locationProvider.html5Mode(false);
             

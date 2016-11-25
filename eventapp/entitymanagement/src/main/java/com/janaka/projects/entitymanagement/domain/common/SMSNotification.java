@@ -24,7 +24,7 @@ public class SMSNotification extends AuditEntity {
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id = 0;
 
   @Column(name = "text", length = 1000)

@@ -71,5 +71,11 @@ public final class ServiceEndpoints {
   public static final String SUBMIT_FEEDBACK = "/SubmitFeedBack";
 
 
+  // --------------- EVENTS -----------------------
+  public static final String EVENTS = "eventsservice";
+
+  public static final String CREATE = "/create";
+
+
 
 }

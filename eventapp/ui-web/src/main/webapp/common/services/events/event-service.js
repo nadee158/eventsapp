@@ -9,13 +9,13 @@ define(['app'], function (app) {
 	
 	    
 	    EventServiceFactory.createEvent = function (EventCreationRequest, baseUrl) {
-	    	var url = baseUrl + '/EventService/CreateEvent';
+	    	var url = baseUrl + '/eventsservice/create';
 	        return $http.post(url, EventCreationRequest);
 	    };
 	    
 	    EventServiceFactory.updateEvent = function (EventUpdateRequest, baseUrl) {
-	    	var url = baseUrl + '/EventService/UpdateEvent';
-	        return $http.post(url, EventUpdateRequest);
+	    	var url = baseUrl + '/eventsservice/update';
+	        return $http.put(url, EventUpdateRequest);
 	    };
 	    
 	    EventServiceFactory.deleteEvent = function (objectDeletionRequest, baseUrl) {

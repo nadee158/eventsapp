@@ -42,7 +42,8 @@ require
 				'pdfjs':'../assets/lib/angular-pdf-1.3.0/pdf',
 				'pdfworker':'../assets/lib/angular-pdf-1.3.0/pdf.worker',
 				'visualcaptcha.angular':'../assets/lib/visual-captcha-0.0.7/visualcaptcha.angular',
-				'angular-cookies':'../assets/lib/angular-cookies-1.5.8/angular-cookies.min'
+				'angular-cookies':'../assets/lib/angular-cookies-1.5.8/angular-cookies.min',
+				'angular-material-datetimepicker':'../assets/lib/angular-material-datetimepicker-1.0/js/angular-material-datetimepicker'
 			},			
 			shim : {
 				'apptheme' : {
@@ -150,13 +151,17 @@ require
 				'angular-cookies' : {
 					deps : [ 'angular' ]
 				},
+				'angular-material-datetimepicker' : {
+					deps : [ 'angular','ngMaterial','moment','ngAnimate','ngAria' ]
+				},
+				
 			},
 			priority : [ "angular" ]
 		});
 
 require([ 'app', 'require-domready', 'angular-datatables', 'angular-loading-bar','angular-translate-loader-static-files',
           'ngStorage', 'angular-translate', 'dropzone', 'ngDropzone', 'angular-cookies',
-          'pdf', 'ngMessages', 
+          'pdf', 'ngMessages', 'angular-material-datetimepicker', 
           '../common/services/common-service',
           '../common/services/commonstorage-service',
           '../common/services/security-service',

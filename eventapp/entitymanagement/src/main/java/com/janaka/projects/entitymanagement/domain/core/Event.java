@@ -32,8 +32,8 @@ public class Event extends AuditEntity implements Serializable {
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id = 0;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
   @NotNull
   @Column(name = "event_name")

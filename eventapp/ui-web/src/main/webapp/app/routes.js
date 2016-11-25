@@ -155,9 +155,9 @@ define([], function()
                 	            	  isFree:false
                 	              }
                 },'/eventsetup':{
-                	templateUrl:'app/eventSetup/eventsetup.html',
+                	templateUrl:'app/events/eventsetup.html',
                 	dependencies:[
-                	              '../app/eventSetup/eventsetup',
+                	              '../app/events/eventsetup',
                 	              '../common/services/events/event-service'],
                 	              access:{
                 	            	  isFree:false
