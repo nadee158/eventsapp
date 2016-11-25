@@ -1,4 +1,4 @@
-package com.janaka.projects.services.web.config;
+package com.janaka.projects.services.web.util;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

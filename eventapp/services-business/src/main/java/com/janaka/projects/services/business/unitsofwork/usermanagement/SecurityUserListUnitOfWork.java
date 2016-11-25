@@ -7,6 +7,7 @@ import com.janaka.projects.dtos.domain.usermanagement.SecurityUserDTO;
 import com.janaka.projects.dtos.responses.common.ObjectListResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.SecurityUserRepository;
 import com.janaka.projects.entitymanagement.domain.usermanagement.SecurityUser;
+import com.janaka.projects.entitymanagement.enums.RecordStatus;
 import com.janaka.projects.services.business.common.JmxNotificationPublisher;
 import com.janaka.projects.services.business.domaindtoconverter.usermanagement.SecurityUserDTOConverter;
 import com.janaka.projects.services.business.unitsofwork.common.UnitOfWork;
@@ -20,7 +21,7 @@ public class SecurityUserListUnitOfWork extends UnitOfWork {
 
   @Override
   protected void doWork() {
-    this.domainList = (List<SecurityUser>) repository.findByIsDeleted(false);
+    this.domainList = (List<SecurityUser>) repository.findByRecordStatus(RecordStatus.ACTIVE);
   }
 
   @Override

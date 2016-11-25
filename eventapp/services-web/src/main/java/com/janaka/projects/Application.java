@@ -6,13 +6,15 @@ import javax.servlet.MultipartConfigElement;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
-import org.springframework.boot.context.embedded.MultipartConfigFactory;
-import org.springframework.boot.context.web.ErrorPageFilter;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.boot.web.support.ErrorPageFilter;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -20,6 +22,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @ComponentScan(basePackages = {"com.janaka.projects.*"})
 @EnableAutoConfiguration()
 @EnableAsync
+@PropertySource(
+    value = {"classpath:database.properties", "classpath:application.properties", "classpath:cacheserver.properties"})
 public class Application extends SpringBootServletInitializer {
 
   public static void main(String[] args) {
@@ -60,6 +64,11 @@ public class Application extends SpringBootServletInitializer {
     factory.setMaxFileSize("128000KB");
     factory.setMaxRequestSize("128000KB");
     return factory.createMultipartConfig();
+  }
+
+  @Bean
+  public static PropertySourcesPlaceholderConfigurer propertyConfig() {
+    return new PropertySourcesPlaceholderConfigurer();
   }
 
 }

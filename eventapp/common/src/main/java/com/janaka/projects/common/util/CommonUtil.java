@@ -2,6 +2,8 @@ package com.janaka.projects.common.util;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.janaka.projects.common.constant.ApplicationConstants;
@@ -164,5 +167,21 @@ public final class CommonUtil {
     return null;
   }
 
+
+  public static String getFormatteDate(LocalDateTime localDateTime) {
+    if (!(localDateTime == null)) {
+      DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(ApplicationConstants.GLOBAL_DATE_TIME_FORMAT);
+      return localDateTime.format(dateFormat);
+    }
+    return null;
+  }
+
+  public static LocalDateTime getParsedDate(String dateString) {
+    if (StringUtils.isNotEmpty(dateString)) {
+      DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(ApplicationConstants.GLOBAL_DATE_TIME_FORMAT);
+      return LocalDateTime.parse(dateString, dateFormat);
+    }
+    return null;
+  }
 
 }

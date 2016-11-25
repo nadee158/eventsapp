@@ -37,7 +37,7 @@ public class AuditEntity implements Serializable {
   @Column(name = "uuid")
   private String uuId = null;
 
-  @Audited
+  @Audited()
   @Column(name = "creation_time", nullable = false)
   @CreatedDate
   @JsonFormat(pattern = ApplicationConstants.GLOBAL_DATE_TIME_FORMAT)
