@@ -1,12 +1,8 @@
 package com.janaka.projects.dtos.requests.core;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import org.apache.commons.lang3.StringUtils;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.janaka.projects.common.constant.ApplicationConstants;
 
 public class EventCreationRequest implements Serializable {
 
@@ -17,8 +13,7 @@ public class EventCreationRequest implements Serializable {
 
   private String eventName = StringUtils.EMPTY;
 
-  @JsonFormat(pattern = ApplicationConstants.GLOBAL_DATE_TIME_FORMAT)
-  private LocalDateTime eventDate;
+  private String eventDate;
 
   private String eventVenue;
 
@@ -34,11 +29,12 @@ public class EventCreationRequest implements Serializable {
     this.eventName = eventName;
   }
 
-  public LocalDateTime getEventDate() {
+
+  public String getEventDate() {
     return eventDate;
   }
 
-  public void setEventDate(LocalDateTime eventDate) {
+  public void setEventDate(String eventDate) {
     this.eventDate = eventDate;
   }
 

@@ -35,19 +35,19 @@ public class User implements UserDetails {
 
   private String secret = StringUtils.EMPTY;
 
-  private Set<Authority> authorities = new HashSet<Authority>();
+  private Set<Authority> myAuthorities = new HashSet<Authority>();
 
-  private boolean accountExpired;
+  private boolean customAccountExpired;
 
-  private boolean accountLocked;
+  private boolean customAccountLocked;
 
-  private boolean credentialsExpired;
+  private boolean customCredentialsExpired;
 
-  private boolean accountEnabled;
+  private boolean customAccountEnabled;
 
   private List<String> activeSessions;
 
-  private int activeSessionCount;
+  private int customActiveSessionCount;
 
 
 
@@ -64,28 +64,25 @@ public class User implements UserDetails {
     this.email = email;
     this.userName = userName;
     this.secret = secret;
-    this.authorities = authorities;
-    this.accountExpired = accountExpired;
-    this.accountLocked = accountLocked;
-    this.credentialsExpired = credentialsExpired;
-    this.accountEnabled = accountEnabled;
+    this.myAuthorities = authorities;
+    this.customAccountExpired = accountExpired;
+    this.customAccountLocked = accountLocked;
+    this.customCredentialsExpired = credentialsExpired;
+    this.customAccountEnabled = accountEnabled;
   }
 
 
-
-  private User() {
+  public User() {
     super();
   }
-
 
 
   @Override
   @JsonIgnore
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.authorities;
+    return this.myAuthorities;
   }
 
-  @JsonIgnore
   public long getId() {
     return id;
   }
@@ -97,33 +94,32 @@ public class User implements UserDetails {
 
   @JsonIgnore
   public boolean isAccountExpired() {
-    return accountExpired;
+    return customAccountExpired;
   }
 
   @JsonIgnore
   public boolean isAccountLocked() {
-    return accountLocked;
+    return customAccountLocked;
   }
 
   @JsonIgnore
   public boolean isCredentialsExpired() {
-    return credentialsExpired;
+    return customCredentialsExpired;
   }
 
   @JsonIgnore
   public boolean isAccountEnabled() {
-    return accountEnabled;
+    return customAccountEnabled;
   }
 
-  public void setAuthorities(Set<Authority> authorities) {
-    this.authorities = authorities;
-  }
 
+  @JsonIgnore
   @Override
   public String getPassword() {
     return this.secret;
   }
 
+  @JsonIgnore
   @Override
   public String getUsername() {
     return this.userName;
@@ -132,27 +128,35 @@ public class User implements UserDetails {
   @Override
   @JsonIgnore
   public boolean isAccountNonExpired() {
-    return (!(this.accountExpired));
+    return (!(this.customAccountExpired));
   }
 
+  @JsonIgnore
   @Override
   public boolean isAccountNonLocked() {
-    return (!(this.accountLocked));
+    return (!(this.customAccountLocked));
   }
 
+  @JsonIgnore
   @Override
   public boolean isCredentialsNonExpired() {
-    return (!(this.credentialsExpired));
+    return (!(this.customCredentialsExpired));
   }
 
+  @JsonIgnore
   @Override
   public boolean isEnabled() {
-    return this.accountEnabled;
+    return this.customAccountEnabled;
   }
 
   @Override
   public String toString() {
-    return getClass().getSimpleName() + ": " + getUsername();
+    return "User [id=" + id + ", securityUserId=" + securityUserId + ", userFullName=" + userFullName
+        + ", profileImagePath=" + profileImagePath + ", dateOfBirth=" + dateOfBirth + ", cotactNumber=" + cotactNumber
+        + ", email=" + email + ", userName=" + userName + ", secret=" + secret + ", myAuthorities=" + myAuthorities
+        + ", customAccountExpired=" + customAccountExpired + ", customAccountLocked=" + customAccountLocked
+        + ", customCredentialsExpired=" + customCredentialsExpired + ", customAccountEnabled=" + customAccountEnabled
+        + ", activeSessions=" + activeSessions + ", customActiveSessionCount=" + customActiveSessionCount + "]";
   }
 
   public String getUserName() {
@@ -167,7 +171,6 @@ public class User implements UserDetails {
     this.secret = secret;
   }
 
-  @JsonIgnore
   public List<String> getActiveSessions() {
     return activeSessions;
   }
@@ -176,30 +179,42 @@ public class User implements UserDetails {
     this.activeSessions = activeSessions;
   }
 
-  @JsonIgnore
-  public int getActiveSessionCount() {
-    return activeSessionCount;
+
+
+  public UUID getSecurityUserId() {
+    return securityUserId;
   }
 
-  public void setActiveSessionCount(int activeSessionCount) {
-    this.activeSessionCount = activeSessionCount;
+
+
+  public void setSecurityUserId(UUID securityUserId) {
+    this.securityUserId = securityUserId;
   }
+
+
 
   public String getUserFullName() {
     return userFullName;
   }
 
+
+
   public void setUserFullName(String userFullName) {
     this.userFullName = userFullName;
   }
+
+
 
   public String getProfileImagePath() {
     return profileImagePath;
   }
 
+
+
   public void setProfileImagePath(String profileImagePath) {
     this.profileImagePath = profileImagePath;
   }
+
 
 
   public LocalDateTime getDateOfBirth() {
@@ -218,21 +233,102 @@ public class User implements UserDetails {
     return cotactNumber;
   }
 
+
+
   public void setCotactNumber(String cotactNumber) {
     this.cotactNumber = cotactNumber;
   }
+
+
 
   public String getEmail() {
     return email;
   }
 
+
+
   public void setEmail(String email) {
     this.email = email;
   }
 
-  public UUID getSecurityUserId() {
-    return securityUserId;
+
+
+  public Set<Authority> getMyAuthorities() {
+    return myAuthorities;
   }
+
+
+
+  public void setMyAuthorities(Set<Authority> myAuthorities) {
+    this.myAuthorities = myAuthorities;
+  }
+
+
+
+  public boolean isCustomAccountExpired() {
+    return customAccountExpired;
+  }
+
+
+
+  public void setCustomAccountExpired(boolean customAccountExpired) {
+    this.customAccountExpired = customAccountExpired;
+  }
+
+
+
+  public boolean isCustomAccountLocked() {
+    return customAccountLocked;
+  }
+
+
+
+  public void setCustomAccountLocked(boolean customAccountLocked) {
+    this.customAccountLocked = customAccountLocked;
+  }
+
+
+
+  public boolean isCustomCredentialsExpired() {
+    return customCredentialsExpired;
+  }
+
+
+
+  public void setCustomCredentialsExpired(boolean customCredentialsExpired) {
+    this.customCredentialsExpired = customCredentialsExpired;
+  }
+
+
+
+  public boolean isCustomAccountEnabled() {
+    return customAccountEnabled;
+  }
+
+
+
+  public void setCustomAccountEnabled(boolean customAccountEnabled) {
+    this.customAccountEnabled = customAccountEnabled;
+  }
+
+
+
+  public int getCustomActiveSessionCount() {
+    return customActiveSessionCount;
+  }
+
+
+
+  public void setCustomActiveSessionCount(int customActiveSessionCount) {
+    this.customActiveSessionCount = customActiveSessionCount;
+  }
+
+
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
 
 
 }

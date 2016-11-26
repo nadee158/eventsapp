@@ -178,6 +178,7 @@ public final class CommonUtil {
 
   public static LocalDateTime getParsedDate(String dateString) {
     if (StringUtils.isNotEmpty(dateString)) {
+      dateString = StringUtils.upperCase(dateString);
       DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(ApplicationConstants.GLOBAL_DATE_TIME_FORMAT);
       return LocalDateTime.parse(dateString, dateFormat);
     }

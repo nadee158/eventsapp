@@ -83,7 +83,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       
       
       function submitEvent(eventCreationRequest){
-    	var timeDate=moment($scope.eventTime).format('hh:mm a');
+    	var timeDate=moment($scope.eventTime).format('hh:mm:ss a');
     	var dateDate=moment(eventCreationRequest.eventDate).format('MM/DD/YYYY');
     	
     	eventCreationRequest.eventDate = dateDate + " " + timeDate;
@@ -92,19 +92,23 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       	var response=EventServiceFactory.createEvent(eventCreationRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
-	      		if(data.status.value==409){
-	      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.message));
-	      		}else{
-	      			$scope.eventCreationResponse=data;
-	      			
-	      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
-	      			
-	      			$location.path("/home");
-	      		}	
+	        	if(data.apiResponseStatus){
+	        		if(data.apiResponseStatus==200){
+	        			$scope.eventCreationResponse=data.apiResponseResults;
+		      			
+		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
+		      			
+		      			$location.path("/home");
+		      		}else{
+		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.apiResponseResults.message));
+		      			
+		      		}	
+	        	}
+	      		
               
           }).error(function(data, status, headers, config){
-          	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD'));
-          	console.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + " " + data.message);
+          	 NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD'));
+          	 console.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + " " + data);
           }) 
       }
 	  

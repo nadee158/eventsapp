@@ -1,10 +1,10 @@
-package com.janaka.projects.dtos.domain.core;
+package com.janaka.projects.dtos.requests.core;
 
 import java.io.Serializable;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class EventDTO implements Serializable {
+public class EventUpdateRequest implements Serializable {
 
   /**
    * 
@@ -64,6 +64,12 @@ public class EventDTO implements Serializable {
     this.recordStatus = recordStatus;
   }
 
+  @Override
+  public String toString() {
+    return "EventUpdateRequest [id=" + id + ", eventName=" + eventName + ", eventDate=" + eventDate + ", eventVenue="
+        + eventVenue + ", daysOfGame=" + daysOfGame + ", recordStatus=" + recordStatus + "]";
+  }
+
   public long getId() {
     return id;
   }
@@ -71,13 +77,6 @@ public class EventDTO implements Serializable {
   public void setId(long id) {
     this.id = id;
   }
-
-  @Override
-  public String toString() {
-    return "EventDTO [id=" + id + ", eventName=" + eventName + ", eventDate=" + eventDate + ", eventVenue=" + eventVenue
-        + ", daysOfGame=" + daysOfGame + ", recordStatus=" + recordStatus + "]";
-  }
-
 
 
 }

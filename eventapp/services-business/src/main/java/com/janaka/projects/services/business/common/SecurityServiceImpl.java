@@ -33,6 +33,7 @@ import com.janaka.projects.services.business.unitsofwork.common.SaveSessionDetai
 import com.janaka.projects.services.business.unitsofwork.common.SignInUnitOfWork;
 import com.janaka.projects.services.business.unitsofwork.common.SignOutUnitOfWork;
 import com.janaka.projects.services.business.unitsofwork.common.SignUpUnitOfWork;
+import com.janaka.projects.services.common.CacheService;
 import com.janaka.projects.services.common.NotificationService;
 import com.janaka.projects.services.common.SecurityService;
 
@@ -48,6 +49,9 @@ public class SecurityServiceImpl extends BusinessService implements SecurityServ
 
   @Autowired
   private JmxNotificationPublisher jmxNotificationPublisher;
+
+  @Autowired
+  private CacheService cacheService;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -76,7 +80,7 @@ public class SecurityServiceImpl extends BusinessService implements SecurityServ
 
   @Override
   public SignOutResponse signOut(SecurityContext securityContext, AuditContext auditContext, SignOutRequest request) {
-    SignOutUnitOfWork uow = new SignOutUnitOfWork(jmxNotificationPublisher);
+    SignOutUnitOfWork uow = new SignOutUnitOfWork(jmxNotificationPublisher, cacheService);
     uow.setSecurityContext(securityContext);
     uow.setRequest(request);
     // set infrastructure settings
@@ -120,7 +124,7 @@ public class SecurityServiceImpl extends BusinessService implements SecurityServ
   @Override
   public Session ensureSessionValidity(SecurityContext securityContext, AuditContext auditContext) {
     // TODO: check in cache and return session if 1) existent 2) non-expired 3) user is still valid
-    EnsureSessionValidityUnitOfWork uow = new EnsureSessionValidityUnitOfWork(jmxNotificationPublisher);
+    EnsureSessionValidityUnitOfWork uow = new EnsureSessionValidityUnitOfWork(jmxNotificationPublisher, cacheService);
     uow.setAuditContext(auditContext);
     uow.setSecurityContext(securityContext);
     this.doWork(uow);
@@ -131,7 +135,7 @@ public class SecurityServiceImpl extends BusinessService implements SecurityServ
 
   @Override
   public SaveSessionDetailsResponse saveSessionDetails(SaveSessionDetailsRequest saveSessionDetailsRequest) {
-    SaveSessionDetailsUnitOfWork uow = new SaveSessionDetailsUnitOfWork(jmxNotificationPublisher);
+    SaveSessionDetailsUnitOfWork uow = new SaveSessionDetailsUnitOfWork(jmxNotificationPublisher, cacheService);
     uow.setRepository(repository);
     uow.setRequest(saveSessionDetailsRequest);
     this.doWork(uow);
@@ -142,7 +146,7 @@ public class SecurityServiceImpl extends BusinessService implements SecurityServ
 
   @Override
   public GetSessionDetailsResponse getSessionDetails(GetSessionDetailsRequest request) {
-    GetSessionDetailsUnitOfWork uow = new GetSessionDetailsUnitOfWork(request, jmxNotificationPublisher);
+    GetSessionDetailsUnitOfWork uow = new GetSessionDetailsUnitOfWork(request, jmxNotificationPublisher, cacheService);
     this.doWork(uow);
     return uow.getResponse();
   }
