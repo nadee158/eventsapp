@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import com.janaka.projects.common.constant.ApplicationConstants;
@@ -23,6 +24,7 @@ import com.janaka.projects.dtos.responses.core.EventUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.EventRepository;
 import com.janaka.projects.entitymanagement.domain.core.Event;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
+import com.janaka.projects.entitymanagement.specifications.core.EventSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.EventDTOConverter;
 import com.janaka.projects.services.core.EventService;
@@ -112,8 +114,22 @@ public class EventServiceImpl extends BusinessService implements EventService {
 
   @Override
   public TabularDataResponseModel<EventDTO> getEvents(TabularDataRequestModel request) {
-    // TODO Auto-generated method stub
-    return null;
+    DataTablesOutput<Event> domainResponse = eventRepository.findAll(request, EventSpecifications.isNotDeleted());
+    TabularDataResponseModel<EventDTO> response = new TabularDataResponseModel<EventDTO>();
+    if (!(domainResponse == null)) {
+      if (!(domainResponse.getData() == null || domainResponse.getData().isEmpty())) {
+        List<EventDTO> dtoList = new ArrayList<>();
+        domainResponse.getData().forEach(event -> {
+          dtoList.add(EventDTOConverter.convertDomainToDTO(event));
+        });
+        response.setData(dtoList);
+      }
+      response.setDraw(domainResponse.getDraw());
+      response.setError(domainResponse.getError());
+      response.setRecordsFiltered(domainResponse.getRecordsFiltered());
+      response.setRecordsTotal(domainResponse.getRecordsTotal());
+    }
+    return response;
   }
 
 }
