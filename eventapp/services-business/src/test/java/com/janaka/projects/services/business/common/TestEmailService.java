@@ -3,7 +3,7 @@ package com.janaka.projects.services.business.common;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailParseException;
 import org.springframework.mail.MailPreparationException;
@@ -18,7 +18,7 @@ import com.janaka.projects.services.test.Application;
 import com.janaka.projects.services.test.RepositoryConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {Application.class, RepositoryConfiguration.class})
+@SpringBootTest(classes = {Application.class, RepositoryConfiguration.class})
 public class TestEmailService {
 
 

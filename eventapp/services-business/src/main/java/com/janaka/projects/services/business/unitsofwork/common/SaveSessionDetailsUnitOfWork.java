@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.janaka.projects.common.caching.Cache;
-import com.janaka.projects.common.caching.CacheFactory;
 import com.janaka.projects.common.security.Session;
 import com.janaka.projects.common.security.User;
 import com.janaka.projects.dtos.requests.common.SaveSessionDetailsRequest;
@@ -13,17 +11,22 @@ import com.janaka.projects.dtos.responses.common.SaveSessionDetailsResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.SecurityUserRepository;
 import com.janaka.projects.entitymanagement.domain.usermanagement.SecurityUser;
 import com.janaka.projects.services.business.common.JmxNotificationPublisher;
+import com.janaka.projects.services.common.CacheService;
 
 public final class SaveSessionDetailsUnitOfWork extends UnitOfWork {
 
-  public SaveSessionDetailsUnitOfWork(JmxNotificationPublisher giveJmxNotificationPublisher) {
+  public SaveSessionDetailsUnitOfWork(JmxNotificationPublisher giveJmxNotificationPublisher,
+      CacheService cacheService) {
     super(giveJmxNotificationPublisher);
+    this.cacheService = cacheService;
   }
 
   private SecurityUserRepository repository;
 
   private SaveSessionDetailsRequest request = null;
   private SaveSessionDetailsResponse response = null;
+
+  private CacheService cacheService;
 
   private User user = null;
   private Session session = null;
@@ -50,13 +53,11 @@ public final class SaveSessionDetailsUnitOfWork extends UnitOfWork {
   @Override
   @Transactional(readOnly = true)
   protected void doWork() {
-    Cache cache = CacheFactory.getCache();
-
     // add session to cache
-    cache.set(session.getToken(), session);
+    cacheService.addToCache(session.getToken(), session);
 
     // add user to cache
-    User userFromCache = cache.get(session.getName());
+    User userFromCache = cacheService.getFromCache(session.getName(), User.class);
     if (userFromCache == null) {
       userFromCache = user;
     }
@@ -66,9 +67,9 @@ public final class SaveSessionDetailsUnitOfWork extends UnitOfWork {
     }
 
     userFromCache.getActiveSessions().add(session.getId().toString());
-    userFromCache.setActiveSessionCount(userFromCache.getActiveSessionCount() + 1);
+    userFromCache.setCustomActiveSessionCount(userFromCache.getCustomActiveSessionCount() + 1);
 
-    cache.set(session.getName(), userFromCache);
+    cacheService.addToCache(session.getName(), userFromCache);
 
     response = new SaveSessionDetailsResponse();
     response.setUser(user);

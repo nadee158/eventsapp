@@ -23,19 +23,18 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.authentication.AccountExpiredException;
-import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.stereotype.Service;
 
-import com.janaka.projects.common.caching.Cache;
-import com.janaka.projects.common.caching.CacheFactory;
 import com.janaka.projects.common.constant.ApplicationConstants;
 import com.janaka.projects.common.security.AuditContext;
 import com.janaka.projects.common.security.SecurityContext;
 import com.janaka.projects.common.security.Session;
 import com.janaka.projects.common.security.User;
 import com.janaka.projects.common.util.CommonUtil;
+import com.janaka.projects.common.util.CustomAccountStatusUserDetailsChecker;
+import com.janaka.projects.services.common.CacheService;
 import com.janaka.projects.services.reports.dao.ReportTemplateRepository;
 import com.janaka.projects.services.reports.domains.ReportTemplate;
 import com.janaka.projects.services.reports.dto.CreateReportRequest;
@@ -62,7 +61,7 @@ public class ReportServiceImpl implements ReportService {
 
   private static final String PROP_FILE_NAME = "reports";
 
-  private final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
+  private final CustomAccountStatusUserDetailsChecker detailsChecker = new CustomAccountStatusUserDetailsChecker();
 
   protected final MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
 
@@ -70,6 +69,9 @@ public class ReportServiceImpl implements ReportService {
 
   @Autowired
   private ReportTemplateRepository reportTemplateRepository;
+
+  @Autowired
+  private CacheService cacheService;
 
   @Override
   public CreateReportResponse createReport(SecurityContext securityContext, AuditContext auditContext,
@@ -105,10 +107,9 @@ public class ReportServiceImpl implements ReportService {
   private boolean ensureSessionValidity(SecurityContext securityContext, AuditContext auditContext) {
     // TODO: check in cache and return session if 1) existent 2) non-expired 3) user is still valid
     boolean isValid = false;
-    Cache cache = CacheFactory.getCache();
 
     // if 1) existent
-    Session session = cache.get(securityContext.getToken());
+    Session session = cacheService.getFromCache(securityContext.getToken(), Session.class);
 
     if (!(session == null)) {
       // 2) non-expired
@@ -119,12 +120,12 @@ public class ReportServiceImpl implements ReportService {
       long expiryPeriod = session.getExpires();
       System.out.println("expiryPeriod :" + expiryPeriod);
       if (!(diff > expiryPeriod)) {
-        User userFromCache = cache.get(session.getName());
+        User userFromCache = cacheService.getFromCache(session.getName(), User.class);
         detailsChecker.check(userFromCache);
         isValid = true;
       } else {
         // user expired
-        cache.remove(securityContext.getToken());
+        cacheService.deleteFromCache(securityContext.getToken());
         session = null;
         throw new AccountExpiredException(
             messages.getMessage("AccountStatusUserDetailsChecker.expired", "User account has expired"));
@@ -135,7 +136,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     session.setLastRequestTimestamp(Calendar.getInstance().getTime());
-    cache.set(securityContext.getToken(), session);
+    cacheService.addToCache(securityContext.getToken(), session);
     return isValid;
   }
 

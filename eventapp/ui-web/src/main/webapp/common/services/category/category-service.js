@@ -23,8 +23,13 @@ define(['app'], function (app) {
 	        return $http.post(url, objectDeletionRequest);
 	    };
 	    
+<<<<<<< HEAD
 	    CategoryServiceFactory.getActiveCategories = function (baseUrl) {
 	    	var url = baseUrl + '/CategoryService/GetActiveCategories';
+=======
+	    CategoryServiceFactory.getActiveCategorys = function (baseUrl) {
+	    	var url = baseUrl + '/CategoryService/GetActiveCategorys';
+>>>>>>> 84cf1a3bb7775e95de62f2ee2275b98dd1c0ee10
 	        return $http.get(url);
 	    };
 	    

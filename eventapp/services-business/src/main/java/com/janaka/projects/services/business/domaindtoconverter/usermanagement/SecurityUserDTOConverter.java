@@ -21,6 +21,7 @@ import com.janaka.projects.entitymanagement.domain.usermanagement.SecurityUser;
 import com.janaka.projects.entitymanagement.domain.usermanagement.UserRole;
 import com.janaka.projects.entitymanagement.enums.MaritalStatus;
 import com.janaka.projects.entitymanagement.enums.Prefix;
+import com.janaka.projects.entitymanagement.enums.RecordStatus;
 
 public class SecurityUserDTOConverter {
 
@@ -29,7 +30,7 @@ public class SecurityUserDTOConverter {
     if (!(securityUserDTO == null)) {
       SecurityUser securityUser = new SecurityUser();
       Person person = getUpdatedPerson(new Person(), securityUserDTO.getPerson());
-      securityUser.setDeleted(securityUserDTO.isDeleted());
+      securityUser.setRecordStatus(RecordStatus.fromRecordStatusCode(securityUserDTO.getRecordStatus()));
       securityUser.setPerson(person);
       securityUser.setSecret(securityUserDTO.getSecret());
       securityUser.setUserName(securityUserDTO.getUserName());
@@ -46,7 +47,7 @@ public class SecurityUserDTOConverter {
         }
       }
 
-      securityUser.setVersionNumber(securityUserDTO.getVersionNumber());
+      securityUser.setVersion(securityUserDTO.getVersionNumber());
 
       return securityUser;
     }
@@ -80,7 +81,7 @@ public class SecurityUserDTOConverter {
       securityUserDTO.setCreatedByUser(securityUser.getCreatedByUser());
       securityUserDTO.setCreationTime(securityUser.getCreationTime());
       securityUserDTO.setCredentialsExpired(securityUser.isCredentialsExpired());
-      securityUserDTO.setDeleted(securityUser.isDeleted());
+      securityUserDTO.setRecordStatus(securityUser.getRecordStatus().getRecordStatusCode());
 
 
 
@@ -101,7 +102,7 @@ public class SecurityUserDTOConverter {
       }
 
       securityUserDTO.setUuId(securityUser.getUuId());
-      securityUserDTO.setVersionNumber(securityUser.getVersionNumber());
+      securityUserDTO.setVersionNumber(securityUser.getVersion());
       return securityUserDTO;
     }
     return null;
@@ -135,7 +136,7 @@ public class SecurityUserDTOConverter {
     securityUser.setAccountExpired(false);
     securityUser.setAccountLocked(false);
     securityUser.setCredentialsExpired(false);
-    securityUser.setDeleted(false);
+    securityUser.setRecordStatus(RecordStatus.ACTIVE);
     securityUser.setPerson(getPerson(request));
     securityUser.setSecret(new BCryptPasswordEncoder().encode(request.getSecret()));
     securityUser.setUserName(request.getUserName());
@@ -158,7 +159,7 @@ public class SecurityUserDTOConverter {
   private static Person getPerson(SecurityUserCreationRequest request) {
     Person person = new Person();
     person.setAddress(request.getAddress());
-    person.setDeleted(false);
+    person.setRecordStatus(RecordStatus.ACTIVE);
     person.setEmail(request.getEmail());
     person.setFullName(request.getFullName());
     person.setNic(request.getNic());
@@ -171,7 +172,7 @@ public class SecurityUserDTOConverter {
   public static SecurityUser updateDomainFromRequest(SecurityUserUpdateRequest request,
       SecurityUser securityUserFromDB) {
 
-    securityUserFromDB.setDeleted(request.isDeleted());
+    securityUserFromDB.setRecordStatus(RecordStatus.fromRecordStatusCode(request.getRecordStatus()));
 
     securityUserFromDB.setPerson(getUpdatedPerson(securityUserFromDB.getPerson(), request));
 
@@ -182,7 +183,7 @@ public class SecurityUserDTOConverter {
 
   private static Person getUpdatedPerson(Person person, SecurityUserUpdateRequest request) {
     person.setAddress(request.getAddress());
-    person.setDeleted(false);
+    person.setRecordStatus(RecordStatus.ACTIVE);
     person.setEmail(request.getEmail());
     person.setFullName(request.getFullName());
     person.setNic(request.getNic());

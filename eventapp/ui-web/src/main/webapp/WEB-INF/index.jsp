@@ -45,11 +45,21 @@
 	<link rel="stylesheet"	href="<c:url value='assets/lib/md-angular-material-datatables/md-data-table.min.css?v=${v}' />" />
 	<link rel="stylesheet"	href="<c:url value='assets/lib/angular-loading-bar-0.5.1/css/loading-bar.css?v=${v}' />" />
 	<link rel="stylesheet"	href="<c:url value='assets/lib/visual-captcha-0.0.7/css/visualcaptcha.css?v=${v}' />" />
+	
+	<link rel="stylesheet"	href="<c:url value='assets/lib/angular-material-datetimepicker-1.0/css/material-datetimepicker.min.css?v=${v}' />" />
   
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+	<style type="text/css">
+	 .md-input-validation-message{
+	   color: #ff0000;
+	 }
+	 body{
+	   top: 0px !important; 
+	 }
+	</style>
   
 </head>
 <!--

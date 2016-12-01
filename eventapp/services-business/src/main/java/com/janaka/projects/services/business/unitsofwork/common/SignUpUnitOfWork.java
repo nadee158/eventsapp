@@ -67,8 +67,8 @@ public final class SignUpUnitOfWork extends UnitOfWork {
     user.setAccountLocked(false);
     user.setCredentialsExpired(false);
 
-    // Set<UserRole> roles = new HashSet<UserRole>();
-    // roles.add(UserRole.USER);
+    // Set<Event> roles = new HashSet<Event>();
+    // roles.add(Event.USER);
     // user.setRoles(roles);
 
 

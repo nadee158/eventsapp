@@ -1,6 +1,5 @@
 package com.janaka.projects.services.web.security.utils;
 
-import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.janaka.projects.common.security.Session;
 import com.janaka.projects.common.security.User;
+import com.janaka.projects.common.util.CustomAccountStatusUserDetailsChecker;
 import com.janaka.projects.services.common.SecurityService;
 
 @Component
@@ -20,7 +20,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
   private PasswordEncoder passwordEncoder;
 
-  private final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
+  private final CustomAccountStatusUserDetailsChecker detailsChecker = new CustomAccountStatusUserDetailsChecker();
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {

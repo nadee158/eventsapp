@@ -93,20 +93,16 @@ public interface ApplicationConstants {
   public static final String SCHEMA_CORE = "core";
   public static final String SCHEMA_COMMON = "common";
   public static final String SCHEMA_USERMANAGEMENT = "usermanagement";
-  public static final String SCHEMA_DOCUMENTMANAGEMENT = "documentmanagement";
-  public static final String SCHEMA_WORKFLOWMANAGEMENT = "workflowmanagement";
-  public static final String SCHEMA_NURSERYMANAGEMENT = "nurserymanagement";
-  public static final String SCHEMA_SUBSIDYMANAGEMENT = "subsidymanagement";
-  public static final String SCHEMA_INVENTORYMANAGEMENT = "inventorymanagement";
-  public static final String SCHEMA_LISCENCEMANAGEMENT = "liscencemanagement";
-  public static final String SCHEMA_CORPORATEPLANNING = "corporateplanning";
-  public static final String SCHEMA_ADVERTISEMENT = "advertisement";
 
   public static final String SINHALA = "si";
   public static final String TAMIL = "ta";
   public static final String ENGLISH = "en";
 
   public static final String SUBMITTED_FOR_DELIVERY = "SUBMITTED_FOR_DELIVERY";
+
+  public static final String GLOBAL_DATE_TIME_FORMAT = "MM/dd/yyyy hh:mm:ss a";
+  public static final String GLOBAL_TIME_FORMAT = "hh:mm:ss a";
+  public static final String GLOBAL_DATE_FORMAT = "MM/dd/yyyy";
 
 
 

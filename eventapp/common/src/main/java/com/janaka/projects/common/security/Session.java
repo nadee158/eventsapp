@@ -1,14 +1,17 @@
 package com.janaka.projects.common.security;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Session implements Authentication {
 
@@ -34,10 +37,14 @@ public class Session implements Authentication {
 
   private long expires;
 
-  private Collection<? extends GrantedAuthority> authorities = new HashSet<Authority>();
+  private List<Authority> myAuthorities = new ArrayList<Authority>();
 
-  private String name;
+  private String userName;
 
+
+  public Session() {
+    super();
+  }
 
   public Session(User user) {
     this.id = UUID.randomUUID();
@@ -45,8 +52,18 @@ public class Session implements Authentication {
     this.startTimestamp = Calendar.getInstance().getTime();
     this.lastRequestTimestamp = Calendar.getInstance().getTime();
     this.expires = EXPIRY_PERIOD;
-    this.authorities = user.getAuthorities();
-    this.name = user.getUserName();
+    this.myAuthorities = constructAuthorities(user.getAuthorities());
+    this.userName = user.getUserName();
+  }
+
+  private List<Authority> constructAuthorities(Collection<? extends GrantedAuthority> authorities2) {
+    if (!(authorities2 == null || authorities2.isEmpty())) {
+      List<Authority> authorities = new ArrayList<Authority>();
+      authorities2.forEach(auth -> {
+        authorities.add(new Authority(auth.toString()));
+      });
+    }
+    return null;
   }
 
   public UUID getId() {
@@ -89,26 +106,27 @@ public class Session implements Authentication {
     this.lastRequestTimestamp = lastRequestTimestamp;
   }
 
+  @JsonIgnore
   @Override
   public String getName() {
-    return this.name;
+    return this.userName;
   }
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return authorities;
-  }
 
+
+  @JsonIgnore
   @Override
   public Object getCredentials() {
     return this.getToken();
   }
 
+  @JsonIgnore
   @Override
   public Object getDetails() {
     return this.id.toString();
   }
 
+  @JsonIgnore
   @Override
   public Object getPrincipal() {
     return this.ownerId;
@@ -139,8 +157,28 @@ public class Session implements Authentication {
         + expires + "]";
   }
 
-  public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-    this.authorities = authorities;
+
+
+  @JsonIgnore
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return myAuthorities;
+  }
+
+  public List<Authority> getMyAuthorities() {
+    return myAuthorities;
+  }
+
+  public void setMyAuthorities(List<Authority> myAuthorities) {
+    this.myAuthorities = myAuthorities;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
 

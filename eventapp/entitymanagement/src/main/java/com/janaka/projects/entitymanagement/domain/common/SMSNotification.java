@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 import org.hibernate.envers.Audited;
 
@@ -19,13 +18,13 @@ import com.janaka.projects.entitymanagement.enums.YesNoStatus;
 @Audited
 @Entity
 @Table(name = "sms_notification")
-public class SMSNotification extends BaseDomain {
+public class SMSNotification extends AuditEntity {
 
   private static final long serialVersionUID = 1L;
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id = 0;
 
   @Column(name = "text", length = 1000)
@@ -51,10 +50,6 @@ public class SMSNotification extends BaseDomain {
 
   @Column(name = "recipient_address")
   private String recipientAddress;
-
-  @Version
-  @Column(name = "version_id")
-  private long versionId = 0;
 
   @Column(name = "exception")
   private String exception;
@@ -111,14 +106,6 @@ public class SMSNotification extends BaseDomain {
     this.recipientAddress = recipientAddress;
   }
 
-  public long getVersionId() {
-    return versionId;
-  }
-
-  public void setVersionId(long versionId) {
-    this.versionId = versionId;
-  }
-
   public String getText() {
     return text;
   }
@@ -149,6 +136,14 @@ public class SMSNotification extends BaseDomain {
 
   public void setExceptionMesssage(String exceptionMesssage) {
     this.exceptionMesssage = exceptionMesssage;
+  }
+
+  @Override
+  public String toString() {
+    return "SMSNotification [id=" + id + ", text=" + text + ", language=" + language + ", smsType=" + smsType
+        + ", sentStatus=" + sentStatus + ", retryCount=" + retryCount + ", recipientName=" + recipientName
+        + ", recipientAddress=" + recipientAddress + ", exception=" + exception + ", exceptionMesssage="
+        + exceptionMesssage + "]";
   }
 
 

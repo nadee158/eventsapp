@@ -53,8 +53,8 @@ public class UserRoleServiceImpl extends BusinessService implements UserRoleServ
   @Override
   public UserRoleCreationResponse createUserRole(AuditContext auditContext, SecurityContext securityContext,
       UserRoleCreationRequest request) {
-    UserRoleCreationUnitOfWork uow = new UserRoleCreationUnitOfWork(userRoleRepository, securityService, request,
-        auditContext, securityContext, jmxNotificationPublisher);
+    UserRoleCreationUnitOfWork uow = new UserRoleCreationUnitOfWork(userRoleRepository, request, auditContext,
+        securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }
@@ -62,8 +62,8 @@ public class UserRoleServiceImpl extends BusinessService implements UserRoleServ
   @Override
   public UserRoleUpdateResponse updateUserRole(AuditContext auditContext, SecurityContext securityContext,
       UserRoleUpdateRequest request) {
-    UserRoleUpdateUnitOfWork uow = new UserRoleUpdateUnitOfWork(userRoleRepository, securityService, request,
-        auditContext, securityContext, jmxNotificationPublisher);
+    UserRoleUpdateUnitOfWork uow = new UserRoleUpdateUnitOfWork(userRoleRepository, request, auditContext,
+        securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }
@@ -71,8 +71,8 @@ public class UserRoleServiceImpl extends BusinessService implements UserRoleServ
   @Override
   public ObjectDeletionResponse deleteUserRole(AuditContext auditContext, SecurityContext securityContext,
       ObjectDeletionRequest request) {
-    UserRoleDeletionUnitOfWork uow = new UserRoleDeletionUnitOfWork(userRoleRepository, securityService, request,
-        auditContext, securityContext, jmxNotificationPublisher);
+    UserRoleDeletionUnitOfWork uow = new UserRoleDeletionUnitOfWork(userRoleRepository, request, auditContext,
+        securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }

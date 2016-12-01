@@ -1,14 +1,14 @@
 package com.janaka.projects.dtos.domain.usermanagement;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.janaka.projects.common.util.CustomJsonDateDeserializer;
-import com.janaka.projects.common.util.CustomJsonDateSerializer;
+import com.janaka.projects.common.util.CustomJsonDateTimeDeserializer;
+import com.janaka.projects.common.util.CustomJsonDateTimeSerializer;
 
 
 
@@ -22,9 +22,9 @@ public class PersonDTO implements Serializable {
 
   private String fullName = StringUtils.EMPTY;
 
-  @JsonDeserialize(using = CustomJsonDateDeserializer.class)
-  @JsonSerialize(using = CustomJsonDateSerializer.class)
-  private Date dateOfBirth = null;
+  @JsonDeserialize(using = CustomJsonDateTimeDeserializer.class)
+  @JsonSerialize(using = CustomJsonDateTimeSerializer.class)
+  private LocalDateTime dateOfBirth = null;
 
   private String nic = StringUtils.EMPTY;
 
@@ -64,11 +64,12 @@ public class PersonDTO implements Serializable {
     this.fullName = fullName;
   }
 
-  public Date getDateOfBirth() {
+
+  public LocalDateTime getDateOfBirth() {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(Date dateOfBirth) {
+  public void setDateOfBirth(LocalDateTime dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
@@ -126,6 +127,13 @@ public class PersonDTO implements Serializable {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  @Override
+  public String toString() {
+    return "PersonDTO [id=" + id + ", prefix=" + prefix + ", fullName=" + fullName + ", dateOfBirth=" + dateOfBirth
+        + ", nic=" + nic + ", mobileNumber=" + mobileNumber + ", landNumber=" + landNumber + ", email=" + email
+        + ", profileImagePath=" + profileImagePath + ", maritalStatus=" + maritalStatus + ", address=" + address + "]";
   }
 
 

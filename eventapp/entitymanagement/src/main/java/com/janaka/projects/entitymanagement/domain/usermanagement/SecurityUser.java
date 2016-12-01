@@ -19,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,7 +27,8 @@ import org.hibernate.envers.Audited;
 
 import com.janaka.projects.common.security.Authority;
 import com.janaka.projects.common.security.User;
-import com.janaka.projects.entitymanagement.domain.common.BaseDomain;
+import com.janaka.projects.entitymanagement.domain.common.AuditEntity;
+import com.janaka.projects.entitymanagement.enums.RecordStatus;
 
 @Audited
 @Entity
@@ -36,14 +36,14 @@ import com.janaka.projects.entitymanagement.domain.common.BaseDomain;
     indexes = {@Index(name = "security_user_id_pk_index", unique = true, columnList = "id"),
         @Index(name = "security_user_security_user_id_index", unique = true, columnList = "uuid"),
         @Index(name = "security_user_user_name_index", unique = true, columnList = "user_name")})
-public class SecurityUser extends BaseDomain {
+public class SecurityUser extends AuditEntity {
 
   private static final long serialVersionUID = 1L;
 
   @Id
   @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id = 0;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
   @NotNull
   @Size(min = 3, max = 30)
@@ -88,11 +88,6 @@ public class SecurityUser extends BaseDomain {
   @Column(name = "account_enabled")
   private boolean accountEnabled = true;
 
-
-
-  @Version
-  @Column(name = "version_number")
-  private long versionNumber = 0;
 
   public SecurityUser() {
 
@@ -176,7 +171,8 @@ public class SecurityUser extends BaseDomain {
     grantedAuthorities = new HashSet<Authority>();
     if (!(userRoles == null || userRoles.isEmpty())) {
       for (UserRole userRole : userRoles) {
-        if (!(userRole == null || userRole.isDeleted())) {
+        if (!(userRole == null || userRole.getRecordStatus() == null
+            || userRole.getRecordStatus() == RecordStatus.INACTIVE)) {
           grantedAuthorities.add(new Authority(userRole.getUserRoleName()));
         }
       }
@@ -202,15 +198,6 @@ public class SecurityUser extends BaseDomain {
   }
 
 
-  public long getVersionNumber() {
-    return versionNumber;
-  }
-
-  public void setVersionNumber(long versionNumber) {
-    this.versionNumber = versionNumber;
-  }
-
-
   public Person getPerson() {
     return person;
   }
@@ -232,7 +219,7 @@ public class SecurityUser extends BaseDomain {
     return "SecurityUser [id=" + id + ", userName=" + userName + ", secret=" + secret + ", expires=" + expires
         + ", person=" + person + ", userRoles=" + userRoles + ", grantedAuthorities=" + grantedAuthorities
         + ", accountExpired=" + accountExpired + ", accountLocked=" + accountLocked + ", credentialsExpired="
-        + credentialsExpired + ", accountEnabled=" + accountEnabled + ", versionNumber=" + versionNumber + "]";
+        + credentialsExpired + ", accountEnabled=" + accountEnabled + "]";
   }
 
 

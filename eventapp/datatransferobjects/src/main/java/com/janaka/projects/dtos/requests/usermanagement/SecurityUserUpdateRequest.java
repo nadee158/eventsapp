@@ -33,7 +33,7 @@ public class SecurityUserUpdateRequest implements Serializable {
 
   private int versionNumber;
 
-  private boolean isDeleted;
+  private String recordStatus;
 
   public long getId() {
     return id;
@@ -108,12 +108,12 @@ public class SecurityUserUpdateRequest implements Serializable {
     this.versionNumber = versionNumber;
   }
 
-  public boolean isDeleted() {
-    return isDeleted;
+  public String getRecordStatus() {
+    return recordStatus;
   }
 
-  public void setDeleted(boolean isDeleted) {
-    this.isDeleted = isDeleted;
+  public void setRecordStatus(String recordStatus) {
+    this.recordStatus = recordStatus;
   }
 
 

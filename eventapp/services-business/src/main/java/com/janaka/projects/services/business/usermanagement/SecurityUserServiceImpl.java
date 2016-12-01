@@ -9,15 +9,18 @@ import com.janaka.projects.common.datamanagement.TabularDataRequestModel;
 import com.janaka.projects.common.datamanagement.TabularDataResponseModel;
 import com.janaka.projects.common.security.AuditContext;
 import com.janaka.projects.common.security.SecurityContext;
+import com.janaka.projects.common.security.User;
 import com.janaka.projects.dtos.domain.usermanagement.MaritalStatusDTO;
 import com.janaka.projects.dtos.domain.usermanagement.PrefixDTO;
 import com.janaka.projects.dtos.domain.usermanagement.SecurityUserDTO;
+import com.janaka.projects.dtos.requests.common.GetSessionDetailsRequest;
 import com.janaka.projects.dtos.requests.common.ObjectDeletionRequest;
 import com.janaka.projects.dtos.requests.common.ObjectRetrievalRequest;
 import com.janaka.projects.dtos.requests.usermanagement.SecurityUserCreationRequest;
 import com.janaka.projects.dtos.requests.usermanagement.SecurityUserPermissionUpdateRequest;
 import com.janaka.projects.dtos.requests.usermanagement.SecurityUserProfileUpdateRequest;
 import com.janaka.projects.dtos.requests.usermanagement.SecurityUserUpdateRequest;
+import com.janaka.projects.dtos.responses.common.GetSessionDetailsResponse;
 import com.janaka.projects.dtos.responses.common.ObjectDeletionResponse;
 import com.janaka.projects.dtos.responses.common.ObjectListResponse;
 import com.janaka.projects.dtos.responses.common.ObjectRetrievalResponse;
@@ -51,16 +54,16 @@ public class SecurityUserServiceImpl extends BusinessService implements Security
   private UserRoleRepository userRoleRepository;
 
   @Autowired
-  private SecurityService securityService;
+  private JmxNotificationPublisher jmxNotificationPublisher;
 
   @Autowired
-  private JmxNotificationPublisher jmxNotificationPublisher;
+  private SecurityService securityService;
 
   @Override
   public SecurityUserCreationResponse createSecurityUser(AuditContext auditContext, SecurityContext securityContext,
       SecurityUserCreationRequest request) {
     SecurityUserCreationUnitOfWork uow = new SecurityUserCreationUnitOfWork(securityUserRepository, userRoleRepository,
-        securityService, request, auditContext, securityContext, jmxNotificationPublisher);
+        request, auditContext, securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }
@@ -68,8 +71,8 @@ public class SecurityUserServiceImpl extends BusinessService implements Security
   @Override
   public SecurityUserUpdateResponse updateSecurityUser(AuditContext auditContext, SecurityContext securityContext,
       SecurityUserUpdateRequest request) {
-    SecurityUserUpdateUnitOfWork uow = new SecurityUserUpdateUnitOfWork(securityUserRepository, securityService,
-        request, auditContext, securityContext, jmxNotificationPublisher);
+    SecurityUserUpdateUnitOfWork uow = new SecurityUserUpdateUnitOfWork(securityUserRepository, request, auditContext,
+        securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }
@@ -77,8 +80,8 @@ public class SecurityUserServiceImpl extends BusinessService implements Security
   @Override
   public ObjectDeletionResponse deleteSecurityUser(AuditContext auditContext, SecurityContext securityContext,
       ObjectDeletionRequest request) {
-    SecurityUserDeletionUnitOfWork uow = new SecurityUserDeletionUnitOfWork(securityUserRepository, securityService,
-        request, auditContext, securityContext, jmxNotificationPublisher);
+    SecurityUserDeletionUnitOfWork uow = new SecurityUserDeletionUnitOfWork(securityUserRepository, request,
+        auditContext, securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }
@@ -103,19 +106,33 @@ public class SecurityUserServiceImpl extends BusinessService implements Security
   @Override
   public TabularDataResponseModel<SecurityUserDTO> getSecurityUsers(AuditContext auditContext,
       SecurityContext securityContext, TabularDataRequestModel request) {
+    User userFromSession = getUserFromSession(securityContext);
     SecurityUserDataTablesOutputUnitOfWork uow = new SecurityUserDataTablesOutputUnitOfWork(securityUserRepository,
-        request, securityService, auditContext, securityContext, jmxNotificationPublisher);
+        request, auditContext, securityContext, jmxNotificationPublisher, userFromSession);
     this.doWork(uow);
     return uow.getResponse();
   }
 
 
 
+  public User getUserFromSession(SecurityContext securityContext) {
+    User userFromSession = null;
+    if (!(securityContext == null || securityContext.getToken() == null)) {
+      GetSessionDetailsRequest getSessionDetailsRequest = new GetSessionDetailsRequest();
+      getSessionDetailsRequest.setToken(securityContext.getToken());
+      GetSessionDetailsResponse getSessionDetailsResponse = securityService.getSessionDetails(getSessionDetailsRequest);
+      if (!(getSessionDetailsResponse == null)) {
+        userFromSession = getSessionDetailsResponse.getUser();
+      }
+    }
+    return userFromSession;
+  }
+
   @Override
   public SecurityUserUpdateResponse updateUserRolesOfSecurityUser(AuditContext auditContext,
       SecurityContext securityContext, SecurityUserPermissionUpdateRequest request) {
     UserRolesOfSecurityUserUpdateunitOfWork uow = new UserRolesOfSecurityUserUpdateunitOfWork(securityUserRepository,
-        userRoleRepository, securityService, request, auditContext, securityContext, jmxNotificationPublisher);
+        userRoleRepository, request, auditContext, securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }
@@ -125,8 +142,8 @@ public class SecurityUserServiceImpl extends BusinessService implements Security
   @Override
   public SecurityUserUpdateResponse updateSecurityUserProfile(AuditContext auditContext,
       SecurityContext securityContext, SecurityUserProfileUpdateRequest request) {
-    SecurityUserProfileUpdateUnitOfWork uow = new SecurityUserProfileUpdateUnitOfWork(securityUserRepository,
-        securityService, request, auditContext, securityContext, jmxNotificationPublisher);
+    SecurityUserProfileUpdateUnitOfWork uow = new SecurityUserProfileUpdateUnitOfWork(securityUserRepository, request,
+        auditContext, securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }

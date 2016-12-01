@@ -21,7 +21,6 @@ import com.janaka.projects.services.business.unitsofwork.common.ReSendSMSUnitOfW
 import com.janaka.projects.services.business.unitsofwork.common.SendEmailUnitOfWork;
 import com.janaka.projects.services.business.unitsofwork.common.SendSMSUnitOfWork;
 import com.janaka.projects.services.common.NotificationService;
-import com.janaka.projects.services.common.SecurityService;
 
 @Service(value = "notificationService")
 @Transactional()
@@ -37,9 +36,6 @@ public class NotificationServiceImpl extends BusinessService implements Notifica
   private SMSUtil smsUtil;
 
   @Autowired
-  private SecurityService securityService;
-
-  @Autowired
   private SMSNotificationRepository smsNotificationRepository;
 
   @Autowired
@@ -48,8 +44,8 @@ public class NotificationServiceImpl extends BusinessService implements Notifica
   @Override
   public SendEmailResponse sendEmail(SendEmailRequest request, AuditContext auditContext,
       SecurityContext securityContext) {
-    SendEmailUnitOfWork uow = new SendEmailUnitOfWork(request, mailUtil, emailNotificationRepository, securityService,
-        auditContext, securityContext, jmxNotificationPublisher);
+    SendEmailUnitOfWork uow = new SendEmailUnitOfWork(request, mailUtil, emailNotificationRepository, auditContext,
+        securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getEmailResponse();
   }
@@ -65,7 +61,7 @@ public class NotificationServiceImpl extends BusinessService implements Notifica
   @Override
   public SendSMSResponse sendSMS(SendSMSRequest request, AuditContext auditContext, SecurityContext securityContext) {
     SendSMSUnitOfWork uow = new SendSMSUnitOfWork(request, smsUtil, smsNotificationRepository, auditContext,
-        securityContext, securityService, jmxNotificationPublisher);
+        securityContext, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
   }
