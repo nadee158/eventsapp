@@ -21,6 +21,18 @@
 		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#eventsetup"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>Events Setup</span></a></li>
 		          </ul>
 		      </li>
+		     <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">
+		          <a href="#">
+		            <i class="fa fa-files-o"></i>
+		            <span translate>Categories</span> 
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#categorysetup"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>Category Setup</span></a></li>
+		          </ul>
+		      </li>
 			 <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">
 		          <a href="#">
 		            <i class="fa fa-files-o"></i>

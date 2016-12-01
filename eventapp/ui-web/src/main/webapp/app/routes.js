@@ -155,10 +155,18 @@ define([], function()
                 	            	  isFree:false
                 	              }
                 },'/eventsetup':{
-                	templateUrl:'app/eventSetup/eventsetup.html',
+                	templateUrl:'app/event/eventsetup.html',
                 	dependencies:[
-                	              '../app/eventSetup/eventsetup',
+                	              '../app/event/eventsetup',
                 	              '../common/services/events/event-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/categorysetup':{
+                	templateUrl:'app/category/categorysetup.html',
+                	dependencies:[
+                	              '../app/category/categorysetup',
+                	              '../common/services/category/category-service'],
                 	              access:{
                 	            	  isFree:false
                 	              }
