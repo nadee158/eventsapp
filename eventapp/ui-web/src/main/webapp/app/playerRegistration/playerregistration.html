@@ -1,0 +1,161 @@
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Player Registration
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Player Registration</li>
+      </ol>
+    </section>
+
+ 			<!-- Main content -->
+    <section class="content">
+
+	  <div class="box box-primary" ng-cloak class="md-inline-form" ng-controller="PlayerRegistrationController" ng-init="initializePRController()">
+	
+		<form name="playerRegistrationForm" id="playerRegistrationForm">
+		
+			<md-content layout-padding>			
+				<div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Name Of the Event</label>
+			           	<md-select ng-model="playerCreationRequest.eventId" name="eventId" required>
+						    <md-option ng-value="{{event.eventId}}" ng-repeat="event in events">{{ event.eventName }}</md-option>
+						</md-select>
+			           	<span ng-show="categorySetupForm.eventId.$dirty"> 
+							<span ng-show="categorySetupForm.eventId.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>				       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Player No</label>
+			           	<input ng-model="playerCreationRequest.playerNumber" name="playerNumber"/>
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Team</label>
+			           	<input ng-model="playerCreationRequest.team" name="team" md-maxlength="20" required />
+			           	<span ng-show="playerRegistrationForm.team.$dirty"> 
+							<span ng-show="playerRegistrationForm.team.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+							<span ng-show="playerRegistrationForm.team.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 20 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Player Name</label>
+			           	<input ng-model="playerCreationRequest.playerName" name="playerName" md-maxlength="240" required />
+			           	<span ng-show="playerRegistrationForm.playerName.$dirty"> 
+							<span ng-show="playerRegistrationForm.playerName.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+							<span ng-show="playerRegistrationForm.playerName.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 240 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>IC/Passport</label>
+			           	<input ng-model="playerCreationRequest.icPassport" name="icPassport" md-maxlength="240" required />
+			           	<span ng-show="playerRegistrationForm.icPassport.$dirty"> 
+							<span ng-show="playerRegistrationForm.icPassport.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+							<span ng-show="playerRegistrationForm.icPassport.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 240 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Address</label>
+			           	<input ng-model="playerCreationRequest.address" name="address" md-maxlength="1000" />
+			           	<span ng-show="playerRegistrationForm.address.$dirty"> 
+							<span ng-show="playerRegistrationForm.address.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 1000 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Email ID</label>
+			           	<input ng-model="playerCreationRequest.email" name="email" md-maxlength="240" />
+			           	<span ng-show="playerRegistrationForm.email.$dirty"> 
+							<span ng-show="playerRegistrationForm.email.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 240 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Email ID</label>
+			           	<input ng-model="playerCreationRequest.contactNumber" name="contactNumber" md-maxlength="12" />
+			           	<span ng-show="playerRegistrationForm.contactNumber.$dirty"> 
+							<span ng-show="playerRegistrationForm.contactNumber.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 12 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Weight</label>
+			           	<input type="number" step="any" ng-model="playerCreationRequest.weight" name="weight" md-maxlength="4" />
+			           	<span ng-show="playerRegistrationForm.weight.$dirty"> 
+							<span ng-show="playerRegistrationForm.weight.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 4 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Height</label>
+			           	<input type="number" step="any" ng-model="playerCreationRequest.height" name="height" md-maxlength="4" />
+			           	<span ng-show="playerRegistrationForm.height.$dirty"> 
+							<span ng-show="playerRegistrationForm.height.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 4 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Event Type</label>
+			           	<md-select ng-model="playerCreationRequest.categoryId" name="categoryId" required>
+						    <md-option ng-value="{{category.categoryId}}" ng-repeat="category in categories">{{ category.categoryName }}</md-option>
+						</md-select>
+			           	<span ng-show="categorySetupForm.categoryId.$dirty"> 
+							<span ng-show="categorySetupForm.categoryId.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>				       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+		        	<md-button class="md-raised md-warn">Exit</md-button>
+		        	<md-button class="md-raised md-warn">Reset</md-button>
+		        	<md-button class="md-raised md-primary">Create</md-button>
+		        </div>
+		        
+		        
+	        </md-content>
+       	</form>
+	</div>
+
+    </section>
+<!-- /.content -->

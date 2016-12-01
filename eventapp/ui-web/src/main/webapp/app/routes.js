@@ -155,15 +155,9 @@ define([], function()
                 	            	  isFree:false
                 	              }
                 },'/eventsetup':{
-<<<<<<< HEAD
-                	templateUrl:'app/event/eventsetup.html',
-                	dependencies:[
-                	              '../app/event/eventsetup',
-=======
                 	templateUrl:'app/events/eventsetup.html',
                 	dependencies:[
                 	              '../app/events/eventsetup',
->>>>>>> 84cf1a3bb7775e95de62f2ee2275b98dd1c0ee10
                 	              '../common/services/events/event-service'],
                 	              access:{
                 	            	  isFree:false
@@ -172,7 +166,18 @@ define([], function()
                 	templateUrl:'app/category/categorysetup.html',
                 	dependencies:[
                 	              '../app/category/categorysetup',
+                	              '../common/services/events/event-service',
                 	              '../common/services/category/category-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/playerregistration':{
+                	templateUrl:'app/playerRegistration/playerregistration.html',
+                	dependencies:[
+                	              '../app/playerRegistration/playerregistration',
+                	              '../common/services/events/event-service',
+                	              '../common/services/category/category-service',
+                	              '../common/services/player/player-service'],
                 	              access:{
                 	            	  isFree:false
                 	              }

@@ -74,6 +74,14 @@ public final class ServiceEndpoints {
   // --------------- EVENTS -----------------------
   public static final String EVENTS = "eventsservice";
 
+  // --------------- CATEGORIES -----------------------
+  public static final String CATEGORIES = "categoryservice";
+
+  // --------------- PLAYER -----------------------
+  public static final String PLAYERS = "playerservice";
+
+
+
   public static final String CREATE = "/create";
 
   public static final String UPDATE = "/update";

@@ -9,32 +9,28 @@ define(['app'], function (app) {
 	
 	    
 	    CategoryServiceFactory.createCategory = function (CategoryCreationRequest, baseUrl) {
-	    	var url = baseUrl + '/CategoryService/CreateCategory';
+	    	var url = baseUrl + '/categoryservice/create';
 	        return $http.post(url, CategoryCreationRequest);
 	    };
 	    
 	    CategoryServiceFactory.updateCategory = function (CategoryUpdateRequest, baseUrl) {
-	    	var url = baseUrl + '/CategoryService/UpdateCategory';
+	    	var url = baseUrl + '/categoryservice/update';
 	        return $http.post(url, CategoryUpdateRequest);
 	    };
 	    
 	    CategoryServiceFactory.deleteCategory = function (objectDeletionRequest, baseUrl) {
-	    	var url = baseUrl + '/CategoryService/DeleteCategory';
+	    	var url = baseUrl + '/categoryservice/delete';
 	        return $http.post(url, objectDeletionRequest);
 	    };
 	    
-<<<<<<< HEAD
+
 	    CategoryServiceFactory.getActiveCategories = function (baseUrl) {
-	    	var url = baseUrl + '/CategoryService/GetActiveCategories';
-=======
-	    CategoryServiceFactory.getActiveCategorys = function (baseUrl) {
-	    	var url = baseUrl + '/CategoryService/GetActiveCategorys';
->>>>>>> 84cf1a3bb7775e95de62f2ee2275b98dd1c0ee10
+	    	var url = baseUrl + '/categoryservice/getactivelist';
 	        return $http.get(url);
 	    };
 	    
 	    CategoryServiceFactory.getCategoryById = function (objectRetrievalRequest, baseUrl) {
-	    	var url = baseUrl + '/CategoryService/GetCategoryById';
+	    	var url = baseUrl + '/categoryservice/getbyid';
 	    	return $http.post(url, objectRetrievalRequest);
 	    };
 	    
