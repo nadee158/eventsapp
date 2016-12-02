@@ -129,6 +129,7 @@ define(['routes','dependencyResolverFor','datatables','ngMaterial','select2','Pu
     	var rootPath = $location.protocol() + '://' + $location.host() + ':' + $location.port();
         $rootScope.baseUrl =  rootPath + '/eventappservices';     
         $rootScope.reportBaseUrl = rootPath + '/eventappservices-reports';
+        $rootScope.uiBaseUrl = rootPath + '/ui-web';
         
 		
 		$rootScope.$on('$routeChangeStart', function (event, next, current) {

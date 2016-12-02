@@ -9,7 +9,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.janaka.projects.common.datamanagement.TabularDataRequestModel;
 import com.janaka.projects.common.datamanagement.TabularDataResponseModel;
@@ -38,10 +41,12 @@ public class PlayerController {
   private PlayerService playerService;
 
   @RequestMapping(value = ServiceEndpoints.CREATE, method = RequestMethod.POST,
-      produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public CustomResponseEntity<ApiResponseObject<?>> createCategories(
-      @Valid @RequestBody PlayerCreationRequest request) {
+      consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public @ResponseBody CustomResponseEntity<ApiResponseObject<?>> createPlayer(
+      @RequestPart(value = "playerCreationRequest") PlayerCreationRequest request,
+      @RequestPart("file") MultipartFile file) {
     logger.error("request : " + request);
+    logger.error("file : " + file);
     PlayerCreationResponse response = playerService.createPlayer(request);
     return new CustomResponseEntity<ApiResponseObject<?>>(
         new ApiResponseObject<PlayerCreationResponse>(HttpStatus.OK, response), HttpStatus.OK);

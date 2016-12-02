@@ -8,9 +8,22 @@ define(['app'], function (app) {
 	    var PlayerServiceFactory = {};
 	
 	    
-	    PlayerServiceFactory.createPlayer = function (PlayerCreationRequest, baseUrl) {
+	    PlayerServiceFactory.createPlayer = function (playerCreationRequest,file, baseUrl) {
 	    	var url = baseUrl + '/playerservice/create';
-	        return $http.post(url, PlayerCreationRequest);
+	        return $http({
+	            method: 'POST',
+	            url: url,
+	            headers: {'Content-Type': undefined },
+	            transformRequest: function (data) {
+	                var formData = new FormData();
+	                formData.append('store', new Blob([angular.toJson(data.store)], {
+	                    type: "application/json"
+	                }));
+	                formData.append("file", data.file);
+	                return formData;
+	            },
+	            data: { playerCreationRequest: playerCreationRequest, file: file }
+	        });
 	    };
 	    
 	    PlayerServiceFactory.updatePlayer = function (PlayerUpdateRequest, baseUrl) {

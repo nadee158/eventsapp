@@ -1,3 +1,24 @@
+<style type="text/css">
+.dz-success-mark{
+ display: none;
+}
+.dz-error-mark{
+ display: none;
+}
+.dz-remove{
+ display: none;
+}
+.dz-details{
+display: none;
+}
+.dz-upload { 
+    display: block; 
+    background-color: red; 
+    height: 10px;
+    width: 0%;
+}
+</style> 
+ 
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -16,29 +37,45 @@
 	
 		<form name="playerRegistrationForm" id="playerRegistrationForm">
 		
-			<md-content layout-padding>			
-				<div layout-gt-sm="row">
-			         <md-input-container class="md-block" flex-gt-sm>
+			<md-content layout-padding>	
+			
+			<div layout="row" layout-xs="column">
+			  <div flex>
+			    <div layout="row">
+			         <md-input-container layout="column" flex>
 			           	<label translate>Name Of the Event</label>
 			           	<md-select ng-model="playerCreationRequest.eventId" name="eventId" required>
 						    <md-option ng-value="{{event.eventId}}" ng-repeat="event in events">{{ event.eventName }}</md-option>
 						</md-select>
-			           	<span ng-show="categorySetupForm.eventId.$dirty"> 
-							<span ng-show="categorySetupForm.eventId.$error.required">
+			           	<span ng-show="playerRegistrationForm.eventId.$dirty"> 
+							<span ng-show="playerRegistrationForm.eventId.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
 						</span>				       
 			         </md-input-container>
-		        </div>
-		        <div layout-gt-sm="row">
-			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>Player No</label>
-			           	<input ng-model="playerCreationRequest.playerNumber" name="playerNumber"/>
+		         </div>
+		         <div layout="row">
+			         <md-input-container layout="column" flex>
+			           	<label translate>Event Type</label>
+			           	<md-select ng-model="playerCreationRequest.categoryId" name="categoryId" required>
+						    <md-option ng-value="{{category.categoryId}}" ng-repeat="category in categories">{{ category.categoryName }}</md-option>
+						</md-select>
+			           	<span ng-show="playerRegistrationForm.categoryId.$dirty"> 
+							<span ng-show="playerRegistrationForm.categoryId.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>				       
 			         </md-input-container>
-		        </div>
-		        <div layout-gt-sm="row">
-			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>Team</label>
+		        </div>	
+		        <div layout="row">
+			        <md-input-container layout="column" flex>
+				           	<label translate>Player No</label>
+				           	<input ng-model="playerCreationRequest.playerNumber" name="playerNumber"/>
+				    </md-input-container>
+		        </div>	
+		         <div layout="row">
+			        <md-input-container layout="column" flex>
+		           		<label translate>Team</label>
 			           	<input ng-model="playerCreationRequest.team" name="team" md-maxlength="20" required />
 			           	<span ng-show="playerRegistrationForm.team.$dirty"> 
 							<span ng-show="playerRegistrationForm.team.$error.required">
@@ -46,6 +83,40 @@
 							</span>
 							<span ng-show="playerRegistrationForm.team.$error['md-maxlength']">
 								<span class="md-input-validation-message" translate>Event name should be less than 20 characters long!</span>
+							</span>					
+						</span>	
+				    </md-input-container>
+		        </div>	
+			  </div>
+			  <div flex>
+		    	 <div layout="row" layout-align="center center">
+				   	<div id="imagePreview" style="width:200px;height:200px;background-size: contain;background-image: url('{{imageUrl}}');">
+				   	</div>
+				  </div>
+				  <div layout="row" layout-align="center center">
+				  	 <div id="imageErrorMessage" ng-show="buttonVisible" style="color:#ff0000;"></div>
+				  	 <div id="imageSuccessMessage" ng-show="!buttonVisible" style="color:#00ff00;"></div>
+				  </div>
+				  <div layout="row" layout-align="center center">
+				  	<md-button id="fileUploadBtn" ng-show="buttonVisible" class="md-raised md-primary">Browse</md-button>
+				   	<md-button id="fileRemoveBtn" ng-show="!buttonVisible" class="md-raised md-primary">Remove</md-button>
+				  </div>
+			  </div>
+			</div>
+			
+		       
+		        
+		       
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>IC/Passport</label>
+			           	<input ng-model="playerCreationRequest.icPassport" name="icPassport" md-maxlength="240" required />
+			           	<span ng-show="playerRegistrationForm.icPassport.$dirty"> 
+							<span ng-show="playerRegistrationForm.icPassport.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+							<span ng-show="playerRegistrationForm.icPassport.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event name should be less than 240 characters long!</span>
 							</span>					
 						</span>			       
 			         </md-input-container>
@@ -59,20 +130,6 @@
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
 							<span ng-show="playerRegistrationForm.playerName.$error['md-maxlength']">
-								<span class="md-input-validation-message" translate>Event name should be less than 240 characters long!</span>
-							</span>					
-						</span>			       
-			         </md-input-container>
-		        </div>
-		        <div layout-gt-sm="row">
-			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>IC/Passport</label>
-			           	<input ng-model="playerCreationRequest.icPassport" name="icPassport" md-maxlength="240" required />
-			           	<span ng-show="playerRegistrationForm.icPassport.$dirty"> 
-							<span ng-show="playerRegistrationForm.icPassport.$error.required">
-								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
-							</span>
-							<span ng-show="playerRegistrationForm.icPassport.$error['md-maxlength']">
 								<span class="md-input-validation-message" translate>Event name should be less than 240 characters long!</span>
 							</span>					
 						</span>			       
@@ -99,10 +156,10 @@
 							</span>					
 						</span>			       
 			         </md-input-container>
-		        </div>
-		        <div layout-gt-sm="row">
+<!-- 		        </div> -->
+<!-- 		        <div layout-gt-sm="row"> -->
 			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>Email ID</label>
+			           	<label translate>Contact Number</label>
 			           	<input ng-model="playerCreationRequest.contactNumber" name="contactNumber" md-maxlength="12" />
 			           	<span ng-show="playerRegistrationForm.contactNumber.$dirty"> 
 							<span ng-show="playerRegistrationForm.contactNumber.$error['md-maxlength']">
@@ -114,36 +171,23 @@
 		        <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Weight</label>
-			           	<input type="number" step="any" ng-model="playerCreationRequest.weight" name="weight" md-maxlength="4" />
+			           	<input type="number" step="any" ng-model="playerCreationRequest.weight" name="weight" />
 			           	<span ng-show="playerRegistrationForm.weight.$dirty"> 
 							<span ng-show="playerRegistrationForm.weight.$error['md-maxlength']">
 								<span class="md-input-validation-message" translate>Event name should be less than 4 characters long!</span>
 							</span>					
 						</span>			       
 			         </md-input-container>
-		        </div>
-		        <div layout-gt-sm="row">
+<!-- 		        </div> -->
+<!-- 		        <div layout-gt-sm="row"> -->
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Height</label>
-			           	<input type="number" step="any" ng-model="playerCreationRequest.height" name="height" md-maxlength="4" />
+			           	<input type="number" step="any" ng-model="playerCreationRequest.height" name="height" />
 			           	<span ng-show="playerRegistrationForm.height.$dirty"> 
 							<span ng-show="playerRegistrationForm.height.$error['md-maxlength']">
 								<span class="md-input-validation-message" translate>Event name should be less than 4 characters long!</span>
 							</span>					
 						</span>			       
-			         </md-input-container>
-		        </div>
-		        <div layout-gt-sm="row">
-			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>Event Type</label>
-			           	<md-select ng-model="playerCreationRequest.categoryId" name="categoryId" required>
-						    <md-option ng-value="{{category.categoryId}}" ng-repeat="category in categories">{{ category.categoryName }}</md-option>
-						</md-select>
-			           	<span ng-show="categorySetupForm.categoryId.$dirty"> 
-							<span ng-show="categorySetupForm.categoryId.$error.required">
-								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
-							</span>
-						</span>				       
 			         </md-input-container>
 		        </div>
 		        <div layout-gt-sm="row">

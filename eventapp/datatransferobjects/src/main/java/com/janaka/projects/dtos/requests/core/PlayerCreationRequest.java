@@ -2,6 +2,8 @@ package com.janaka.projects.dtos.requests.core;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class PlayerCreationRequest implements Serializable {
 
   /**
@@ -26,6 +28,8 @@ public class PlayerCreationRequest implements Serializable {
   private double height;
 
   private long categoryId;
+
+  private MultipartFile file;
 
   public long getEventId() {
     return eventId;
@@ -103,7 +107,15 @@ public class PlayerCreationRequest implements Serializable {
   public String toString() {
     return "PlayerCreationRequest [eventId=" + eventId + ", playerNumber=" + playerNumber + ", playerName=" + playerName
         + ", icPassport=" + icPassport + ", address=" + address + ", contactNumber=" + contactNumber + ", weight="
-        + weight + ", height=" + height + ", categoryId=" + categoryId + "]";
+        + weight + ", height=" + height + ", categoryId=" + categoryId + ", file=" + file + "]";
+  }
+
+  public MultipartFile getFile() {
+    return file;
+  }
+
+  public void setFile(MultipartFile file) {
+    this.file = file;
   }
 
 
