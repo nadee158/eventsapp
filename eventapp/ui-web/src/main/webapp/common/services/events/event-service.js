@@ -19,17 +19,17 @@ define(['app'], function (app) {
 	    };
 	    
 	    EventServiceFactory.deleteEvent = function (objectDeletionRequest, baseUrl) {
-	    	var url = baseUrl + '/EventService/DeleteEvent';
+	    	var url = baseUrl + '/eventsservice/delete';
 	        return $http.post(url, objectDeletionRequest);
 	    };
 	    
 	    EventServiceFactory.getActiveEvents = function (baseUrl) {
-	    	var url = baseUrl + '/EventService/GetActiveEvents';
+	    	var url = baseUrl + '/eventsservice/getactivelist';
 	        return $http.get(url);
 	    };
 	    
 	    EventServiceFactory.getEventById = function (objectRetrievalRequest, baseUrl) {
-	    	var url = baseUrl + '/EventService/GetEventById';
+	    	var url = baseUrl + '/eventsservice/getbyid';
 	    	return $http.post(url, objectRetrievalRequest);
 	    };
 	    

@@ -26,10 +26,25 @@ define(['app', 'ui_bootstrap'], function (app, ui_bootstrap) {
 	  
 	  $scope.buttonVisible = true;
 	  
+	  $scope.events=[];
+	  $scope.categories=[];
+	  
 	  $scope.initializePRController = function() {
 		  $scope.imageUrl=$rootScope.uiBaseUrl + '/assets/app/images/avatar_2x.png';
+		  loadEvents();
       };
       
+      function loadEvents(){
+    	  var response=EventServiceFactory.getActiveEvents(baseUrl);	
+    	  response.success(function(data, status, headers, config) {	
+      		if(data.apiResponseResults.dtoList){
+      			$scope.events=data.apiResponseResults.dtoList;	
+      		} 
+	        }).error(function(data, status, headers, config){
+	            	NotificationServiceFactory.error(data.message);
+	            	console.error('Error while getting events ' + data.message);
+	        })
+      }
       
       var myDropzone = new Dropzone("#fileUploadBtn", { 
     	  url: "#",
@@ -100,7 +115,7 @@ define(['app', 'ui_bootstrap'], function (app, ui_bootstrap) {
 
       $scope.registerPlayer= function() {
     	    
-      	angular.forEach($scope.playerRegistrationForm.$error.required, function(field) {
+      	    angular.forEach($scope.playerRegistrationForm.$error.required, function(field) {
         	    field.$setDirty();
         	    
         	});

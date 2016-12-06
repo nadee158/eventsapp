@@ -83,6 +83,7 @@ public class EventServiceImpl extends BusinessService implements EventService {
   @Override
   public ObjectListResponse<EventDTO> getAllActiveEvents() {
     List<Event> activeEvents = eventRepository.findByRecordStatus(RecordStatus.ACTIVE);
+    System.out.println("activeEvents :" + activeEvents);
     if (!(activeEvents == null || activeEvents.isEmpty())) {
       ObjectListResponse<EventDTO> response = new ObjectListResponse<EventDTO>();
       List<EventDTO> dtoList = new ArrayList<EventDTO>();
@@ -93,6 +94,7 @@ public class EventServiceImpl extends BusinessService implements EventService {
       response.setListSize(dtoList.size());
       response.setMessage("LISTED_SUCCESSFULLY");
       response.setStatus(ApplicationConstants.STATUS_CODE_OK);
+      return response;
     }
     return null;
   }
