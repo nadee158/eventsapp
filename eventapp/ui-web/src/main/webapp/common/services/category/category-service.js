@@ -8,14 +8,14 @@ define(['app'], function (app) {
 	    var CategoryServiceFactory = {};
 	
 	    
-	    CategoryServiceFactory.createCategory = function (CategoryCreationRequest, baseUrl) {
+	    CategoryServiceFactory.createCategory = function (categoryCreationRequest, baseUrl) {
 	    	var url = baseUrl + '/categoryservice/create';
-	        return $http.post(url, CategoryCreationRequest);
+	        return $http.post(url, categoryCreationRequest);
 	    };
 	    
-	    CategoryServiceFactory.updateCategory = function (CategoryUpdateRequest, baseUrl) {
+	    CategoryServiceFactory.updateCategory = function (categoryUpdateRequest, baseUrl) {
 	    	var url = baseUrl + '/categoryservice/update';
-	        return $http.post(url, CategoryUpdateRequest);
+	        return $http.post(url, categoryUpdateRequest);
 	    };
 	    
 	    CategoryServiceFactory.deleteCategory = function (objectDeletionRequest, baseUrl) {

@@ -41,6 +41,7 @@ public class CategoryController {
       produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public CustomResponseEntity<ApiResponseObject<?>> createCategories(
       @Valid @RequestBody CategoryCreationRequest request) {
+    System.out.println("CategoryCreationRequest " + request);
     CategoryCreationResponse response = categoryService.createEvent(request);
     return new CustomResponseEntity<ApiResponseObject<?>>(
         new ApiResponseObject<CategoryCreationResponse>(HttpStatus.OK, response), HttpStatus.OK);

@@ -39,6 +39,11 @@ public class CategorySetupItemDTO implements Serializable {
     this.text2 = text2;
   }
 
+  @Override
+  public String toString() {
+    return "CategorySetupItemDTO [itemName=" + itemName + ", text1=" + text1 + ", text2=" + text2 + "]";
+  }
+
 
 
 }

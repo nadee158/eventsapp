@@ -22,16 +22,74 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
 	  
 	  var baseUrl=$rootScope.baseUrl;
 	  
-	  $scope.itemDTOList=new Array();
+	  
 	  
 	  $scope.initializeCategorySetupController = function() {
 		  loadEvents();
 		  loadGenders();
 		  loadItemDropDown();
-		  itemDTOList=[];
-		  $scope.itemDTOList=new Array();
+		  resetForm();
       };
       
+      
+      
+      $scope.createCategory= function() {
+    	    
+      	   angular.forEach($scope.categorySetupForm.$error.required, function(field) {
+        	    field.$setDirty();
+           });
+      	
+        	if($scope.categorySetupForm.$valid) {
+        		
+        		ModalDialogServiceFactory.confirmBox(
+              		  $translate('common.notification.message.CONFIRM_SUBMIT_TITLE'), 
+              		  $translate('common.notification.message.CONFIRM_SUMIT_CONTENT'), 
+              		  '', 
+              		  $translate('common.button.text.SUBMIT'), 
+              		  $translate('common.button.text.CANCEL'), 
+              		  submitCategory, 
+              		  $scope.categoryCreationRequest, 
+              		  null, 
+              		  null
+                );
+        	    
+        	}else{
+        		ModalDialogServiceFactory.alert(
+              		  $translate('common.notification.message.NOTIFY_FORM_VALIDATION_ERRORS'), 
+              		  $translate('common.notification.message.NOTIFY_FORM_VALIDATION_ERRORS_CONTENT'), 
+              		  '', 
+              		  $translate('common.button.text.OK'), 
+              		  null, 
+              		  null
+                );
+        	} 
+      }
+      
+      function submitCategory(categoryCreationRequest){
+        	//Do something
+        	var response=CategoryServiceFactory.createCategory(categoryCreationRequest,baseUrl);		         
+            
+  	        response.success(function(data, status, headers, config) {
+  	        	if(data.apiResponseStatus){
+  	        		if(data.apiResponseStatus==200){
+  	        			$scope.categoryCreationResponse=data.apiResponseResults;
+  		      			
+  		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
+  		      			
+  		      			$location.path("/home");
+  		      		}else{
+  		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.apiResponseResults.message));
+  		      			
+  		      		}	
+  	        	}
+  	      		
+                
+            }).error(function(data, status, headers, config){
+            	 NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD'));
+            	 console.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + " " + data);
+            }) 
+        }
+        
       
       
       function CategorySetupItemDTO(itemName,text1,text2){
@@ -40,16 +98,60 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
     	  this.text2=text2;
       }
       
+      $scope.resetCategoryForm = function() {
+    	  ModalDialogServiceFactory.confirmBox(
+          		  'Confirm Form Reset', 
+          		  'Are you sure you want to clear the form content?', 
+          		  '', 
+          		  'Ok', 
+          		  $translate('common.button.text.CANCEL'), 
+          		  resetForm, 
+          		  null, 
+          		  null, 
+          		  null
+            );
+      };
+      
+      function resetForm(){
+    	  $scope.categoryCreationRequest=new Object();
+    	  $scope.categoryCreationRequest.categorySetupItems=new Array();
+    	  clearItemForm();
+      }
+      
+      $scope.exitCategoryForm = function() {
+    	  ModalDialogServiceFactory.confirmBox(
+          		  'Confirm Exit', 
+          		  'Are you sure you want to leave the page?', 
+          		  '', 
+          		  'Ok', 
+          		  $translate('common.button.text.CANCEL'), 
+          		  exitForm, 
+          		  null, 
+          		  null, 
+          		  null
+            );
+      };
+      
+      function exitForm(){
+    	  $location.path("/home");
+      }
       
       $scope.addItem = function() {
     	  var selectBox=$scope.selectBox;
     	  var text1=$scope.text1;
     	  var text2=$scope.text2;
     	  if(selectBox && text1 && text2){
-    		  $scope.itemDTOList.push(new CategorySetupItemDTO(selectBox,text1,text2));
+    		  $scope.categoryCreationRequest.categorySetupItems.push(new CategorySetupItemDTO($.trim(selectBox),$.trim(text1),$.trim(text2)));
+    		  clearItemForm();
     	  }else{
     		  NotificationServiceFactory.error('Enter all required fields'); 
     	  }
+      }
+      
+      function clearItemForm(){
+    	  $scope.selectBox='';
+    	  $scope.text1='';
+    	  $scope.text2='';
       }
       
       function loadItemDropDown(){

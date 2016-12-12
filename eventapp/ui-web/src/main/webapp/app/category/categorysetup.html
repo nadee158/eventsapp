@@ -47,7 +47,8 @@
 		             <label translate>Age Group</label>
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>From</label>
-			           	<input ng-model="categoryCreationRequest.fromAge" name="fromAge" md-maxlength="20" required />
+			           	<input ng-model="categoryCreationRequest.fromAge" name="fromAge" type="number" step="any" min="1"
+                              max="120" required />
 			           	<span ng-show="categorySetupForm.fromAge.$dirty"> 
 							<span ng-show="categorySetupForm.fromAge.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
@@ -58,8 +59,9 @@
 						</span>			       
 			         </md-input-container>
 			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>From</label>
-			           	<input ng-model="categoryCreationRequest.toAge" name="toAge" md-maxlength="20" required />
+			           	<label translate>To</label>
+			           	<input ng-model="categoryCreationRequest.toAge" name="toAge" type="number" step="any" min="1"
+                              max="120" required />
 			           	<span ng-show="categorySetupForm.toAge.$dirty"> 
 							<span ng-show="categorySetupForm.toAge.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
@@ -118,16 +120,35 @@
 			         </md-input-container>
 		        </div>
 		        
-		        <div layout-gt-sm="row" ng-repeat="itemDTO in itemDTOList">
-		        	<span>{{itemDTO.itemName}}</span> || 
-		        	<span>{{itemDTO.text1}}</span> || 
-		        	<span>{{itemDTO.text2}}</span>
+		       
+				  
+				<div layout-gt-sm="row">  
+				
+				    <md-chips ng-model="categoryCreationRequest.categorySetupItems" name="categorySetupItems" readonly="false"
+				         md-removable="true" md-max-chips="12" md-min-chips="1" md-chips-disable-input>
+				      <md-chip-template>
+				        <span>
+				          <strong>{{$chip.itemName}}</strong>
+				          <em>({{$chip.text1}} | {{$chip.text2}})</em>
+				        </span>
+				      </md-chip-template>
+				    </md-chips>
+				    
+				    <span ng-show="categoryCreationRequest.categorySetupItems.$dirty"> 
+						<span ng-show="categorySetupForm.categorySetupItems.$error['md-max-chips']">
+							<span class="md-input-validation-message" translate>The maxmium of chips is reached.</span>
+						</span>	
+						<span ng-show="categorySetupForm.categorySetupItems.$error.md-min-chips">
+						<span class="md-input-validation-message" translate>At least one screen item should be assigned</span>
+					</span>				
+					</span>	
+				  
 		        </div>
 		        
 		        <div layout-gt-sm="row">
-		        	<md-button class="md-raised md-warn">Exit</md-button>
-		        	<md-button class="md-raised md-warn">Reset</md-button>
-		        	<md-button class="md-raised md-primary">Create</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="exitCategoryForm()">Exit</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="resetCategoryForm()">Reset</md-button>
+		        	<md-button class="md-raised md-primary" ng-click="createCategory()">Create</md-button>
 		        </div>
 		        
 		        
