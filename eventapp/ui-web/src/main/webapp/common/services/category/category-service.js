@@ -34,6 +34,11 @@ define(['app'], function (app) {
 	    	return $http.post(url, objectRetrievalRequest);
 	    };
 	    
+	    CategoryServiceFactory.getCategoryByEventId = function (objectRetrievalRequest, baseUrl) {
+	    	var url = baseUrl + '/categoryservice/getbyeventid';
+	    	return $http.post(url, objectRetrievalRequest);
+	    };
+	    
 	    
 	    return CategoryServiceFactory;
 	}]);

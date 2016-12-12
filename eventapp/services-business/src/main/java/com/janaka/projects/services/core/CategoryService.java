@@ -27,4 +27,6 @@ public interface CategoryService {
 
   public TabularDataResponseModel<CategoryDTO> getCategories(TabularDataRequestModel request);
 
+  public ObjectListResponse<CategoryDTO> getCategoryByEventId(ObjectRetrievalRequest request);
+
 }

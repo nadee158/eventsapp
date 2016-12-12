@@ -108,7 +108,14 @@ define(['app'], function (app) {
             var promise = $http.post(url, request);
             console.log('Calling ' + url);
             return promise;
+        },
+        listGenders: function (baseUrl) {
+            var url = baseUrl + '/commonservice/listgenders';
+            var promise = $http.get(url);
+            console.log('Calling ' + url);
+            return promise;
         }
+        
       };
 	}]);
 	

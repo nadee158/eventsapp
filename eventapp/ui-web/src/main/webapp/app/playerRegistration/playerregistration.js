@@ -46,6 +46,20 @@ define(['app', 'ui_bootstrap'], function (app, ui_bootstrap) {
 	        })
       }
       
+     
+      
+      $scope.getEventTypes=function(eventId){
+      	var eventTypeListRequest={id:eventId};
+      	var response=CategoryServiceFactory.getCategoryByEventId(applicationModuleListRequest,baseUrl);	        	 
+      	response.success(function(data, status, headers, config) {	
+      		$scope.disable=true;
+	      		$scope.categories=data.dtoList;		                
+	        }).error(function(data, status, headers, config){
+	            	NotificationServiceFactory.error(data.message);
+	            	console.error('Error while creating Application ' + data.message);
+	        })
+      }
+      
       var myDropzone = new Dropzone("#fileUploadBtn", { 
     	  url: "#",
     	  maxFilesize:0.5,

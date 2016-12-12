@@ -19,8 +19,8 @@
 			   <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Event Name</label>
-			           	<md-select ng-model="categoryCreationRequest.eventName" required>
-						    <md-option ng-value="{{eventSetup.eventId}}" ng-repeat="eventSetup in eventSetups">{{ eventSetup.eventName }}</md-option>
+			           	<md-select ng-model="categoryCreationRequest.eventId" required>
+						    <md-option ng-value="event.id" ng-repeat="event in events">{{ event.eventName }}</md-option>
 						</md-select>
 			           	<span ng-show="categorySetupForm.eventName.$dirty"> 
 							<span ng-show="categorySetupForm.eventName.$error.required">
@@ -32,26 +32,39 @@
 				<div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Event Type</label>
-			           	<input ng-model="categoryCreationRequest.eventType" name="eventType" md-maxlength="240" required />
-			           	<span ng-show="categorySetupForm.eventType.$dirty"> 
-							<span ng-show="categorySetupForm.eventType.$error.required">
+			           	<input ng-model="categoryCreationRequest.categorySetupName" name="categorySetupName" md-maxlength="240" required />
+			           	<span ng-show="categorySetupForm.categorySetupName.$dirty"> 
+							<span ng-show="categorySetupForm.categorySetupName.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
-							<span ng-show="categorySetupForm.eventType.$error['md-maxlength']">
+							<span ng-show="categorySetupForm.categorySetupName.$error['md-maxlength']">
 								<span class="md-input-validation-message" translate>Event type should be less than 240 characters long!</span>
 							</span>					
 						</span>			       
 			         </md-input-container>
 		        </div>
 		        <div layout-gt-sm="row">
+		             <label translate>Age Group</label>
 			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>Age Group</label>
-			           	<input ng-model="categoryCreationRequest.ageGroup" name="ageGroup" md-maxlength="20" required />
-			           	<span ng-show="categorySetupForm.ageGroup.$dirty"> 
-							<span ng-show="categorySetupForm.ageGroup.$error.required">
+			           	<label translate>From</label>
+			           	<input ng-model="categoryCreationRequest.fromAge" name="fromAge" md-maxlength="20" required />
+			           	<span ng-show="categorySetupForm.fromAge.$dirty"> 
+							<span ng-show="categorySetupForm.fromAge.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
-							<span ng-show="categorySetupForm.ageGroup.$error['md-maxlength']">
+							<span ng-show="categorySetupForm.fromAge.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event type should be less than 240 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>From</label>
+			           	<input ng-model="categoryCreationRequest.toAge" name="toAge" md-maxlength="20" required />
+			           	<span ng-show="categorySetupForm.toAge.$dirty"> 
+							<span ng-show="categorySetupForm.toAge.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+							<span ng-show="categorySetupForm.toAge.$error['md-maxlength']">
 								<span class="md-input-validation-message" translate>Event type should be less than 240 characters long!</span>
 							</span>					
 						</span>			       
@@ -60,8 +73,8 @@
 		         <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Gender</label>
-			           	<md-select ng-model="categoryCreationRequest.gender" required>
-						    <md-option ng-value="{{gender.genderId}}" ng-repeat="gender in genders">{{ eventSetup.gender }}</md-option>
+			           	<md-select ng-model="categoryCreationRequest.gender" required name="gender">
+						    <md-option ng-value="gender" ng-repeat="gender in genders">{{ gender }}</md-option>
 						</md-select>
 			           	<span ng-show="categorySetupForm.gender.$dirty"> 
 							<span ng-show="categorySetupForm.gender.$error.required">
@@ -73,16 +86,42 @@
 		        <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Category/Belt</label>
-			           	<input ng-model="categoryCreationRequest.categoryName" name="categoryName" md-maxlength="240" required />
-			           	<span ng-show="categorySetupForm.categoryName.$dirty"> 
-							<span ng-show="categorySetupForm.categoryName.$error.required">
+			           	<input ng-model="categoryCreationRequest.gradeOrBelt" name="gradeOrBelt" md-maxlength="240" required />
+			           	<span ng-show="categorySetupForm.gradeOrBelt.$dirty"> 
+							<span ng-show="categorySetupForm.gradeOrBelt.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
-							<span ng-show="categorySetupForm.categoryName.$error['md-maxlength']">
+							<span ng-show="categorySetupForm.gradeOrBelt.$error['md-maxlength']">
 								<span class="md-input-validation-message" translate>Category name should be less than 240 characters long!</span>
 							</span>					
 						</span>			       
 			         </md-input-container>
+		        </div>
+		        
+		         <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Select Box</label>
+			           	<md-select ng-model="selectBox"  name="selectBox">
+						    <md-option ng-value="item" ng-repeat="item in itemDropDowns">{{ item }}</md-option>
+						</md-select>
+			         </md-input-container>
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Text 1</label>
+			           	<input ng-model="text1" name="text1" />
+			         </md-input-container>
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Text 2</label>
+			           	<input ng-model="text2" name="text2" />
+			         </md-input-container>
+			         <md-input-container class="md-block" flex-gt-sm>
+			           <md-button class="md-raised md-primary"  ng-click="addItem()" >Add</md-button>
+			         </md-input-container>
+		        </div>
+		        
+		        <div layout-gt-sm="row" ng-repeat="itemDTO in itemDTOList">
+		        	<span>{{itemDTO.itemName}}</span> || 
+		        	<span>{{itemDTO.text1}}</span> || 
+		        	<span>{{itemDTO.text2}}</span>
 		        </div>
 		        
 		        <div layout-gt-sm="row">

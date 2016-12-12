@@ -25,7 +25,7 @@ public class CategoryServiceImpl extends BusinessService implements CategoryServ
 
   @Override
   public CategoryCreationResponse createEvent(CategoryCreationRequest request) {
-    // TODO Auto-generated method stub
+    System.out.println("request " + request);
     return null;
   }
 
@@ -55,6 +55,12 @@ public class CategoryServiceImpl extends BusinessService implements CategoryServ
 
   @Override
   public TabularDataResponseModel<CategoryDTO> getCategories(TabularDataRequestModel request) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public ObjectListResponse<CategoryDTO> getCategoryByEventId(ObjectRetrievalRequest request) {
     // TODO Auto-generated method stub
     return null;
   }

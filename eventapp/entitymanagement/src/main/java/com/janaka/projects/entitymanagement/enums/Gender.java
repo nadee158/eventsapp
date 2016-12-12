@@ -30,4 +30,10 @@ public enum Gender {
     return LOOKUP.get(code);
   }
 
+  public static Map<Integer, Gender> getLookup() {
+    return LOOKUP;
+  }
+
+
+
 }

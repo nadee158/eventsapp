@@ -44,7 +44,8 @@ display: none;
 			    <div layout="row">
 			         <md-input-container layout="column" flex>
 			           	<label translate>Name Of the Event</label>
-			           	<md-select ng-model="playerCreationRequest.eventId" name="eventId" required>
+			           	<md-select ng-model="playerCreationRequest.eventId" name="eventId" required 
+			           	  ng-change="getEventTypes(playerCreationRequest.eventId)" >
 						    <md-option ng-value="{{event.eventId}}" ng-repeat="event in events">{{ event.eventName }}</md-option>
 						</md-select>
 			           	<span ng-show="playerRegistrationForm.eventId.$dirty"> 

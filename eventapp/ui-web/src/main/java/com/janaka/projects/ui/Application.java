@@ -6,15 +6,17 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.velocity.VelocityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = {"com.janaka.projects.ui.*"})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class,
-    DataSourceTransactionManagerAutoConfiguration.class, SecurityAutoConfiguration.class})
+    DataSourceTransactionManagerAutoConfiguration.class, SecurityAutoConfiguration.class,
+    VelocityAutoConfiguration.class})
 public class Application extends SpringBootServletInitializer {
 
 

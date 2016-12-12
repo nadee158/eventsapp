@@ -68,8 +68,7 @@ public class CategoryController {
   }
 
   @RequestMapping(value = ServiceEndpoints.GET_BY_ID, method = RequestMethod.POST)
-  public CustomResponseEntity<ApiResponseObject<?>> getActiveSecurityUserById(
-      @RequestBody ObjectRetrievalRequest request) {
+  public CustomResponseEntity<ApiResponseObject<?>> getActiveCategoryById(@RequestBody ObjectRetrievalRequest request) {
     ObjectRetrievalResponse<CategoryDTO> response = categoryService.getCategoryById(request);
     return new CustomResponseEntity<ApiResponseObject<?>>(
         new ApiResponseObject<ObjectRetrievalResponse<CategoryDTO>>(HttpStatus.OK, response), HttpStatus.OK);
@@ -78,6 +77,14 @@ public class CategoryController {
   @RequestMapping(value = ServiceEndpoints.GET_ALL, method = RequestMethod.POST)
   public TabularDataResponseModel<CategoryDTO> getActiveCategories(@RequestBody TabularDataRequestModel request) {
     return categoryService.getCategories(request);
+  }
+
+  @RequestMapping(value = ServiceEndpoints.GET_BY_EVENT_ID, method = RequestMethod.POST)
+  public CustomResponseEntity<ApiResponseObject<?>> getActiveCategoryByEventId(
+      @RequestBody ObjectRetrievalRequest request) {
+    ObjectListResponse<CategoryDTO> response = categoryService.getCategoryByEventId(request);
+    return new CustomResponseEntity<ApiResponseObject<?>>(
+        new ApiResponseObject<ObjectListResponse<CategoryDTO>>(HttpStatus.OK, response), HttpStatus.OK);
   }
 
 

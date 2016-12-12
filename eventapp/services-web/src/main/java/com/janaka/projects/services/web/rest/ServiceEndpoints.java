@@ -80,6 +80,11 @@ public final class ServiceEndpoints {
   // --------------- PLAYER -----------------------
   public static final String PLAYERS = "playerservice";
 
+  // --------------- COMMON -----------------------
+  public static final String COMMON = "commonservice";
+
+  public static final String LIST_GENDERS = "/listgenders";
+
 
 
   public static final String CREATE = "/create";
@@ -93,6 +98,8 @@ public final class ServiceEndpoints {
   public static final String GET_BY_ID = "/getbyid";
 
   public static final String GET_ALL = "/getall";
+
+  public static final String GET_BY_EVENT_ID = "/getbyeventid";
 
 
 
