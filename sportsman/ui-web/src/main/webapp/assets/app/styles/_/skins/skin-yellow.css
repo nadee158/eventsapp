@@ -3,7 +3,7 @@
  * ------------
  */
 .skin-yellow .main-header .navbar {
-  background-color: #eda815;
+  background-color: #fde74c;
 }
 .skin-yellow .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -29,7 +29,7 @@
   color: #fff;
 }
 .skin-yellow .main-header .navbar .sidebar-toggle:hover {
-  background-color: #d89811;
+  background-color: #fde433;
 }
 @media (max-width: 767px) {
   .skin-yellow .main-header .navbar .dropdown-menu li.divider {
@@ -39,19 +39,19 @@
     color: #fff;
   }
   .skin-yellow .main-header .navbar .dropdown-menu li a:hover {
-    background: #d89811;
+    background: #fde433;
   }
 }
 .skin-yellow .main-header .logo {
-  background-color: #d89811;
+  background-color: #fde433;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }
 .skin-yellow .main-header .logo:hover {
-  background-color: #d39510;
+  background-color: #fde32e;
 }
 .skin-yellow .main-header li.user-header {
-  background-color: #eda815;
+  background-color: #fde74c;
 }
 .skin-yellow .content-header {
   background: transparent;
@@ -76,7 +76,7 @@
 .skin-yellow .sidebar-menu > li.active > a {
   color: #ffffff;
   background: #1e282c;
-  border-left-color: #eda815;
+  border-left-color: #fde74c;
 }
 .skin-yellow .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;
