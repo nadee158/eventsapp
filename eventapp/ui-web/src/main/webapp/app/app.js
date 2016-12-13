@@ -127,8 +127,8 @@ define(['routes','dependencyResolverFor','datatables','ngMaterial','select2','Pu
     app.run(function ($rootScope, $location, CommonStorageFactory,Constants) {
        
     	var rootPath = $location.protocol() + '://' + $location.host() + ':' + $location.port();
-        $rootScope.baseUrl =  rootPath + '/eventappservices';     
-        $rootScope.reportBaseUrl = rootPath + '/eventappservices-reports';
+        $rootScope.baseUrl =  rootPath + '/sportsmanservices';     
+        $rootScope.reportBaseUrl = rootPath + '/sportsmanservices-reports';
         $rootScope.uiBaseUrl = rootPath + '/ui-web';
         
 		

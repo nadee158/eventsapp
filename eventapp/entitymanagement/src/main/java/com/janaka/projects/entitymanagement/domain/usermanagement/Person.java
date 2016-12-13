@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,8 +19,6 @@ import org.hibernate.validator.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.janaka.projects.common.constant.ApplicationConstants;
 import com.janaka.projects.entitymanagement.domain.common.AuditEntity;
-import com.janaka.projects.entitymanagement.enums.MaritalStatus;
-import com.janaka.projects.entitymanagement.enums.Prefix;
 
 
 @Audited
@@ -40,10 +36,6 @@ public class Person extends AuditEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id = 0;
 
-  @Column(name = "prefix")
-  @Enumerated(EnumType.STRING)
-  private Prefix prefix;
-
   @Column(name = "full_name")
   private String fullName = StringUtils.EMPTY;
 
@@ -56,11 +48,8 @@ public class Person extends AuditEntity {
   @Column(name = "nic")
   private String nic = StringUtils.EMPTY;
 
-  @Column(name = "mobile_number")
-  private String mobileNumber = StringUtils.EMPTY;
-
-  @Column(name = "land_number")
-  private String landNumber = StringUtils.EMPTY;
+  @Column(name = "contact_number")
+  private String contactNumber = StringUtils.EMPTY;
 
   @Column(name = "email")
   @Email()
@@ -68,10 +57,6 @@ public class Person extends AuditEntity {
 
   @Column(name = "profile_image_path")
   private String profileImagePath = StringUtils.EMPTY;
-
-  @Enumerated(EnumType.STRING)
-  @Column(name = "marital_status")
-  private MaritalStatus maritalStatus = null;
 
   @Column(name = "address")
   private String address;
@@ -82,14 +67,6 @@ public class Person extends AuditEntity {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public Prefix getPrefix() {
-    return prefix;
-  }
-
-  public void setPrefix(Prefix prefix) {
-    this.prefix = prefix;
   }
 
   public String getFullName() {
@@ -117,20 +94,12 @@ public class Person extends AuditEntity {
     this.nic = nic;
   }
 
-  public String getMobileNumber() {
-    return mobileNumber;
+  public String getContactNumber() {
+    return contactNumber;
   }
 
-  public void setMobileNumber(String mobileNumber) {
-    this.mobileNumber = mobileNumber;
-  }
-
-  public String getLandNumber() {
-    return landNumber;
-  }
-
-  public void setLandNumber(String landNumber) {
-    this.landNumber = landNumber;
+  public void setContactNumber(String contactNumber) {
+    this.contactNumber = contactNumber;
   }
 
   public String getEmail() {
@@ -149,14 +118,6 @@ public class Person extends AuditEntity {
     this.profileImagePath = profileImagePath;
   }
 
-  public MaritalStatus getMaritalStatus() {
-    return maritalStatus;
-  }
-
-  public void setMaritalStatus(MaritalStatus maritalStatus) {
-    this.maritalStatus = maritalStatus;
-  }
-
   public String getAddress() {
     return address;
   }
@@ -167,9 +128,9 @@ public class Person extends AuditEntity {
 
   @Override
   public String toString() {
-    return "Person [id=" + id + ", prefix=" + prefix + ", fullName=" + fullName + ", dateOfBirth=" + dateOfBirth
-        + ", nic=" + nic + ", mobileNumber=" + mobileNumber + ", landNumber=" + landNumber + ", email=" + email
-        + ", profileImagePath=" + profileImagePath + ", maritalStatus=" + maritalStatus + ", address=" + address + "]";
+    return "Person [id=" + id + ", fullName=" + fullName + ", dateOfBirth=" + dateOfBirth + ", nic=" + nic
+        + ", contactNumber=" + contactNumber + ", email=" + email + ", profileImagePath=" + profileImagePath
+        + ", address=" + address + "]";
   }
 
 

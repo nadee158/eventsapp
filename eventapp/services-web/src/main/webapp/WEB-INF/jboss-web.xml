@@ -4,7 +4,7 @@
 
 <jboss-web>
 
-        <context-root>/eventappservices</context-root>
+        <context-root>/sportsmanservices</context-root>
 
 </jboss-web>
 

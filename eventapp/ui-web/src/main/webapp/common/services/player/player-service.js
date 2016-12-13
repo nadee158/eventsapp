@@ -16,7 +16,7 @@ define(['app'], function (app) {
 	            headers: {'Content-Type': undefined },
 	            transformRequest: function (data) {
 	                var formData = new FormData();
-	                formData.append('store', new Blob([angular.toJson(data.store)], {
+	                formData.append('playerCreationRequest', new Blob([angular.toJson(data.playerCreationRequest)], {
 	                    type: "application/json"
 	                }));
 	                formData.append("file", data.file);

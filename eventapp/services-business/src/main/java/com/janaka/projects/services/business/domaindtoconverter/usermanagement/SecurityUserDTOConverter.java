@@ -6,9 +6,7 @@ import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.janaka.projects.dtos.domain.usermanagement.MaritalStatusDTO;
 import com.janaka.projects.dtos.domain.usermanagement.PersonDTO;
-import com.janaka.projects.dtos.domain.usermanagement.PrefixDTO;
 import com.janaka.projects.dtos.domain.usermanagement.SecurityUserDTO;
 import com.janaka.projects.dtos.domain.usermanagement.UserRoleDTO;
 import com.janaka.projects.dtos.requests.usermanagement.SecurityUserCreationRequest;
@@ -19,8 +17,6 @@ import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.Use
 import com.janaka.projects.entitymanagement.domain.usermanagement.Person;
 import com.janaka.projects.entitymanagement.domain.usermanagement.SecurityUser;
 import com.janaka.projects.entitymanagement.domain.usermanagement.UserRole;
-import com.janaka.projects.entitymanagement.enums.MaritalStatus;
-import com.janaka.projects.entitymanagement.enums.Prefix;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
 
 public class SecurityUserDTOConverter {
@@ -58,16 +54,10 @@ public class SecurityUserDTOConverter {
     person.setDateOfBirth(personDTO.getDateOfBirth());
     person.setEmail(personDTO.getEmail());
     person.setFullName(personDTO.getFullName());
-    if (!(personDTO.getMaritalStatus() == null || personDTO.getMaritalStatus().getCode() != 0)) {
-      person.setMaritalStatus(MaritalStatus.fromCode(personDTO.getMaritalStatus().getCode()));
-    }
     person.setProfileImagePath(personDTO.getProfileImagePath());
     person.setAddress(personDTO.getAddress());
-    person.setMobileNumber(personDTO.getMobileNumber());
+    person.setContactNumber(personDTO.getMobileNumber());
     person.setNic(personDTO.getNic());
-    if (!(personDTO.getPrefix() == null || personDTO.getPrefix().getCode() != 0)) {
-      person.setPrefix(Prefix.fromCode(personDTO.getMaritalStatus().getCode()));
-    }
     person.setProfileImagePath(personDTO.getProfileImagePath());
     return person;
   }
@@ -110,21 +100,13 @@ public class SecurityUserDTOConverter {
 
   private static PersonDTO getPersonDTO(Person person) {
     PersonDTO personDTO = new PersonDTO();
-    if (!(person.getMaritalStatus() == null)) {
-      personDTO.setMaritalStatus(
-          new MaritalStatusDTO(person.getMaritalStatus().getCode(), person.getMaritalStatus().toString()));
-    }
     personDTO.setProfileImagePath(person.getProfileImagePath());
     personDTO.setFullName(person.getFullName());
-    if (!(person.getPrefix() == null)) {
-      personDTO.setPrefix(new PrefixDTO(person.getPrefix().getCode(), person.getPrefix().getName()));
-    }
     personDTO.setAddress(person.getAddress());
     personDTO.setDateOfBirth(person.getDateOfBirth());
     personDTO.setEmail(person.getEmail());
     personDTO.setId(person.getId());
-    personDTO.setMobileNumber(person.getMobileNumber());
-    personDTO.setLandNumber(person.getLandNumber());
+    personDTO.setMobileNumber(person.getContactNumber());
     personDTO.setNic(person.getNic());
     return personDTO;
   }
@@ -163,8 +145,7 @@ public class SecurityUserDTOConverter {
     person.setEmail(request.getEmail());
     person.setFullName(request.getFullName());
     person.setNic(request.getNic());
-    person.setMobileNumber(request.getMobileNumber());
-    person.setPrefix(Prefix.fromCode(request.getPrefixCode()));
+    person.setContactNumber(request.getMobileNumber());
     return person;
   }
 
@@ -187,8 +168,7 @@ public class SecurityUserDTOConverter {
     person.setEmail(request.getEmail());
     person.setFullName(request.getFullName());
     person.setNic(request.getNic());
-    person.setMobileNumber(request.getMobileNumber());
-    person.setPrefix(Prefix.fromCode(request.getPrefixCode()));
+    person.setContactNumber(request.getMobileNumber());
     return person;
   }
 
@@ -208,18 +188,11 @@ public class SecurityUserDTOConverter {
   }
 
   private static Person getUpdatedPerson(Person person, SecurityUserProfileUpdateRequest request) {
-    if (!(request.getPrefixName() == null)) {
-      person.setPrefix(Prefix.fromCode(request.getPrefixCode()));
-    }
     person.setFullName(request.getFullName());
     person.setDateOfBirth(request.getDateOfBirth());
     person.setNic(request.getNic());
-    person.setMobileNumber(request.getMobileNumber());
-    person.setLandNumber(request.getLandNumber());
+    person.setContactNumber(request.getMobileNumber());
     person.setEmail(request.getEmail());
-    if (!(request.getMaritalStatusName() == null)) {
-      person.setMaritalStatus(MaritalStatus.fromCode(request.getMaritalStatusCode()));
-    }
     person.setAddress(request.getAddress());
     person.setProfileImagePath(request.getProfileImagePath());
     return person;

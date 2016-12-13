@@ -27,4 +27,8 @@ public interface PlayerService {
 
   public PlayerCreationResponse createPlayer(PlayerCreationRequest request);
 
+  public ObjectRetrievalResponse<PlayerDTO> getPlayerByIcPassport(ObjectRetrievalRequest request);
+
+  public ObjectRetrievalResponse<PlayerDTO> getPlayerByPlayerNo(ObjectRetrievalRequest request);
+
 }

@@ -28,6 +28,9 @@ import com.janaka.projects.dtos.responses.common.ObjectListResponse;
 import com.janaka.projects.dtos.responses.common.ObjectRetrievalResponse;
 import com.janaka.projects.dtos.responses.core.PlayerCreationResponse;
 import com.janaka.projects.dtos.responses.core.PlayerUpdateResponse;
+import com.janaka.projects.entitymanagement.enums.SequenceNumberType;
+import com.janaka.projects.services.common.FileService;
+import com.janaka.projects.services.common.SequenceNumberService;
 import com.janaka.projects.services.core.PlayerService;
 import com.janaka.projects.services.web.rest.ServiceEndpoints;
 
@@ -40,6 +43,13 @@ public class PlayerController {
   @Autowired
   private PlayerService playerService;
 
+  @Autowired
+  private SequenceNumberService sequenceNumberService;
+
+  @Autowired
+  private FileService fileService;
+
+
   @RequestMapping(value = ServiceEndpoints.CREATE, method = RequestMethod.POST,
       consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public @ResponseBody CustomResponseEntity<ApiResponseObject<?>> createPlayer(
@@ -47,6 +57,9 @@ public class PlayerController {
       @RequestPart("file") MultipartFile file) {
     logger.error("request : " + request);
     logger.error("file : " + file);
+    request.setFile(file);
+    request.setSavedImagePath(fileService.saveImegeToDisk(request.getFile()));
+    request.setPlayerNumber(sequenceNumberService.getNextReferenceNumberByNumberType(SequenceNumberType.PLAYER_NUMBER));
     PlayerCreationResponse response = playerService.createPlayer(request);
     return new CustomResponseEntity<ApiResponseObject<?>>(
         new ApiResponseObject<PlayerCreationResponse>(HttpStatus.OK, response), HttpStatus.OK);

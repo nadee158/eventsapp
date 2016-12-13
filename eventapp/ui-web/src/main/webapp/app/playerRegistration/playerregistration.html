@@ -46,7 +46,7 @@ display: none;
 			           	<label translate>Name Of the Event</label>
 			           	<md-select ng-model="playerCreationRequest.eventId" name="eventId" required 
 			           	  ng-change="getEventTypes(playerCreationRequest.eventId)" >
-						    <md-option ng-value="{{event.eventId}}" ng-repeat="event in events">{{ event.eventName }}</md-option>
+						    <md-option ng-value="event.id" ng-repeat="event in events">{{ event.eventName }}</md-option>
 						</md-select>
 			           	<span ng-show="playerRegistrationForm.eventId.$dirty"> 
 							<span ng-show="playerRegistrationForm.eventId.$error.required">
@@ -59,7 +59,7 @@ display: none;
 			         <md-input-container layout="column" flex>
 			           	<label translate>Event Type</label>
 			           	<md-select ng-model="playerCreationRequest.categoryId" name="categoryId" required>
-						    <md-option ng-value="{{category.categoryId}}" ng-repeat="category in categories">{{ category.categoryName }}</md-option>
+						    <md-option ng-value="category.id" ng-repeat="category in categories">{{ category.categorySetupName }}</md-option>
 						</md-select>
 			           	<span ng-show="playerRegistrationForm.categoryId.$dirty"> 
 							<span ng-show="playerRegistrationForm.categoryId.$error.required">
@@ -192,9 +192,9 @@ display: none;
 			         </md-input-container>
 		        </div>
 		        <div layout-gt-sm="row">
-		        	<md-button class="md-raised md-warn">Exit</md-button>
-		        	<md-button class="md-raised md-warn">Reset</md-button>
-		        	<md-button class="md-raised md-primary">Create</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="exitPlayerForm()">Exit</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="resetPlayerForm()">Reset</md-button>
+		        	<md-button class="md-raised md-primary" ng-click="registerPlayer()">Create</md-button>
 		        </div>
 		        
 		        

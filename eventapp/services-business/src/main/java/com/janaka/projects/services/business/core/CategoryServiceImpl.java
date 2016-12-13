@@ -1,5 +1,8 @@
 package com.janaka.projects.services.business.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +85,18 @@ public class CategoryServiceImpl extends BusinessService implements CategoryServ
 
   @Override
   public ObjectListResponse<CategoryDTO> getCategoryByEventId(ObjectRetrievalRequest request) {
-    // TODO Auto-generated method stub
+    List<CategorySetup> categorySetupList = categorySetupRepository.findByEvent_Id(request.getId());
+    if (!(categorySetupList == null || categorySetupList.isEmpty())) {
+      ObjectListResponse<CategoryDTO> response = new ObjectListResponse<CategoryDTO>();
+      response.setDtoList(new ArrayList<CategoryDTO>());
+      categorySetupList.forEach(item -> {
+        response.getDtoList().add(CategorySetupDTOConverter.convertDomainToDTO(item));
+      });
+      response.setListSize(response.getDtoList().size());
+      response.setMessage("SUCCESS");
+      response.setStatus(ApplicationConstants.STATUS_CODE_OK);
+      return response;
+    }
     return null;
   }
 

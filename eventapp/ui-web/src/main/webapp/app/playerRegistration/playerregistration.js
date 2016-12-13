@@ -46,14 +46,47 @@ define(['app', 'ui_bootstrap'], function (app, ui_bootstrap) {
 	        })
       }
       
-     
+      $scope.exitPlayerForm=function(){
+    	  ModalDialogServiceFactory.confirmBox(
+          		  'Confirm Exit', 
+          		  'Are you sure you want to leave the page?', 
+          		  '', 
+          		  'Ok', 
+          		  $translate('common.button.text.CANCEL'), 
+          		  exitForm, 
+          		  null, 
+          		  null, 
+          		  null
+            );
+      }
+      
+      function exitForm(){
+    	  $location.path("/home");
+      }
+      
+      $scope.resetPlayerForm=function(){
+    	  ModalDialogServiceFactory.confirmBox(
+          		  'Confirm Form Reset', 
+          		  'Are you sure you want to clear the form content?', 
+          		  '', 
+          		  'Ok', 
+          		  $translate('common.button.text.CANCEL'), 
+          		  resetForm, 
+          		  null, 
+          		  null, 
+          		  null
+            );
+      }
+      
+      function resetForm(){
+    	  $scope.playerCreationRequest=new Object();
+      }
       
       $scope.getEventTypes=function(eventId){
       	var eventTypeListRequest={id:eventId};
-      	var response=CategoryServiceFactory.getCategoryByEventId(applicationModuleListRequest,baseUrl);	        	 
+      	var response=CategoryServiceFactory.getCategoryByEventId(eventTypeListRequest,baseUrl);	        	 
       	response.success(function(data, status, headers, config) {	
-      		$scope.disable=true;
-	      		$scope.categories=data.dtoList;		                
+	      		$scope.categories=data.apiResponseResults.dtoList;		                
 	        }).error(function(data, status, headers, config){
 	            	NotificationServiceFactory.error(data.message);
 	            	console.error('Error while creating Application ' + data.message);
@@ -136,17 +169,29 @@ define(['app', 'ui_bootstrap'], function (app, ui_bootstrap) {
       	
         	if($scope.playerRegistrationForm.$valid) {
         		
-        		ModalDialogServiceFactory.confirmBox(
-              		  $translate('common.notification.message.CONFIRM_SUBMIT_TITLE'), 
-              		  $translate('common.notification.message.CONFIRM_SUMIT_CONTENT'), 
-              		  '', 
-              		  $translate('common.button.text.SUBMIT'), 
-              		  $translate('common.button.text.CANCEL'), 
-              		  submitPlayerRegistrationRequest, 
-              		  $scope.playerCreationRequest, 
-              		  null, 
-              		  null
-                );
+        		if($scope.file){
+        			//$scope.playerCreationRequest.file=$scope.file;
+        			ModalDialogServiceFactory.confirmBox(
+                    		  $translate('common.notification.message.CONFIRM_SUBMIT_TITLE'), 
+                    		  $translate('common.notification.message.CONFIRM_SUMIT_CONTENT'), 
+                    		  '', 
+                    		  $translate('common.button.text.SUBMIT'), 
+                    		  $translate('common.button.text.CANCEL'), 
+                    		  submitPlayerRegistrationRequest, 
+                    		  $scope.playerCreationRequest, 
+                    		  null, 
+                    		  null
+                      );
+        		}else{
+        			ModalDialogServiceFactory.alert(
+                    		  $translate('common.notification.message.NOTIFY_FORM_VALIDATION_ERRORS'), 
+                    		  $translate('Please upload the player image!'), 
+                    		  '', 
+                    		  $translate('common.button.text.OK'), 
+                    		  null, 
+                    		  null
+                      );
+        		}
         	    
         	}else{
         		ModalDialogServiceFactory.alert(

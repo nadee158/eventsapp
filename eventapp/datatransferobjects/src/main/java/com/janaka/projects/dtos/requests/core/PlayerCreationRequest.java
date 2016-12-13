@@ -29,7 +29,25 @@ public class PlayerCreationRequest implements Serializable {
 
   private long categoryId;
 
+  private String team;
+
   private MultipartFile file;
+
+  private String savedImagePath;
+
+  private String dateOfBirth;
+
+  private String email;
+
+  private long personId;
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
   public long getEventId() {
     return eventId;
@@ -107,7 +125,8 @@ public class PlayerCreationRequest implements Serializable {
   public String toString() {
     return "PlayerCreationRequest [eventId=" + eventId + ", playerNumber=" + playerNumber + ", playerName=" + playerName
         + ", icPassport=" + icPassport + ", address=" + address + ", contactNumber=" + contactNumber + ", weight="
-        + weight + ", height=" + height + ", categoryId=" + categoryId + ", file=" + file + "]";
+        + weight + ", height=" + height + ", categoryId=" + categoryId + ", team=" + team + ", file=" + file
+        + ", savedImagePath=" + savedImagePath + ", dateOfBirth=" + dateOfBirth + ", email=" + email + "]";
   }
 
   public MultipartFile getFile() {
@@ -116,6 +135,38 @@ public class PlayerCreationRequest implements Serializable {
 
   public void setFile(MultipartFile file) {
     this.file = file;
+  }
+
+  public String getTeam() {
+    return team;
+  }
+
+  public void setTeam(String team) {
+    this.team = team;
+  }
+
+  public String getDateOfBirth() {
+    return dateOfBirth;
+  }
+
+  public void setDateOfBirth(String dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  public String getSavedImagePath() {
+    return savedImagePath;
+  }
+
+  public void setSavedImagePath(String savedImagePath) {
+    this.savedImagePath = savedImagePath;
+  }
+
+  public long getPersonId() {
+    return personId;
+  }
+
+  public void setPersonId(long personId) {
+    this.personId = personId;
   }
 
 

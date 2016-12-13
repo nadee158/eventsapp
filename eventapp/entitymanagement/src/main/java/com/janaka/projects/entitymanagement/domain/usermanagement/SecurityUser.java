@@ -185,8 +185,8 @@ public class SecurityUser extends AuditEntity {
   public User constructUser() {
 
     return new User(id, UUID.fromString(getUuId()), person.getFullName(), person.getProfileImagePath(),
-        person.getDateOfBirth(), person.getMobileNumber(), person.getEmail(), userName, secret, this.grantedAuthorities,
-        accountExpired, accountLocked, credentialsExpired, accountEnabled);
+        person.getDateOfBirth(), person.getContactNumber(), person.getEmail(), userName, secret,
+        this.grantedAuthorities, accountExpired, accountLocked, credentialsExpired, accountEnabled);
   }
 
   public Set<UserRole> getUserRoles() {

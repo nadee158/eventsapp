@@ -144,7 +144,7 @@ public final class ChangePasswordUnitOfWork extends UnitOfWork {
         if (emailResponse.getStatus() == ApplicationConstants.STATUS_CODE_OK) {
           response.setEmailSentStatus(YesNoStatus.YES.getCode());
         }
-        if (StringUtils.isNotEmpty(securityUser.getPerson().getMobileNumber())) {
+        if (StringUtils.isNotEmpty(securityUser.getPerson().getContactNumber())) {
           SendSMSResponse sendSMSResponse = sendSMS();
           if (sendSMSResponse.getStatus() == ApplicationConstants.STATUS_CODE_OK) {
             response.setSmsSentStatus(YesNoStatus.YES.getCode());
@@ -173,7 +173,7 @@ public final class ChangePasswordUnitOfWork extends UnitOfWork {
   private SendSMSResponse sendSMS() {
     List<NotificationRecipient> recepients = new ArrayList<NotificationRecipient>();
     NotificationRecipient recipient = new NotificationRecipient(securityUser.getPerson().getFullName(),
-        securityUser.getPerson().getMobileNumber(), 1);
+        securityUser.getPerson().getContactNumber(), 1);
     recepients.add(recipient);
     SendSMSRequest sendSMSRequest = new SendSMSRequest();
     sendSMSRequest.setLanguage(language);

@@ -9,7 +9,7 @@
 
 	<parent>
 		<groupId>com.janaka.projects</groupId>
-		<artifactId>eventapp</artifactId>
+		<artifactId>sportsman</artifactId>
 		<version>1.0</version>
 	</parent>
 
@@ -83,13 +83,11 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-			<version>${groovy.version}</version>
 		</dependency>
 
 		<!-- Jasper -->
@@ -155,6 +153,6 @@
 			</plugins>
 		</pluginManagement>
 
-		<finalName>services-reports</finalName>
+		<finalName>sportsmanservices-reports</finalName>
 	</build>
 </project>

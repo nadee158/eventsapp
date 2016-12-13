@@ -93,6 +93,9 @@ public class AuditEntity implements Serializable {
     if (this.modificationTime == null) {
       this.modificationTime = LocalDateTime.now();
     }
+    if (this.recordStatus == null) {
+      this.recordStatus = RecordStatus.ACTIVE;
+    }
     audit("INSERT");
   }
 

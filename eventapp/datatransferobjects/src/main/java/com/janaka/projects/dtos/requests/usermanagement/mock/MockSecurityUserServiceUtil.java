@@ -11,13 +11,13 @@ public class MockSecurityUserServiceUtil {
   public static SecurityUserCreationRequest getSecurityUserCreationRequest() {
     SecurityUserCreationRequest request = new SecurityUserCreationRequest();
     request.setAddress("Test Address");
-    request.setEmail("nadee158@gmail.com");
+    request.setEmail("janakawanigatunga82@gmail.com");
     request.setFullName("Super user Testing");
     request.setMobileNumber("0712186182");
-    request.setNic("865480433v");
+    request.setNic("812265481v");
     request.setPrefixCode(1);
-    request.setSecret("eventsappuser@123");
-    request.setUserName("eventsappuser");
+    request.setSecret("sportsman_admin@123");
+    request.setUserName("sportsman_admin");
     List<Long> urlist = new ArrayList<Long>();
     urlist.add(1l);
     request.setUserRoles(urlist);

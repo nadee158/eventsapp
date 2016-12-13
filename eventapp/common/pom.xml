@@ -7,7 +7,7 @@
 
 	<parent>
 		<groupId>com.janaka.projects</groupId>
-		<artifactId>eventapp</artifactId>
+		<artifactId>sportsman</artifactId>
 		<version>1.0</version>
 	</parent>
 

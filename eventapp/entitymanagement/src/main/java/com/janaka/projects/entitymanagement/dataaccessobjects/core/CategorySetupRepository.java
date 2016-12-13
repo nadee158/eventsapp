@@ -11,5 +11,7 @@ public interface CategorySetupRepository extends DataTablesRepository<CategorySe
 
   List<CategorySetup> findByRecordStatus(RecordStatus active);
 
+  List<CategorySetup> findByEvent_Id(long id);
+
 
 }
