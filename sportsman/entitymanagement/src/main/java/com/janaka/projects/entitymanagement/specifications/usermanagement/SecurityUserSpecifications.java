@@ -13,12 +13,9 @@ public class SecurityUserSpecifications {
 
   public static Specification<SecurityUser> isNotDeleted(long securityUserId) {
     return (root, query, criteriaBuilder) -> {
-      Predicate predicateAnd = criteriaBuilder.conjunction();
-      predicateAnd =
-          criteriaBuilder.and(predicateAnd, criteriaBuilder.notEqual(root.get(SecurityUser_.id), securityUserId));
-      predicateAnd = criteriaBuilder.and(predicateAnd,
-          criteriaBuilder.equal(root.get(SecurityUser_.recordStatus), RecordStatus.ACTIVE));
-      return predicateAnd;
+      Predicate predicateOne = criteriaBuilder.notEqual(root.get(SecurityUser_.id), securityUserId);
+      Predicate predicateTwo = criteriaBuilder.equal(root.get(SecurityUser_.recordStatus), RecordStatus.ACTIVE);
+      return criteriaBuilder.and(predicateOne, predicateTwo);
       // return criteriaBuilder.equal(root.get(Application_.isDeleted),
       // false);
     };

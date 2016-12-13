@@ -3,10 +3,13 @@
 define(['app'], function (app) {
 	app.controller('AddUserRolesToSecurityUserController', ['$scope','$compile','$rootScope','$location','$filter','DTOptionsBuilder','DTColumnBuilder',
 	                                                        'CommonStorageFactory','NotificationServiceFactory','PubSub','Constants','Page',
-	                                                        'ModalDialogServiceFactory','UserRoleServiceFactory','SecurityUserServiceFactory','CommonServiceFactory',
+	                                                        'ModalDialogServiceFactory',
+	                                                        'UserRoleServiceFactory','SecurityUserServiceFactory','CommonServiceFactory',
 	                                                        function($scope,$compile,$rootScope,$location,$filter,DTOptionsBuilder,DTColumnBuilder,
 	                                                                CommonStorageFactory,NotificationServiceFactory,PubSub,Constants,Page,
-	                                                                ModalDialogServiceFactory,UserRoleServiceFactory,SecurityUserServiceFactory,CommonServiceFactory) {
+	                                                                ModalDialogServiceFactory,
+	                                                                UserRoleServiceFactory,SecurityUserServiceFactory
+	                                                                ,CommonServiceFactory) {
 		
 		  var $translate = $filter('translate');
 			
@@ -21,7 +24,6 @@ define(['app'], function (app) {
 	      
 	      var storageKey = Constants.Keys.authtoken;
 		  var authToken = CommonStorageFactory.retrieve(storageKey);
-		  var copyPermissionList=[];
 		  
 		  
 		   var self=this;
@@ -40,52 +42,9 @@ define(['app'], function (app) {
 			    $scope.securityUserPermissionUpdateRequest={};
     		    $scope.securityUserPermissionUpdateRequest.id=securityUserId;
     		    $scope.securityUserPermissionUpdateRequest.userRoles=[];
-		      	displayTopMenuButtons();
-		      	subscribeToTopMenuButtonEvents();
 		      	displayUserRolesBySecurityId(securityUserId);
 		      };
 		      
-		      function displayTopMenuButtons(){
-		     		var formKey='add_userroleforsecurityuser_screen';
-		     	    $scope.formKey=formKey;
-			      	var topMenuButtonDisplay={
-			      			formKey:formKey,
-							    showMenu:true,
-							    showNext:false,
-							    showPrevious:false,
-							    showPrint:false,
-							    showCopy:false,
-							    showEdit:false,
-							    showSearch:false,
-							    showSave:CommonServiceFactory.checkIfPermitted("ROLE_A_UM_SU_USU_UDT"),
-							    showCancel:CommonServiceFactory.checkIfPermitted("ROLE_A_UM_SU_LSU_VWE ROLE_A_UM_SU_LSU_UDT"),
-							    showAddNew:false,
-			       };
-		      	PubSub.publish(Constants.Events.displayheaderbuttons,topMenuButtonDisplay);
-		      }
-		      
-		      function subscribeToTopMenuButtonEvents(){
-		       		//first unsubscribe from previous subscribed events
-		       		PubSub.unsubscribe(Constants.Events.saved);
-		       		PubSub.unsubscribe(Constants.Events.cancel);
-		       		//then subscribe to new events
-		        	var subTopMenuSaveButton = PubSub.subscribe(Constants.Events.saved, listenerSaveClicked);
-		        	var subTopMenuCancelButton = PubSub.subscribe(Constants.Events.cancel, listenerCancelClicked);
-		        }
-		      
-		     	 function listenerSaveClicked(topic, data) {
-//					    var formKey=data.formKey;
-//					    if(formKey==$scope.formKey){
-					    	addUserRoleForSecurityUser();
-//					    }
-					}
-		     	 
-		         function listenerCancelClicked(topic, data) {
-					    var formKey=data.formKey;
-					    if(formKey==$scope.formKey){
-					    	$location.path('/listsecurityusers');
-					    }
-					}
 		      
 		      
 		      var vm=this;
@@ -122,20 +81,6 @@ define(['app'], function (app) {
 		  
 		      vm.dtColumns = [
 		          DTColumnBuilder.newColumn('userRoleName').withTitle($translate('usrmgt.user_role.label.USER_ROLE_NAME')).withOption('width', '15%'),//0
-		          DTColumnBuilder.newColumn('permissions').withTitle($translate('usrmgt.user_role.label.permissions')).withOption('searchable', false).notSortable()//1
-		          .renderWith(function(data, type, full, meta) {
-		        	  if(data){
-		        		  var text='<md-chips>';
-		            	  
-		            	  for(var i = 0; i < data.length; i++) {
-		            		  text=text + '<md-chip>' + data[i].permissionName + '</md-chip>';
-		    			  }
-		            	  
-		            	  text=text + '</md-chips>';
-		                  return  text;
-		        	  }
-		          }),          
-		          
 		          DTColumnBuilder.newColumn('id').withTitle("UserRole Id").notVisible().notSortable().withOption('searchable', false),//2
 		          DTColumnBuilder.newColumn(null).withTitle($translate('common.label.text.ACTIONS')).withOption('searchable', false).notSortable()//3
 		          .renderWith(function(data, type, full, meta) {
@@ -241,7 +186,7 @@ define(['app'], function (app) {
 		        	}
 		        }
 		        
-		        function addUserRoleForSecurityUser(){
+		        $scope.addUserRoleForSecurityUser=function(id,userRoleName) {	
 		        	$scope.securityUserPermissionUpdateRequest.id=securityUserId;
 		        	$scope.securityUserPermissionUpdateRequest.userRoles=[];
 		        			        	
@@ -284,6 +229,42 @@ define(['app'], function (app) {
 		            }) 
 		        	
 		        }
+		        
+		        $scope.resetForm = function() {
+			      	  ModalDialogServiceFactory.confirmBox(
+			            		  'Confirm Form Reset', 
+			            		  'Are you sure you want to clear the form content?', 
+			            		  '', 
+			            		  'Ok', 
+			            		  $translate('common.button.text.CANCEL'), 
+			            		  resetFormInner, 
+			            		  null, 
+			            		  null, 
+			            		  null
+			              );
+			        };
+			        
+			        function resetFormInner(){
+			      	  $scope.securityUserPermissionUpdateRequest=new Object();
+			        }
+			        
+			        $scope.exitForm = function() {
+			      	  ModalDialogServiceFactory.confirmBox(
+			            		  'Confirm Exit', 
+			            		  'Are you sure you want to leave the page?', 
+			            		  '', 
+			            		  'Ok', 
+			            		  $translate('common.button.text.CANCEL'), 
+			            		  exitFormInner, 
+			            		  null, 
+			            		  null, 
+			            		  null
+			              );
+			        };
+			        
+			        function exitFormInner(){
+			        	$location.path("/listsecurityusers");
+			        }
      
 	  } 
 	

@@ -14,10 +14,6 @@ public class SecurityUserPermissionUpdateRequest implements Serializable {
 
   private List<Long> userRoles = null;
 
-  private List<Long> explicitlyGrantedPermissions = null;
-
-  private List<Long> explicitlyDeniedPermissions = null;
-
   private int versionNumber;
 
   public long getId() {
@@ -36,21 +32,6 @@ public class SecurityUserPermissionUpdateRequest implements Serializable {
     this.userRoles = userRoles;
   }
 
-  public List<Long> getExplicitlyGrantedPermissions() {
-    return explicitlyGrantedPermissions;
-  }
-
-  public void setExplicitlyGrantedPermissions(List<Long> explicitlyGrantedPermissions) {
-    this.explicitlyGrantedPermissions = explicitlyGrantedPermissions;
-  }
-
-  public List<Long> getExplicitlyDeniedPermissions() {
-    return explicitlyDeniedPermissions;
-  }
-
-  public void setExplicitlyDeniedPermissions(List<Long> explicitlyDeniedPermissions) {
-    this.explicitlyDeniedPermissions = explicitlyDeniedPermissions;
-  }
 
   public int getVersionNumber() {
     return versionNumber;

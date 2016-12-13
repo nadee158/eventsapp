@@ -111,20 +111,25 @@ display: none;
 		        <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>IC/Passport</label>
-			           	<input ng-model="playerCreationRequest.icPassport" name="icPassport" md-maxlength="240" required />
-			           	<span ng-show="playerRegistrationForm.icPassport.$dirty"> 
-							<span ng-show="playerRegistrationForm.icPassport.$error.required">
+			           	<md-icon><i class="fa fa-info" aria-hidden="true"></i></md-icon>
+			           	<input ng-model="playerCreationRequest.icPassport" name="icPassport" md-minlength="10" md-maxlength="12" required />
+			            <span ng-show="playerRegistrationForm.nic.$dirty"> 
+							<span ng-show="playerRegistrationForm.nic.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
-							<span ng-show="playerRegistrationForm.icPassport.$error['md-maxlength']">
-								<span class="md-input-validation-message" translate>Event name should be less than 240 characters long!</span>
+							<span ng-show="playerRegistrationForm.nic.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.NIC_MAX_LENGTH</span>
+							</span>	
+							<span ng-show="playerRegistrationForm.nic.$error['md-minlength']">
+								<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.NIC_MIN_LENGTH</span>
 							</span>					
-						</span>			       
+						</span>		       
 			         </md-input-container>
 		        </div>
 		        <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Player Name</label>
+			           	<md-icon><i class="fa fa-user" aria-hidden="true"></i></md-icon>
 			           	<input ng-model="playerCreationRequest.playerName" name="playerName" md-maxlength="240" required />
 			           	<span ng-show="playerRegistrationForm.playerName.$dirty"> 
 							<span ng-show="playerRegistrationForm.playerName.$error.required">
@@ -139,7 +144,8 @@ display: none;
 		        <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Address</label>
-			           	<input ng-model="playerCreationRequest.address" name="address" md-maxlength="1000" />
+			           	<md-icon><i class="fa fa-home" aria-hidden="true"></i></md-icon>
+			           	<textarea ng-model="playerCreationRequest.address" name="address"  md-maxlength="1000" rows="5" md-select-on-focus required></textarea>
 			           	<span ng-show="playerRegistrationForm.address.$dirty"> 
 							<span ng-show="playerRegistrationForm.address.$error['md-maxlength']">
 								<span class="md-input-validation-message" translate>Event name should be less than 1000 characters long!</span>
@@ -150,17 +156,26 @@ display: none;
 		        <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Email ID</label>
-			           	<input ng-model="playerCreationRequest.email" name="email" md-maxlength="240" />
-			           	<span ng-show="playerRegistrationForm.email.$dirty"> 
+			           	<md-icon><i class="fa fa-envelope" aria-hidden="true"></i></md-icon>
+			           	<input ng-model="playerCreationRequest.email" name="email" md-maxlength="100" required ng-pattern="/^.+@.+\..+$/" />
+						<span ng-show="playerRegistrationForm.email.$dirty"> 
+							<span ng-show="playerRegistrationForm.email.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
 							<span ng-show="playerRegistrationForm.email.$error['md-maxlength']">
-								<span class="md-input-validation-message" translate>Event name should be less than 240 characters long!</span>
-							</span>					
+								<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.EMAIL_LENGTH</span>
+							</span>	
+							<span ng-show="playerRegistrationForm.email.$error['pattern']">
+								<span class="md-input-validation-message" translate>usrmgt.security_user.validation.message.EMAIL_FORMAT</span>
+							</span>	
+											
 						</span>			       
 			         </md-input-container>
 <!-- 		        </div> -->
 <!-- 		        <div layout-gt-sm="row"> -->
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Contact Number</label>
+			           	<md-icon><i class="fa fa-mobile" aria-hidden="true"></i></md-icon>
 			           	<input ng-model="playerCreationRequest.contactNumber" name="contactNumber" md-maxlength="12" />
 			           	<span ng-show="playerRegistrationForm.contactNumber.$dirty"> 
 							<span ng-show="playerRegistrationForm.contactNumber.$error['md-maxlength']">

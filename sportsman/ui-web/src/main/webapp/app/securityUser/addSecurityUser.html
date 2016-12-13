@@ -6,46 +6,7 @@
 		
 			<md-content layout-padding>
 				<section>
-      				<md-subheader class="md-primary"><span translate>usrmgt.security_user.label.ORGANIZATION</span></md-subheader>
-					<div layout-gt-sm="row">
-				         <md-input-container class="md-block" flex-gt-sm>
-				           <label translate>usrmgt.security_user.label.ORGANIZATION</label>
-				           <md-icon><i class="fa fa-building" aria-hidden="true"></i></md-icon>
-				           <md-select ng-model="securityUserCreationRequest.organizationId" name="organizationId" required >
-				              <md-option ng-repeat="organization in organizations" value="{{organization.id}}">
-				                {{organization.organizationName}}
-				              </md-option>
-				            </md-select>
-				            <span ng-show="securityUserForm.organizationId.$dirty"> 
-								<span ng-show="securityUserForm.organizationId.$error.required">
-									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
-								</span>
-							</span>
-							 <div ng-messages="securityUserForm.organizationId.$error">
-					          <div ng-message="required">This is required.</div>
-					          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
-					        </div>				       
-				         </md-input-container>
-			        </div>
-				</section>
-				<section>
       				<md-subheader class="md-primary"><span translate>usrmgt.security_user.label.PERSONAL_DETAILS</span></md-subheader>      
-					<div layout-gt-sm="row">
-				         <md-input-container class="md-block" flex-gt-sm>
-				           <label translate>usrmgt.security_user.label.PREFIX</label>
-				           <md-icon><i class="fa fa-asterisk" aria-hidden="true"></i></md-icon>
-				           <md-select ng-model="securityUserCreationRequest.prefixCode" name="prefixCode" required >
-				              <md-option ng-repeat="prefix in prefixes" value="{{prefix.code}}">
-				                {{prefix.name}}
-				              </md-option>
-				            </md-select>
-				            <span ng-show="securityUserForm.prefixCode.$dirty"> 
-								<span ng-show="securityUserForm.prefixCode.$error.required">
-									<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
-								</span>
-							</span>				       
-				         </md-input-container>
-			        </div>
 					<div layout-gt-sm="row">
 				         <md-input-container class="md-block" flex-gt-sm>
 				           	<label translate>usrmgt.security_user.label.FULL_NAME</label>
@@ -190,6 +151,13 @@
 				         </md-input-container>
 			        </div>
 		        </section>
+		         <section>
+		          <div layout-gt-sm="row">
+		        	<md-button class="md-raised md-warn" ng-click="exitForm()">Exit</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="resetForm()">Reset</md-button>
+		        	<md-button class="md-raised md-primary" ng-click="createSecurityUser()" >Create</md-button>		        	
+		        </div>
+		         </section>
 	        </md-content>
        		<input type="hidden" ng-model="formKey" />
        	</form>

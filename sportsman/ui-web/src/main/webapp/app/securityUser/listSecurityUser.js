@@ -19,39 +19,7 @@ define(['app'], function (app) {
 	  var authToken = CommonStorageFactory.retrieve(storageKey);
 	  
 	  $scope.initializeListUsersPage = function() {
-      	displayTopMenuButtons();
-      	subscribeToTopMenuButtonEvents();
       };
-      
-      function displayTopMenuButtons(){
-     		var formKey='list_security_user_screen';
-     	    $scope.formKey=formKey;
-	      	var topMenuButtonDisplay={
-	      			formKey:formKey,
-					    showMenu:true,
-					    showNext:false,
-					    showPrevious:false,
-					    showPrint:false,
-					    showCopy:false,
-					    showEdit:false,
-					    showSearch:false,
-					    showSave:false,
-					    showCancel:false,
-					    showAddNew:CommonServiceFactory.checkIfPermitted("ROLE_A_UM_SU_ASU_VWE"),
-	       };
-      	PubSub.publish(Constants.Events.displayheaderbuttons,topMenuButtonDisplay);
-      }
-     	
-      function subscribeToTopMenuButtonEvents(){
-      	var subTopMenuAddNewButton = PubSub.subscribeOnce(Constants.Events.add_new, listenerAddNewClicked);
-      }
-      
-      function listenerAddNewClicked(topic, data) {
-	    var formKey=data.formKey;
-	    if(formKey==$scope.formKey){
-	    	$location.path("/addsecurityuser");
-	    }
-	  }
       
       var vm=this;
       
@@ -101,24 +69,6 @@ define(['app'], function (app) {
         	  	    '   <i class="fa fa-plus"></i>&nbsp;<span style="color:#000000;">/</span>&nbsp;<i class="fa fa-times"></i>'
         	  		'</button>&nbsp;';
           }),
-          DTColumnBuilder.newColumn(null).withTitle($translate('usrmgt.security_user.label.text.UPDATE_GRANTED_PERMISSIONS'))
-          .withOption('width', '2%')
-          .withOption('searchable', false)
-          .notSortable()//4
-          .renderWith(function(data, type, full, meta) {
-              return '<button class="btn btn-info" ng-click="updateGrantedPermissions(' + data.id + ')">' +
-                  	'   <i class="fa fa-plus"></i>&nbsp;<span style="color:#000000;">/</span>&nbsp;<i class="fa fa-times"></i>'
-              	  	'</button>&nbsp;';
-          }),
-          DTColumnBuilder.newColumn(null).withTitle($translate('usrmgt.security_user.label.text.UPDATE_DENIED_PERMISSIONS'))
-          .withOption('width', '2%')
-          .withOption('searchable', false)
-          .notSortable()//4
-          .renderWith(function(data, type, full, meta) {
-              return '<button class="btn btn-info" ng-click="updateDeniedPermissions(' + data.id + ')">' +
-                    '   <i class="fa fa-plus"></i>&nbsp;<span style="color:#000000;">/</span>&nbsp;<i class="fa fa-times"></i>'
-              	  	'</button>&nbsp;';
-          }),
           DTColumnBuilder.newColumn(null).withTitle($translate('common.label.text.ACTIONS')).withOption('searchable', false).notSortable().withOption('width','20%')//4
           .renderWith(function(data, type, full, meta) {
               return '<button class="btn btn-info" ng-click="view(' + data.id + ')">' +
@@ -144,14 +94,6 @@ define(['app'], function (app) {
       
       $scope.updateUserRoles = function(id) {
           $location.path('/adduserroleforsecurityuser').search({id: id});
-      };
-      
-      $scope.updateGrantedPermissions = function(id) {
-          $location.path('/addpermissionstouser').search({id: id,type:'G'});
-      };
-      
-      $scope.updateDeniedPermissions = function(id) {
-          $location.path('/addpermissionstouser').search({id: id,type:'D'});
       };
       
       
