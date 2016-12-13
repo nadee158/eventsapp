@@ -19,39 +19,10 @@ define(['app'], function (app) {
 	  var authToken = CommonStorageFactory.retrieve(storageKey);
 	  
 	  $scope.initializeListUserRolePage = function() {
-      	displayTopMenuButtons();
-      	subscribeToTopMenuButtonEvents();
       };
       
-      function displayTopMenuButtons(){
-     		var formKey='list_user_role_screen';
-     	    $scope.formKey=formKey;
-	      	var topMenuButtonDisplay={
-	      			formKey:formKey,
-					    showMenu:true,
-					    showNext:false,
-					    showPrevious:false,
-					    showPrint:false,
-					    showCopy:false,
-					    showEdit:false,
-					    showSearch:false,
-					    showSave:false,
-					    showCancel:false,
-					    showAddNew:CommonServiceFactory.checkIfPermitted("ROLE_A_UM_UR_AUR_VWE"),
-	       };
-      	PubSub.publish(Constants.Events.displayheaderbuttons,topMenuButtonDisplay);
-      }
      	
-      function subscribeToTopMenuButtonEvents(){
-      	var subTopMenuAddNewButton = PubSub.subscribeOnce(Constants.Events.add_new, listenerAddNewClicked);
-      }
       
-      function listenerAddNewClicked(topic, data) {
-	    var formKey=data.formKey;
-	    if(formKey==$scope.formKey){
-	    	$location.path("/adduserrole");
-	    }
-	  }
       
       var vm=this;
       
@@ -77,7 +48,7 @@ define(['app'], function (app) {
        .withOption('processing', true)
        .withOption('serverSide', true)
        .withOption('saveState', true)
-       .withOption('order', [2, 'asc'])
+       .withOption('order', [0, 'asc'])
        .withPaginationType('full_numbers')
        .withOption('createdRow', function(row, data, dataIndex) {
               $compile(angular.element(row).contents())($scope);
@@ -86,20 +57,6 @@ define(['app'], function (app) {
   
       vm.dtColumns = [
           DTColumnBuilder.newColumn('userRoleName').withTitle($translate('usrmgt.user_role.label.USER_ROLE_NAME')),//0
-          DTColumnBuilder.newColumn('permissions').withTitle($translate('usrmgt.user_role.label.permissions')).withOption('searchable', false).notSortable()//4
-          .renderWith(function(data, type, full, meta) {
-        	  if(data){
-        		  var text='<md-chips>';
-            	  
-            	  for(var i = 0; i < data.length; i++) {
-            		  text=text + '<md-chip>' + data[i].permissionName + '</md-chip>';
-    			  }
-            	  
-            	  text=text + '</md-chips>';
-                  return  text;
-        	  }
-          }),          
-          
           DTColumnBuilder.newColumn('id').withTitle("UserRole Id").notVisible().notSortable().withOption('searchable', false),//3
           DTColumnBuilder.newColumn(null).withTitle($translate('common.label.text.ACTIONS')).withOption('searchable', false).notSortable()//4
           .renderWith(function(data, type, full, meta) {

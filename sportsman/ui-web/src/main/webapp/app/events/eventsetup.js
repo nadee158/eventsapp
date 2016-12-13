@@ -112,6 +112,42 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
           }) 
       }
 	  
+      
+      $scope.resetForm = function() {
+    	  ModalDialogServiceFactory.confirmBox(
+          		  'Confirm Form Reset', 
+          		  'Are you sure you want to clear the form content?', 
+          		  '', 
+          		  'Ok', 
+          		  $translate('common.button.text.CANCEL'), 
+          		  resetFormInner, 
+          		  null, 
+          		  null, 
+          		  null
+            );
+      };
+      
+      function resetFormInner(){
+    	  $scope.eventCreationRequest=new Object();
+      }
+      
+      $scope.exitForm = function() {
+    	  ModalDialogServiceFactory.confirmBox(
+          		  'Confirm Exit', 
+          		  'Are you sure you want to leave the page?', 
+          		  '', 
+          		  'Ok', 
+          		  $translate('common.button.text.CANCEL'), 
+          		  exitFormInner, 
+          		  null, 
+          		  null, 
+          		  null
+            );
+      };
+      
+      function exitFormInner(){
+    	  $location.path("/home");
+      }
 	  
    
    

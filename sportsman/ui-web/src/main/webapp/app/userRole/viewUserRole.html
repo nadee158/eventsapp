@@ -12,15 +12,11 @@
 			           	<input ng-readonly="true" ng-model="userRoleDto.userRoleName" name="userRoleName" md-maxlength="240" required />
 			         </md-input-container>
 		        </div>
-			     
-			     <md-chips ng-model="userRoleDto.permissions" name="screenPermissions" md-min-chips="1" md-chips-disable-input readonly="true">
-			        <md-chip-template>
-			          <strong>{{$chip.permissionName}}</strong>
-			          <em>({{$chip.permissionCode}})</em>
-			        </md-chip-template>
-			      </md-chips>
-				    
 		        
+		         <div layout-gt-sm="row">
+		        	<md-button class="md-raised md-warn" ng-click="exitForm()">Exit</md-button>
+		        </div>
+			     
 	        </md-content>
        		<input type="hidden" ng-model="formKey" />
        	</form>

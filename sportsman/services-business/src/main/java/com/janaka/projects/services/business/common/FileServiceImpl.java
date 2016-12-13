@@ -3,6 +3,8 @@ package com.janaka.projects.services.business.common;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -48,11 +51,32 @@ public class FileServiceImpl extends BusinessService implements FileService {
 
         File dest = new File(filePath);
 
-        file.transferTo(dest);
+        FileOutputStream fos = null;
+        try {
+          dest.createNewFile();
+          fos = new FileOutputStream(dest);
+          IOUtils.copy(file.getInputStream(), fos);
+        } catch (FileNotFoundException e) {
+          System.out.println("File conversion error");
+          e.printStackTrace();
+        } catch (IOException e) {
+          System.out.println("File conversion error");
+          e.printStackTrace();
+        } finally {
+          if (fos != null) {
+            try {
+              fos.close();
+            } catch (IOException e) {
+              System.out.println("File conversion error");
+              e.printStackTrace();
+            }
+          }
+        }
+
 
         return fileName;
 
-      } catch (IOException e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
     }

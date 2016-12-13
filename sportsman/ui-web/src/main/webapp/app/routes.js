@@ -43,11 +43,6 @@ define([], function()
                 	templateUrl:'app/userRole/addUserRole.html',
                 	dependencies:[
                 	              '../app/userRole/addUserRole',
-                	              '../common/services/usermanagement/application-service',
-                	              '../common/services/usermanagement/application-module-service',
-                	              '../common/services/usermanagement/application-module-service-service',
-                	              '../common/services/usermanagement/screen-service',
-                	              '../common/services/usermanagement/screen-permission-service-bak',
                 	              '../common/services/usermanagement/user-role-service'],
                 	              access:{
                 	            	  isFree:false
@@ -75,11 +70,6 @@ define([], function()
                 	templateUrl:'app/userRole/editUserRole.html',
                 	dependencies:[
 									'../app/userRole/editUserRole',
-									'../common/services/usermanagement/application-service',
-									'../common/services/usermanagement/application-module-service',
-									'../common/services/usermanagement/application-module-service-service',
-									'../common/services/usermanagement/screen-service',
-									'../common/services/usermanagement/screen-permission-service-bak',
 									'../common/services/usermanagement/user-role-service'],
                 	              access:{
                 	            	  isFree:false
@@ -88,7 +78,6 @@ define([], function()
                 	templateUrl:'app/securityUser/addSecurityUser.html',
                 	dependencies:[
                 	              '../app/securityUser/addSecurityUser',                	              
-                	              '../common/services/usermanagement/organization-service',
                 	              '../common/services/usermanagement/security-user-service',
                 	              '../common/directives/passwordcheck'],
                 	              access:{
@@ -117,7 +106,6 @@ define([], function()
                 	templateUrl:'app/securityUser/editSecurityUser.html',
                 	dependencies:[
 									'../app/securityUser/editSecurityUser',									
-									'../common/services/usermanagement/organization-service',
 									'../common/services/usermanagement/security-user-service'],
                 	              access:{
                 	            	  isFree:false
@@ -139,7 +127,6 @@ define([], function()
                 	dependencies:[
                 	              '../app/securityUser/updateUserProfile',
                 	              '../common/services/usermanagement/security-user-service',
-                	              '../common/services/usermanagement/document-management-service'
                 	              ],
                 	              access:{
                 	            	  isFree:false

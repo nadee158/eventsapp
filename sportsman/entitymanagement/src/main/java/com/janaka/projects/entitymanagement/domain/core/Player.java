@@ -2,6 +2,7 @@ package com.janaka.projects.entitymanagement.domain.core;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,11 +51,11 @@ public class Player extends AuditEntity implements Serializable {
   @Column(name = "weight")
   private double weight;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
   @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
   private CategorySetup categorySetup;
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
   private Person person;
 

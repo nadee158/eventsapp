@@ -81,7 +81,7 @@ public final class ServiceEndpoints {
   public static final String PLAYERS = "playerservice";
 
   // --------------- COMMON -----------------------
-  public static final String COMMON = "fileName";
+  public static final String COMMON = "commonservice";
 
   public static final String LIST_GENDERS = "/listgenders";
 
