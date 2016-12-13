@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.janaka.projects.services.common.FileService;
 
-@Service(value = "sequenceNumberService")
+@Service(value = "fileService")
 @Transactional()
 public class FileServiceImpl extends BusinessService implements FileService {
 
