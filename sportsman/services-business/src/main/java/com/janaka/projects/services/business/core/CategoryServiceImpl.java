@@ -21,8 +21,10 @@ import com.janaka.projects.dtos.responses.common.ObjectListResponse;
 import com.janaka.projects.dtos.responses.common.ObjectRetrievalResponse;
 import com.janaka.projects.dtos.responses.core.CategoryCreationResponse;
 import com.janaka.projects.dtos.responses.core.CategoryUpdateResponse;
+import com.janaka.projects.entitymanagement.dataaccessobjects.core.AgeGroupRepository;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.CategorySetupRepository;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.EventRepository;
+import com.janaka.projects.entitymanagement.domain.core.AgeGroup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.Event;
 import com.janaka.projects.services.business.common.BusinessService;
@@ -37,13 +39,19 @@ public class CategoryServiceImpl extends BusinessService implements CategoryServ
   private EventRepository eventRepository;
 
   @Autowired
+  private AgeGroupRepository ageGroupRepository;
+
+  @Autowired
   private CategorySetupRepository categorySetupRepository;
+
+
 
   @Override
   public CategoryCreationResponse createEvent(CategoryCreationRequest request) {
     System.out.println("request " + request);
     Event event = eventRepository.findOne(request.getEventId());
-    CategorySetup categorySetup = CategorySetupDTOConverter.convertRequestToDomain(request, event);
+    AgeGroup ageGroup = ageGroupRepository.findOne(request.getAgeGroupId());
+    CategorySetup categorySetup = CategorySetupDTOConverter.convertRequestToDomain(request, event, ageGroup);
     CategorySetup persisted = categorySetupRepository.save(categorySetup);
     CategoryCreationResponse response = new CategoryCreationResponse();
     response.setCategoryDTO(CategorySetupDTOConverter.convertDomainToDTO(persisted));

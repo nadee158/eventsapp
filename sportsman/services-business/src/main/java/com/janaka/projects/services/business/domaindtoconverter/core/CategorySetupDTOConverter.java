@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.janaka.projects.dtos.domain.core.CategoryDTO;
 import com.janaka.projects.dtos.domain.core.CategorySetupItemDTO;
 import com.janaka.projects.dtos.requests.core.CategoryCreationRequest;
+import com.janaka.projects.entitymanagement.domain.core.AgeGroup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetupItem;
 import com.janaka.projects.entitymanagement.domain.core.Event;
@@ -15,15 +16,16 @@ import com.janaka.projects.entitymanagement.enums.Gender;
 
 public class CategorySetupDTOConverter {
 
-  public static CategorySetup convertRequestToDomain(CategoryCreationRequest request, Event event) {
+  public static CategorySetup convertRequestToDomain(CategoryCreationRequest request, Event event, AgeGroup ageGroup) {
     if (!(request == null)) {
       CategorySetup categorySetup = new CategorySetup();
       categorySetup.setCategorySetupItems(constructCategorySetupItems(categorySetup, request.getCategorySetupItems()));
       categorySetup.setCategorySetupName(request.getCategorySetupName());
       categorySetup.setEvent(event);
-      categorySetup.setFromAge(request.getFromAge());
+      categorySetup.setAgeGroup(ageGroup);
+
       categorySetup.setGradeOrBelt(request.getGradeOrBelt());
-      categorySetup.setToAge(request.getToAge());
+
 
       if (StringUtils.isNoneEmpty(request.getGender())) {
         categorySetup.setGender(Gender.valueOf(request.getGender()));
@@ -60,11 +62,11 @@ public class CategorySetupDTOConverter {
       dto.setCategorySetupItems(constructCategorySetupItemDtos(categorySetup.getCategorySetupItems()));
       dto.setCategorySetupName(categorySetup.getCategorySetupName());
       dto.setEventId(categorySetup.getEvent().getId());
-      dto.setFromAge(categorySetup.getFromAge());
+      dto.setFromAge(categorySetup.getAgeGroup().getFromAge());
       dto.setGender(categorySetup.getGender().toString());
       dto.setGradeOrBelt(categorySetup.getGradeOrBelt());
       dto.setId(categorySetup.getId());
-      dto.setToAge(categorySetup.getToAge());
+      dto.setToAge(categorySetup.getAgeGroup().getToAge());
       return dto;
     }
     return null;

@@ -2,10 +2,13 @@ package com.janaka.projects.services.business.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.janaka.projects.common.constant.ApplicationConstants;
@@ -28,6 +31,7 @@ import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.Player;
 import com.janaka.projects.entitymanagement.domain.usermanagement.Person;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
+import com.janaka.projects.entitymanagement.specifications.core.PlayerSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.PlayerDTOConverter;
 import com.janaka.projects.services.core.PlayerService;
@@ -48,8 +52,23 @@ public class PlayerServiceImpl extends BusinessService implements PlayerService 
 
   @Override
   public TabularDataResponseModel<PlayerDTO> getPlayers(TabularDataRequestModel request) {
-    // TODO Auto-generated method stub
-    return null;
+    Specification<Player> customSpecification = getSecrhSpecification(request.getCustomData());
+    DataTablesOutput<Player> domainResponse = playerRepository.findAll(request, customSpecification);
+    TabularDataResponseModel<PlayerDTO> response = new TabularDataResponseModel<PlayerDTO>();
+    if (!(domainResponse == null)) {
+      if (!(domainResponse.getData() == null || domainResponse.getData().isEmpty())) {
+        List<PlayerDTO> dtoList = new ArrayList<PlayerDTO>();
+        for (Player domain : domainResponse.getData()) {
+          dtoList.add(PlayerDTOConverter.convertDomainToDTO(domain));
+        }
+        response.setData(dtoList);
+      }
+      response.setDraw(domainResponse.getDraw());
+      response.setError(domainResponse.getError());
+      response.setRecordsFiltered(domainResponse.getRecordsFiltered());
+      response.setRecordsTotal(domainResponse.getRecordsTotal());
+    }
+    return response;
   }
 
   @Override
@@ -146,6 +165,39 @@ public class PlayerServiceImpl extends BusinessService implements PlayerService 
       response.setMessage("SUCESS");
       response.setStatus(ApplicationConstants.STATUS_CODE_OK);
       return response;
+    }
+    return null;
+  }
+
+  private Specification<Player> getSecrhSpecification(Map<String, Object> customData) {
+
+    if (!(customData == null || customData.isEmpty())) {
+
+      String playerName = null;
+      String playerNumber = null;
+      String nic = null;
+      String contactNumber = null;
+
+
+      if (customData.containsKey("playerName")) {
+        playerName = (String) customData.get("playerName");
+      }
+
+      if (customData.containsKey("playerNumber")) {
+        playerNumber = (String) customData.get("playerNumber");
+      }
+
+      if (customData.containsKey("nic")) {
+        nic = (String) customData.get("nic");
+      }
+
+      if (customData.containsKey("contactNumber")) {
+        contactNumber = (String) customData.get("contactNumber");
+      }
+
+      return PlayerSpecifications.combinedSpecifications(playerName, playerNumber, nic, contactNumber);
+
+
     }
     return null;
   }

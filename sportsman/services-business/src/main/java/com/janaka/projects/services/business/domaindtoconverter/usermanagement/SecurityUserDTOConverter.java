@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.janaka.projects.dtos.domain.usermanagement.PersonDTO;
@@ -71,7 +72,9 @@ public class SecurityUserDTOConverter {
       securityUserDTO.setCreatedByUser(securityUser.getCreatedByUser());
       securityUserDTO.setCreationTime(securityUser.getCreationTime());
       securityUserDTO.setCredentialsExpired(securityUser.isCredentialsExpired());
-      securityUserDTO.setRecordStatus(securityUser.getRecordStatus().getRecordStatusCode());
+      if (!(securityUser.getRecordStatus() == null)) {
+        securityUserDTO.setRecordStatus(securityUser.getRecordStatus().getRecordStatusCode());
+      }
 
 
 
@@ -153,7 +156,9 @@ public class SecurityUserDTOConverter {
   public static SecurityUser updateDomainFromRequest(SecurityUserUpdateRequest request,
       SecurityUser securityUserFromDB) {
 
-    securityUserFromDB.setRecordStatus(RecordStatus.fromRecordStatusCode(request.getRecordStatus()));
+    if (!(StringUtils.isEmpty(request.getRecordStatus()))) {
+      securityUserFromDB.setRecordStatus(RecordStatus.fromRecordStatusCode(request.getRecordStatus()));
+    }
 
     securityUserFromDB.setPerson(getUpdatedPerson(securityUserFromDB.getPerson(), request));
 

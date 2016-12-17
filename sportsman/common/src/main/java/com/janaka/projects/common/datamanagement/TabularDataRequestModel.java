@@ -19,6 +19,10 @@ public class TabularDataRequestModel extends DataTablesInput implements Serializ
     return customData;
   }
 
+  public void setCustomData(Map<String, Object> customData) {
+    this.customData = customData;
+  }
+
 
 
   // // draw integer Draw counter. This is used by DataTables to ensure that the Ajax returns from

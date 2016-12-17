@@ -1,0 +1,43 @@
+<section class="content">    
+			
+	<div ng-controller="ListPlayersController as listUsers" ng-init="initializeListPlayresPage()">
+	
+		<section>
+		    <form name="searchForm" id="searchForm">
+				<div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Search By</label>
+			           	<md-select ng-model="searchBy" name="searchBy" required>
+						    <md-option ng-value="search.id" ng-repeat="search in serachByList">{{ search.value }}</md-option>
+						</md-select>
+			           	<span ng-show="searchForm.searchBy.$dirty"> 
+							<span ng-show="searchForm.searchBy.$error.required">
+								<span class="md-input-validation-message" translate>This field is required!</span>
+							</span>					
+						</span>
+			         </md-input-container>
+<!-- 		        </div> -->
+<!-- 		        <div layout-gt-sm="row"> -->
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Text</label>
+			           	<input type="text" ng-model="searchText" name="searchText"  required />
+			           	<span ng-show="searchForm.searchText.$dirty"> 
+							<span ng-show="searchForm.searchText.$error.required">
+								<span class="md-input-validation-message" translate>This field is required!</span>
+							</span>					
+						</span>		       
+			         </md-input-container>
+			          <md-input-container class="md-block" flex-gt-sm>
+			             <md-button class="md-raised md-primary" ng-click="searchPlayer()">Search</md-button>
+			            <md-button class="md-raised md-warn" ng-click="resetSearch()">Reset</md-button>
+			          </md-input-container> 
+			          
+		        </div>
+		     </form>
+		</section>
+	
+	    <table datatable="" dt-instance="listUsers.dtInstance" dt-options="listUsers.dtOptions" dt-columns="listUsers.dtColumns" class="mdl-data-table" width="100%"></table>
+	    <input type="hidden" ng-model="formKey" />
+	</div>
+	
+</section>

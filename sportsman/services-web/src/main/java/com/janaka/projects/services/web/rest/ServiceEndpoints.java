@@ -83,6 +83,9 @@ public final class ServiceEndpoints {
   // --------------- COMMON -----------------------
   public static final String COMMON = "commonservice";
 
+  // --------------- COMMON -----------------------
+  public static final String AGE_GROUPS = "agegroupservice";
+
   public static final String LIST_GENDERS = "/listgenders";
 
 

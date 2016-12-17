@@ -3,11 +3,9 @@
 define(['app'], function (app) {
 	app.controller('EditSecurityUserController', ['$scope', '$rootScope','$location','$filter', 
 	                                            'SecurityUserServiceFactory',
-		                                        'OrganizationServiceFactory',
 	                                            'CommonStorageFactory','NotificationServiceFactory','PubSub','Constants','Page','ModalDialogServiceFactory','CommonServiceFactory',
 	    function ($scope, $rootScope,$location,$filter, 
 									    		SecurityUserServiceFactory,
-												OrganizationServiceFactory,
 	    										CommonStorageFactory,NotificationServiceFactory,PubSub,Constants,Page,ModalDialogServiceFactory,CommonServiceFactory) {
 			
 		    var $translate = $filter('translate');
@@ -20,85 +18,15 @@ define(['app'], function (app) {
 	        
 	        $scope.initializeEditSecurityUserPage = function() {
 	        	$scope.securityUserUpdateRequest={};
-	        	displayTopMenuButtons();
-	        	subscribeToTopMenuButtonEvents();
 	        	var queryString = $location.search();
 	        	securityUserId=queryString["id"]
 	        	loadEditedSecurityUser(securityUserId);
-	        	getOrganizations();
-	        	getPrefixes();
 	        };
 	        
-	       	function displayTopMenuButtons(){
-	       		var formKey='edit_security_user_screen';
-	       	    $scope.formKey=formKey;
-	        	var topMenuButtonDisplay={
-	        			formKey:formKey,
-					    showMenu:true,
-					    showNext:false,
-					    showPrevious:false,
-					    showPrint:false,
-					    showCopy:false,
-					    showEdit:false,
-					    showSearch:false,
-					    showSave:CommonServiceFactory.checkIfPermitted("ROLE_A_UM_SU_USU_UDT"),
-					    showCancel:CommonServiceFactory.checkIfPermitted("ROLE_A_UM_SU_LSU_VWE ROLE_A_UM_SU_LSU_UDT"),
-					    showAddNew:false,
-	        	};
-	        	PubSub.publish(Constants.Events.displayheaderbuttons,topMenuButtonDisplay);
-	        }
-	       	
-	       	function subscribeToTopMenuButtonEvents(){
-	       		//first unsubscribe from previous subscribed events
-	       		PubSub.unsubscribe(Constants.Events.saved);
-	       		PubSub.unsubscribe(Constants.Events.cancel);
-	       		PubSub.unsubscribe(Constants.Events.add_new);
-	       		//then subscribe to new events
-	        	var subTopMenuSaveButton = PubSub.subscribe(Constants.Events.saved, listenerSaveClicked);
-	        	var subTopMenuEditButton = PubSub.subscribe(Constants.Events.add_new, listenerAddNewClicked);
-	        	var subTopMenuCancelButton = PubSub.subscribe(Constants.Events.cancel, listenerCancelClicked);
-	        }
 	        
-	        function listenerSaveClicked(topic, data) {
-			    var formKey=data.formKey;
-			    if(formKey==$scope.formKey){
+	        $scope.listenerSaveClicked = function() {
 			    	editSecurityUser();
-			    }
 			}
-	        
-	        function listenerAddNewClicked(topic, data) {
-	    	    var formKey=data.formKey;
-	    	    if(formKey==$scope.formKey){
-	    	    	$location.path("/addsecurityuser");
-	    	    }
-	    	  }
-	        
-	        function listenerCancelClicked(topic, data) {
-			    var formKey=data.formKey;
-			    if(formKey==$scope.formKey){
-			    	$location.path('/listsecurityusers');
-			    }
-			}
-	        
-	        function getOrganizations(){
-	        	var response=OrganizationServiceFactory.getActiveOrganization(baseUrl);	        	 
-	        	response.success(function(data, status, headers, config) {		      			
-		      		$scope.organizations=data.dtoList;		                
-		        }).error(function(data, status, headers, config){
-		            	NotificationServiceFactory.error(data.message);
-		            	console.error('Error while creating SecurityUser ' + data.message);
-		        })
-	        }
-	        
-	        function getPrefixes(){
-	        	var response=SecurityUserServiceFactory.getPrefixes(baseUrl);	        	 
-	        	response.success(function(data, status, headers, config) {		      			
-		      		$scope.prefixes=data.dtoList;		                
-		        }).error(function(data, status, headers, config){
-		            	NotificationServiceFactory.error(data.message);
-		            	console.error('Error while creating SecurityUser ' + data.message);
-		        })
-	        }
 	        
 	        
 	        
@@ -194,6 +122,43 @@ define(['app'], function (app) {
 	            	console.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD') + " " + data.message);
 	            })    
 	        }
+	        
+	        $scope.resetForm = function() {
+		      	  ModalDialogServiceFactory.confirmBox(
+		            		  'Confirm Form Reset', 
+		            		  'Are you sure you want to clear the form content?', 
+		            		  '', 
+		            		  'Ok', 
+		            		  $translate('common.button.text.CANCEL'), 
+		            		  resetFormInner, 
+		            		  null, 
+		            		  null, 
+		            		  null
+		              );
+		        };
+		        
+		        function resetFormInner(){
+		      	  $scope.securityUserUpdateRequest=new Object();
+		      	  loadEditedSecurityUser(securityUserId);
+		        }
+		        
+		        $scope.exitForm = function() {
+		      	  ModalDialogServiceFactory.confirmBox(
+		            		  'Confirm Exit', 
+		            		  'Are you sure you want to leave the page?', 
+		            		  '', 
+		            		  'Ok', 
+		            		  $translate('common.button.text.CANCEL'), 
+		            		  exitFormInner, 
+		            		  null, 
+		            		  null, 
+		            		  null
+		              );
+		        };
+		        
+		        function exitFormInner(){
+		        	$location.path("/listsecurityusers");
+		        }
 	          
 	  } 
 	

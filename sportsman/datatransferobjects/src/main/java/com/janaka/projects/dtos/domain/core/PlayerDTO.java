@@ -39,6 +39,10 @@ public class PlayerDTO implements Serializable {
 
   private String address;
 
+  private String recordStatus = StringUtils.EMPTY;
+
+  private long version = 0;
+
   public long getId() {
     return id;
   }
@@ -157,6 +161,26 @@ public class PlayerDTO implements Serializable {
         + ", weight=" + weight + ", categoryId=" + categoryId + ", categorySetupName=" + categorySetupName
         + ", personId=" + personId + ", fullName=" + fullName + ", nic=" + nic + ", contactNumber=" + contactNumber
         + ", email=" + email + ", profileImagePath=" + profileImagePath + ", address=" + address + "]";
+  }
+
+  public String getRecordStatus() {
+    return recordStatus;
+  }
+
+  public void setRecordStatus(String recordStatus) {
+    this.recordStatus = recordStatus;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
+
+  public long getVersion() {
+    return version;
+  }
+
+  public void setVersion(long version) {
+    this.version = version;
   }
 
 

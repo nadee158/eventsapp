@@ -45,11 +45,9 @@ public class CategorySetup extends AuditEntity implements Serializable {
   @Column(name = "category_setup_name")
   private String categorySetupName = StringUtils.EMPTY;
 
-  @Column(name = "from_age")
-  private int fromAge;
-
-  @Column(name = "to_age")
-  private int toAge;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "age_group_id", referencedColumnName = "id", nullable = false)
+  private AgeGroup ageGroup;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "gender")
@@ -79,22 +77,6 @@ public class CategorySetup extends AuditEntity implements Serializable {
 
   public void setCategorySetupName(String categorySetupName) {
     this.categorySetupName = categorySetupName;
-  }
-
-  public int getFromAge() {
-    return fromAge;
-  }
-
-  public void setFromAge(int fromAge) {
-    this.fromAge = fromAge;
-  }
-
-  public int getToAge() {
-    return toAge;
-  }
-
-  public void setToAge(int toAge) {
-    this.toAge = toAge;
   }
 
   public Gender getGender() {
@@ -129,10 +111,18 @@ public class CategorySetup extends AuditEntity implements Serializable {
     this.categorySetupItems = categorySetupItems;
   }
 
+  public AgeGroup getAgeGroup() {
+    return ageGroup;
+  }
+
+  public void setAgeGroup(AgeGroup ageGroup) {
+    this.ageGroup = ageGroup;
+  }
+
   @Override
   public String toString() {
-    return "CategorySetup [id=" + id + ", categorySetupName=" + categorySetupName + ", fromAge=" + fromAge + ", toAge="
-        + toAge + ", gender=" + gender + ", gradeOrBelt=" + gradeOrBelt + ", event=" + event + ", categorySetupItems="
+    return "CategorySetup [id=" + id + ", categorySetupName=" + categorySetupName + ", ageGroup=" + ageGroup
+        + ", gender=" + gender + ", gradeOrBelt=" + gradeOrBelt + ", event=" + event + ", categorySetupItems="
         + categorySetupItems + "]";
   }
 

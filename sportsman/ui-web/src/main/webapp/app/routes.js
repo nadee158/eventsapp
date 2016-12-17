@@ -168,6 +168,22 @@ define([], function()
                 	              access:{
                 	            	  isFree:false
                 	              }
+                },'/listplayers':{
+                	templateUrl:'app/playerRegistration/listPlayers.html',
+                	dependencies:[
+                	              '../app/playerRegistration/listPlayers',
+                	              '../common/services/player/player-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/editplayer':{
+                	templateUrl:'app/playerRegistration/editPlayer.html',
+                	dependencies:[
+                	              '../app/playerRegistration/editPlayer',
+                	              '../common/services/player/player-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
                 }
          }
     };

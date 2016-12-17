@@ -57,7 +57,8 @@ public class PlayerDTOConverter {
       dto.setProfileImagePath(player.getPerson().getProfileImagePath());
       dto.setTeam(player.getTeam());
       dto.setWeight(player.getWeight());
-
+      dto.setVersion(player.getVersion());
+      dto.setRecordStatus(player.getRecordStatus().toString());
       return dto;
     }
     return null;
