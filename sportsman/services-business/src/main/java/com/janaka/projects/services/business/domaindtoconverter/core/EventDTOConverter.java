@@ -34,7 +34,7 @@ public class EventDTOConverter {
       dto.setEventName(event.getEventName());
       dto.setEventVenue(event.getEventVenue());
       dto.setId(event.getId());
-      dto.setRecordStatus(event.getRecordStatus().toString());
+      dto.setRecordStatus(event.getRecordStatus().getRecordStatusCode());
       return dto;
     }
     return null;

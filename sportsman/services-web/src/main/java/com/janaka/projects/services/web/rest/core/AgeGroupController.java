@@ -53,7 +53,7 @@ public class AgeGroupController {
         new ApiResponseObject<AgeGroupUpdateResponse>(HttpStatus.OK, response), HttpStatus.OK);
   }
 
-  @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.DELETE)
+  @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.POST)
   public CustomResponseEntity<ApiResponseObject<?>> deleteAgeGroup(@RequestBody ObjectDeletionRequest request) {
     ObjectDeletionResponse response = ageGroupService.deleteAgeGroup(request);
     return new CustomResponseEntity<ApiResponseObject<?>>(

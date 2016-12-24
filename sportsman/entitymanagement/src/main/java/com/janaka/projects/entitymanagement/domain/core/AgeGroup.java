@@ -19,7 +19,7 @@ import com.janaka.projects.entitymanagement.domain.common.AuditEntity;
 @Table(name = "age_group",
     indexes = {@Index(name = "age_group_id_pk_index", unique = true, columnList = "id"),
         @Index(name = "age_group_id_index", unique = true, columnList = "uuid"),
-        @Index(name = "age_group_from_to_index", unique = true, columnList = "from_age,toAge")})
+        @Index(name = "age_group_from_to_index", unique = true, columnList = "from_age,to_age")})
 public class AgeGroup extends AuditEntity implements Serializable {
 
 

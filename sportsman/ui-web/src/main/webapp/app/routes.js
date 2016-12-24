@@ -149,6 +149,22 @@ define([], function()
                 	              access:{
                 	            	  isFree:false
                 	              }
+                },'/editevent':{
+                	templateUrl:'app/events/editEvent.html',
+                	dependencies:[
+                	              '../app/events/editEvent',
+                	              '../common/services/events/event-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/listevents':{
+                	templateUrl:'app/events/listEvents.html',
+                	dependencies:[
+                	              '../app/events/listEvents',
+                	              '../common/services/events/event-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
                 },'/categorysetup':{
                 	templateUrl:'app/category/categorysetup.html',
                 	dependencies:[
@@ -181,6 +197,30 @@ define([], function()
                 	dependencies:[
                 	              '../app/playerRegistration/editPlayer',
                 	              '../common/services/player/player-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/addagegroup':{
+                	templateUrl:'app/ageGroup/addAgeGroup.html',
+                	dependencies:[
+                	              '../app/ageGroup/addAgeGroup',
+                	              '../common/services/agegroup/age-group-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/listagegroups':{
+                	templateUrl:'app/ageGroup/listAgeGroups.html',
+                	dependencies:[
+                	              '../app/ageGroup/listAgeGroups',
+                	              '../common/services/agegroup/age-group-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/editagegroup':{
+                	templateUrl:'app/ageGroup/editAgeGroup.html',
+                	dependencies:[
+                	              '../app/ageGroup/editAgeGroup',
+                	              '../common/services/agegroup/age-group-service'],
                 	              access:{
                 	            	  isFree:false
                 	              }

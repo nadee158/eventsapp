@@ -2,7 +2,7 @@
 
 define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstrap, moment) {
 
-  app.controller('EventSetupController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
+  app.controller('EventEditController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
                                           'NotificationServiceFactory',
                                           'SecurityServiceFactory','Page', 
                                           'EventServiceFactory',
@@ -20,10 +20,37 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 	  
 	  var baseUrl=$rootScope.baseUrl;
 	  
+	  var eventId = 0;
 	  
-	  $scope.initializeEventSetupController = function() {
+	  
+	  $scope.initializeEventEditController = function() {
 		  $scope.activeStatus ='Active';
+		  var queryString = $location.search();
+		  eventId=queryString["id"]
+		  loadEvent(eventId);
       };
+      
+      function loadEvent(eventId){
+        	var ObjectRetrievalRequest={id:eventId};
+        	
+        	var response=EventServiceFactory.getEventById(ObjectRetrievalRequest,baseUrl);		         
+            
+  	        response.success(function(data, status, headers, config) {
+  	      	
+  	        	  var objectRetrievalResponse=data;
+      			  var dto=data.apiResponseResults.dto;
+      			  
+      			   var date = moment(dto.eventDate).format('MM/DD/YYYY hh:mm:ss a');
+      			   $scope.eventTime=date;
+      			   setRecordStatus(dto.recordStatus);
+  	        	
+  	        	  $scope.eventUpdateRequest=dto;
+      			
+            }).error(function(data, status, headers, config){
+            	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD'));
+            	console.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD') + " " + data.message);
+            })    
+        }
       
       $scope.myDate = new Date();
 
@@ -38,15 +65,18 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
           $scope.myDate.getDate());
       
     $scope.setValueRecordStatus = function(recordStatus) {
-    	if(recordStatus=='A'){
-    		$scope.activeStatus = 'Active';
-    	}else{
-    		$scope.activeStatus = 'Inactive';
-    	}
+    	setRecordStatus(recordStatus);
     };
     
-       
-    $scope.createEvent= function() {
+    function setRecordStatus(recordStatus){
+    	if(recordStatus=='A'){
+			$scope.activeStatus = 'Active';
+		}else{
+			$scope.activeStatus = 'Inactive';
+		}  
+	 }
+    
+    $scope.updateEvent= function() {
     
     	angular.forEach($scope.eventSetupForm.$error.required, function(field) {
       	    field.$setDirty();
@@ -62,7 +92,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
             		  $translate('common.button.text.SUBMIT'), 
             		  $translate('common.button.text.CANCEL'), 
             		  submitEvent, 
-            		  $scope.eventCreationRequest, 
+            		  $scope.eventUpdateRequest, 
             		  null, 
             		  null
               );
@@ -82,14 +112,14 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 
       
       
-      function submitEvent(eventCreationRequest){
+      function submitEvent(eventUpdateRequest){
     	var timeDate=moment($scope.eventTime).format('hh:mm:ss a');
-    	var dateDate=moment(eventCreationRequest.eventDate).format('MM/DD/YYYY');
+    	var dateDate=moment(eventUpdateRequest.eventDate).format('MM/DD/YYYY');
     	
-    	eventCreationRequest.eventDate = dateDate + " " + timeDate;
-    	console.log(eventCreationRequest.eventDate);
+    	eventUpdateRequest.eventDate = dateDate + " " + timeDate;
+    	console.log(eventUpdateRequest.eventDate);
       	//Do something
-      	var response=EventServiceFactory.createEvent(eventCreationRequest,baseUrl);		         
+      	var response=EventServiceFactory.updateEvent(eventUpdateRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
 	        	if(data.apiResponseStatus){
@@ -128,7 +158,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       };
       
       function resetFormInner(){
-    	  $scope.eventCreationRequest=new Object();
+    	  $scope.eventUpdateRequest=new Object();
       }
       
       $scope.exitForm = function() {

@@ -1,0 +1,9 @@
+<section class="content">    
+			
+	<div ng-controller="ListEventsController as listUsers" ng-init="initializeListUsersPage()">
+	
+	    <table datatable="" dt-instance="listUsers.dtInstance" dt-options="listUsers.dtOptions" dt-columns="listUsers.dtColumns" class="mdl-data-table" width="100%"></table>
+	    <input type="hidden" ng-model="formKey" />
+	</div>
+	
+</section>

@@ -27,7 +27,9 @@ public class AgeGroupDTOConverter {
       dto.setFromAge(ageGroup.getFromAge());
       dto.setVersion(ageGroup.getVersion());
       dto.setId(ageGroup.getId());
-      dto.setRecordStatus(ageGroup.getRecordStatus().toString());
+      if (!(ageGroup.getRecordStatus() == null)) {
+        dto.setRecordStatus(ageGroup.getRecordStatus().getRecordStatusCode());
+      }
       return dto;
     }
     return null;
@@ -37,7 +39,7 @@ public class AgeGroupDTOConverter {
     if (!(ageGroupFromDb == null || request == null)) {
       ageGroupFromDb.setFromAge(request.getFromAge());
       ageGroupFromDb.setToAge(request.getToAge());
-      if (StringUtils.isNoneEmpty(request.getRecordStatus())) {
+      if (StringUtils.isNotEmpty(request.getRecordStatus())) {
         ageGroupFromDb.setRecordStatus(RecordStatus.fromRecordStatusCode(request.getRecordStatus()));
       }
     }

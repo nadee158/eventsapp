@@ -52,7 +52,7 @@ public class EventController {
         new ApiResponseObject<EventUpdateResponse>(HttpStatus.OK, response), HttpStatus.OK);
   }
 
-  @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.DELETE)
+  @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.POST)
   public CustomResponseEntity<ApiResponseObject<?>> deleteEvent(@RequestBody ObjectDeletionRequest request) {
     ObjectDeletionResponse response = eventService.deleteEvent(request);
     return new CustomResponseEntity<ApiResponseObject<?>>(

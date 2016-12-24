@@ -2,70 +2,85 @@
 
 define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstrap, moment) {
 
-  app.controller('EventSetupController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
+  app.controller('EditAgeGroupController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
                                           'NotificationServiceFactory',
-                                          'SecurityServiceFactory','Page', 
-                                          'EventServiceFactory',
+                                          'Page', 
+                                          'AgeGroupServiceFactory',
                                           'CommonServiceFactory',
                                           'ModalDialogServiceFactory',
                                   function($scope, $rootScope, $log, $sce, $filter, $location,
                                 		  NotificationServiceFactory,
-                                		  SecurityServiceFactory,Page, 
-                                		  EventServiceFactory,
+                                		  Page, 
+                                		  AgeGroupServiceFactory,
                                 		  CommonServiceFactory,
                                 		  ModalDialogServiceFactory) {
-	  Page.setTitle("Event Setup");
+	  Page.setTitle("Edit Age Group");
 	  
 	  var $translate = $filter('translate');
 	  
 	  var baseUrl=$rootScope.baseUrl;
 	  
+	  var ageGroupId = 0;
 	  
-	  $scope.initializeEventSetupController = function() {
+	  
+	  $scope.initializeAgeGroupPage = function() {
 		  $scope.activeStatus ='Active';
+		  var queryString = $location.search();
+		  ageGroupId=queryString["id"]
+		  loadAgeGroup(ageGroupId);
       };
       
-      $scope.myDate = new Date();
-
-      $scope.minDate = new Date(
-          $scope.myDate.getFullYear(),
-          $scope.myDate.getMonth(),
-          $scope.myDate.getDate());
-
-      $scope.maxDate = new Date(
-          $scope.myDate.getFullYear() + 10,
-          $scope.myDate.getMonth(),
-          $scope.myDate.getDate());
+      function loadAgeGroup(ageGroupId){
+      	var ObjectRetrievalRequest={id:ageGroupId};
+      	
+      	var response=AgeGroupServiceFactory.getAgeGroupById(ObjectRetrievalRequest,baseUrl);		         
+          
+	        response.success(function(data, status, headers, config) {
+	      	
+	        	  var objectRetrievalResponse=data;
+    			  var dto=data.apiResponseResults.dto;
+	        	
+	        	  $scope.ageGroupUpdateRequest=dto;
+    			
+          }).error(function(data, status, headers, config){
+          	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD'));
+          	console.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD') + " " + data.message);
+          })    
+      }
       
-    $scope.setValueRecordStatus = function(recordStatus) {
-    	if(recordStatus=='A'){
-    		$scope.activeStatus = 'Active';
-    	}else{
-    		$scope.activeStatus = 'Inactive';
-    	}
-    };
-    
        
-    $scope.createEvent= function() {
+    $scope.updateAgeGroup= function() {
     
-    	angular.forEach($scope.eventSetupForm.$error.required, function(field) {
+    	angular.forEach($scope.ageGroupSetupForm.$error.required, function(field) {
       	    field.$setDirty();
-      	    
       	});
     	
-      	if($scope.eventSetupForm.$valid) {
+      	if($scope.ageGroupSetupForm.$valid) {
       		
-      		ModalDialogServiceFactory.confirmBox(
-            		  $translate('common.notification.message.CONFIRM_SUBMIT_TITLE'), 
-            		  $translate('common.notification.message.CONFIRM_SUMIT_CONTENT'), 
-            		  '', 
-            		  $translate('common.button.text.SUBMIT'), 
-            		  $translate('common.button.text.CANCEL'), 
-            		  submitEvent, 
-            		  $scope.eventCreationRequest, 
-            		  null, 
-            		  null
-              );
+      		if($scope.ageGroupUpdateRequest.toAge<=$scope.ageGroupUpdateRequest.fromAge){
+      			ModalDialogServiceFactory.alert(
+              		  $translate('common.notification.message.NOTIFY_FORM_VALIDATION_ERRORS'), 
+              		  'To age must be less than from age!', 
+              		  '', 
+              		  $translate('common.button.text.OK'), 
+              		  null, 
+              		  null
+                );
+      		}else{
+      			ModalDialogServiceFactory.confirmBox(
+              		  $translate('common.notification.message.CONFIRM_SUBMIT_TITLE'), 
+              		  $translate('common.notification.message.CONFIRM_SUMIT_CONTENT'), 
+              		  '', 
+              		  $translate('common.button.text.SUBMIT'), 
+              		  $translate('common.button.text.CANCEL'), 
+              		  submitEvent, 
+              		  $scope.ageGroupUpdateRequest, 
+              		  null, 
+              		  null
+                );
+      		}
+      		
+      		
       	    
       	}else{
       		ModalDialogServiceFactory.alert(
@@ -82,14 +97,10 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 
       
       
-      function submitEvent(eventCreationRequest){
-    	var timeDate=moment($scope.eventTime).format('hh:mm:ss a');
-    	var dateDate=moment(eventCreationRequest.eventDate).format('MM/DD/YYYY');
+      function submitEvent(ageGroupUpdateRequest){
     	
-    	eventCreationRequest.eventDate = dateDate + " " + timeDate;
-    	console.log(eventCreationRequest.eventDate);
       	//Do something
-      	var response=EventServiceFactory.createEvent(eventCreationRequest,baseUrl);		         
+      	var response=AgeGroupServiceFactory.updateAgeGroup(ageGroupUpdateRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
 	        	if(data.apiResponseStatus){
@@ -98,7 +109,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 		      			
 		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
 		      			
-		      			$location.path("/listevents");
+		      			$location.path("/listagegroups");
 		      		}else{
 		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.apiResponseResults.message));
 		      			
@@ -128,7 +139,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       };
       
       function resetFormInner(){
-    	  $scope.eventCreationRequest=new Object();
+    	  $scope.ageGroupUpdateRequest=new Object();
       }
       
       $scope.exitForm = function() {
