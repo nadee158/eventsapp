@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,6 +16,7 @@ import com.janaka.projects.common.constant.ApplicationConstants;
 import com.janaka.projects.common.datamanagement.TabularDataRequestModel;
 import com.janaka.projects.common.datamanagement.TabularDataResponseModel;
 import com.janaka.projects.dtos.domain.core.PlayerDTO;
+import com.janaka.projects.dtos.exceptions.ResultsNotFoundException;
 import com.janaka.projects.dtos.requests.common.ObjectDeletionRequest;
 import com.janaka.projects.dtos.requests.common.ObjectRetrievalRequest;
 import com.janaka.projects.dtos.requests.core.PlayerCreationRequest;
@@ -118,15 +120,31 @@ public class PlayerServiceImpl extends BusinessService implements PlayerService 
 
   @Override
   public PlayerUpdateResponse updatePlayer(PlayerUpdateRequest request) {
-    // TODO Auto-generated method stub
-    return null;
+    Player playerFromDB = playerRepository.findOne(request.getId());
+    PlayerUpdateResponse response = new PlayerUpdateResponse();
+    if (!(playerFromDB == null)) {
+      Person person = null;
+      if (StringUtils.isNotEmpty(request.getNic())) {
+        person = personRepository.findByNic(request.getNic());
+      }
+      CategorySetup categorySetup = categorySetupRepository.findOne(request.getCategoryId());
+      Player player = PlayerDTOConverter.updateDomainFromRequest(request, categorySetup, playerFromDB, person);
+      Player persisted = playerRepository.save(player);
+      response.setId(persisted.getId());
+      response.setPlayerDTO(PlayerDTOConverter.convertDomainToDTO(persisted));
+      response.setMessage("SUCESS");
+      response.setStatus(ApplicationConstants.STATUS_CODE_OK);
+      return response;
+    }
+    throw new ResultsNotFoundException("Updated player was not found!");
   }
+
 
   @Override
   public PlayerCreationResponse createPlayer(PlayerCreationRequest request) {
     Person person = null;
-    if (request.getPersonId() > 0) {
-      person = personRepository.findOne(request.getPersonId());
+    if (StringUtils.isNotEmpty(request.getIcPassport())) {
+      person = personRepository.findByNic(request.getIcPassport());
     }
     CategorySetup categorySetup = categorySetupRepository.findOne(request.getCategoryId());
     Player player = PlayerDTOConverter.convertRequestToDomain(request, categorySetup, person);
@@ -201,5 +219,7 @@ public class PlayerServiceImpl extends BusinessService implements PlayerService 
     }
     return null;
   }
+
+
 
 }

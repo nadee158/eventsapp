@@ -15,6 +15,10 @@ public class PlayerDTO implements Serializable {
 
   private String playerNumber = StringUtils.EMPTY;
 
+  private long eventId;
+
+  private String eventName;
+
   private String team;
 
   private double height;
@@ -181,6 +185,22 @@ public class PlayerDTO implements Serializable {
 
   public void setVersion(long version) {
     this.version = version;
+  }
+
+  public long getEventId() {
+    return eventId;
+  }
+
+  public void setEventId(long eventId) {
+    this.eventId = eventId;
+  }
+
+  public String getEventName() {
+    return eventName;
+  }
+
+  public void setEventName(String eventName) {
+    this.eventName = eventName;
   }
 
 

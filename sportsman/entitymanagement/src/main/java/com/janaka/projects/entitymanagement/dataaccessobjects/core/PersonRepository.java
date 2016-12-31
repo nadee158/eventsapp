@@ -6,4 +6,6 @@ import com.janaka.projects.entitymanagement.domain.usermanagement.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+  Person findByNic(String nic);
+
 }

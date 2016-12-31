@@ -22,6 +22,32 @@
 		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#listagegroups"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>List Age Groups</span></a></li>
 		          </ul>
 		      </li>
+		      <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">
+		          <a href="#">
+		            <i class="fa fa-files-o"></i>
+		            <span translate>Teams</span> 
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#addteam"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>Add Team</span></a></li>
+		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#listteams"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>List Teams</span></a></li>
+		          </ul>
+		      </li>
+		       <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">
+		          <a href="#">
+		            <i class="fa fa-files-o"></i>
+		            <span translate>Grade Belts</span> 
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#addgradebelt"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>Add Grade Belt</span></a></li>
+		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#listgradebelts"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>List Grade Belts</span></a></li>
+		          </ul>
+		      </li>
 			 <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">
 		          <a href="#">
 		            <i class="fa fa-files-o"></i>
@@ -45,6 +71,7 @@
 		          </a>
 		          <ul class="treeview-menu">
 		          	<li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#categorysetup"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>Category Setup</span></a></li>
+		            <li ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')"><a href="#listcategories"><i class="fa fa-circle-o"></i><span id="ellipsis2" translate>List Categories</span></a></li>
 		          </ul>
 		      </li>
 		       <li class="treeview"  ng-show="hasUserAnyRole('ROLE_SUPER_ADMIN')">

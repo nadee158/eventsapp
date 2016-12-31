@@ -1,0 +1,44 @@
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Team
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Team Setup</li>
+      </ol>
+    </section>
+
+ 			<!-- Main content -->
+    <section class="content">
+
+	  <div class="box box-primary" ng-cloak class="md-inline-form" ng-controller="AddTeamController" ng-init="initializeTeamPage()">
+	
+		<form name="teamSetupForm" id="teamSetupForm">
+			<md-content layout-padding>	
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Team Name</label>
+			           	<input ng-model="teamCreationRequest.teamName" name="teamName" required />
+			           	<span ng-show="teamSetupForm.teamName.$dirty"> 
+							<span ng-show="teamSetupForm.teamName.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>			       
+			         </md-input-container>
+			   </div>
+		        
+		        
+		        <div layout-gt-sm="row">
+		        	<md-button class="md-raised md-warn" ng-click="exitForm()">Exit</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="resetForm()">Reset</md-button>
+		        	<md-button class="md-raised md-primary" ng-click="createTeam()">Create</md-button>
+		        </div>
+		        
+		        
+	        </md-content>
+       	</form>
+	</div>
+
+    </section>
+<!-- /.content -->

@@ -1,6 +1,7 @@
 package com.janaka.projects.services.business.core;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ import com.janaka.projects.dtos.responses.core.AgeGroupUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.AgeGroupRepository;
 import com.janaka.projects.entitymanagement.domain.core.AgeGroup;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
-import com.janaka.projects.entitymanagement.specifications.core.AgeGroupSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.AgeGroupDTOConverter;
 import com.janaka.projects.services.core.AgeGroupService;
@@ -92,6 +92,17 @@ public class AgeGroupServiceImpl extends BusinessService implements AgeGroupServ
       activeAgeGroups.forEach(event -> {
         dtoList.add(AgeGroupDTOConverter.convertDomainToDTO(event));
       });
+      java.util.Collections.sort(dtoList, new Comparator<AgeGroupDTO>() {
+        @Override
+        public int compare(AgeGroupDTO o1, AgeGroupDTO o2) {
+          if (o1.getFromAge() > o2.getFromAge()) {
+            return 1;
+          } else if (o1.getFromAge() < o2.getFromAge()) {
+            return -1;
+          } ;
+          return 0;
+        }
+      });
       response.setDtoList(dtoList);
       response.setListSize(dtoList.size());
       response.setMessage("LISTED_SUCCESSFULLY");
@@ -118,8 +129,7 @@ public class AgeGroupServiceImpl extends BusinessService implements AgeGroupServ
 
   @Override
   public TabularDataResponseModel<AgeGroupDTO> getAgeGroups(TabularDataRequestModel request) {
-    DataTablesOutput<AgeGroup> domainResponse =
-        ageGroupRepository.findAll(request, AgeGroupSpecifications.isNotDeleted());
+    DataTablesOutput<AgeGroup> domainResponse = ageGroupRepository.findAll(request);
     TabularDataResponseModel<AgeGroupDTO> response = new TabularDataResponseModel<AgeGroupDTO>();
     if (!(domainResponse == null)) {
       if (!(domainResponse.getData() == null || domainResponse.getData().isEmpty())) {

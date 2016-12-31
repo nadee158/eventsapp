@@ -86,9 +86,13 @@ public final class ServiceEndpoints {
   // --------------- COMMON -----------------------
   public static final String AGE_GROUPS = "agegroupservice";
 
+  // --------------- TEAM -----------------------
+  public static final String TEAMS = "teamservice";
+
+  // --------------- GRADE_BELTS -----------------------
+  public static final String GRADE_BELTS = "gradebeltservice";
+
   public static final String LIST_GENDERS = "/listgenders";
-
-
 
   public static final String CREATE = "/create";
 
@@ -105,6 +109,8 @@ public final class ServiceEndpoints {
   public static final String GET_BY_EVENT_ID = "/getbyeventid";
 
   public static final String FIND_FILE = "/findfile";
+
+  public static final String UPDATE_WITH_FILE = "/updatewithfile";
 
 
 

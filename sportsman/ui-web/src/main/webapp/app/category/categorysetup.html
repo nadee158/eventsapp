@@ -44,34 +44,18 @@
 			         </md-input-container>
 		        </div>
 		        <div layout-gt-sm="row">
-		             <label translate>Age Group</label>
 			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>From</label>
-			           	<input ng-model="categoryCreationRequest.fromAge" name="fromAge" type="number" step="any" min="1"
-                              max="120" required />
-			           	<span ng-show="categorySetupForm.fromAge.$dirty"> 
-							<span ng-show="categorySetupForm.fromAge.$error.required">
+			           	<label translate>Age Group</label>
+			           	<md-select ng-model="categoryCreationRequest.ageGroupId" required>
+						    <md-option ng-value="ageGroup.id" ng-repeat="ageGroup in ageGroups">{{ ageGroup.fromAge }} - {{ ageGroup.toAge }}</md-option>
+						</md-select>
+			           	<span ng-show="categorySetupForm.ageGroupId.$dirty"> 
+							<span ng-show="categorySetupForm.ageGroupId.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
-							<span ng-show="categorySetupForm.fromAge.$error['md-maxlength']">
-								<span class="md-input-validation-message" translate>Event type should be less than 240 characters long!</span>
-							</span>					
 						</span>			       
 			         </md-input-container>
-			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>To</label>
-			           	<input ng-model="categoryCreationRequest.toAge" name="toAge" type="number" step="any" min="1"
-                              max="120" required />
-			           	<span ng-show="categorySetupForm.toAge.$dirty"> 
-							<span ng-show="categorySetupForm.toAge.$error.required">
-								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
-							</span>
-							<span ng-show="categorySetupForm.toAge.$error['md-maxlength']">
-								<span class="md-input-validation-message" translate>Event type should be less than 240 characters long!</span>
-							</span>					
-						</span>			       
-			         </md-input-container>
-		        </div>
+		        </div>	
 		         <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Gender</label>

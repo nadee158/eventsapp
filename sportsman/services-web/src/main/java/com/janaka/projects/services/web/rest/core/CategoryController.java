@@ -54,7 +54,7 @@ public class CategoryController {
         new ApiResponseObject<CategoryUpdateResponse>(HttpStatus.OK, response), HttpStatus.OK);
   }
 
-  @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.DELETE)
+  @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.POST)
   public CustomResponseEntity<ApiResponseObject<?>> deleteEvent(@RequestBody ObjectDeletionRequest request) {
     ObjectDeletionResponse response = categoryService.deleteCategory(request);
     return new CustomResponseEntity<ApiResponseObject<?>>(

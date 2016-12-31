@@ -73,6 +73,23 @@ public class PlayerController {
         new ApiResponseObject<PlayerUpdateResponse>(HttpStatus.OK, response), HttpStatus.OK);
   }
 
+  @RequestMapping(value = ServiceEndpoints.UPDATE_WITH_FILE, method = RequestMethod.POST,
+      consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public @ResponseBody CustomResponseEntity<ApiResponseObject<?>> updateWithFile(
+      @RequestPart(value = "playerUpdateRequest") PlayerUpdateRequest request,
+      @RequestPart("file") MultipartFile file) {
+    logger.error("request : " + request);
+    logger.error("file : " + file);
+    request.setFile(file);
+    request.setSavedImagePath(fileService.saveImegeToDisk(request.getFile()));
+    System.out.println("request.getSavedImagePath() " + request.getSavedImagePath());
+    PlayerUpdateResponse response = playerService.updatePlayer(request);
+    return new CustomResponseEntity<ApiResponseObject<?>>(
+        new ApiResponseObject<PlayerUpdateResponse>(HttpStatus.OK, response), HttpStatus.OK);
+  }
+
+
+
   @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.DELETE)
   public CustomResponseEntity<ApiResponseObject<?>> deletePlayer(@RequestBody ObjectDeletionRequest request) {
     logger.error("request : " + request);

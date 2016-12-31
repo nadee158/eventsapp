@@ -97,7 +97,7 @@ require
 					deps:['jquery']
 				},
 				'datatables':{
-					deps:['jquery']
+					deps:['jquery', 'angular']
 				},
 				'angular-datatables' : {
 					deps : [ 'jquery', 'angular', 'datatables','ngMaterial'],

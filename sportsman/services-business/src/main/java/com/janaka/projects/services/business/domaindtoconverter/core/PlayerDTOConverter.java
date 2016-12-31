@@ -1,8 +1,11 @@
 package com.janaka.projects.services.business.domaindtoconverter.core;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.janaka.projects.common.util.CommonUtil;
 import com.janaka.projects.dtos.domain.core.PlayerDTO;
 import com.janaka.projects.dtos.requests.core.PlayerCreationRequest;
+import com.janaka.projects.dtos.requests.core.PlayerUpdateRequest;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.Player;
 import com.janaka.projects.entitymanagement.domain.usermanagement.Person;
@@ -47,6 +50,7 @@ public class PlayerDTOConverter {
       dto.setAddress(player.getPerson().getAddress());
       dto.setCategoryId(player.getCategorySetup().getId());
       dto.setContactNumber(player.getPerson().getContactNumber());
+      dto.setCategorySetupName(player.getCategorySetup().getCategorySetupName());
       dto.setEmail(player.getPerson().getEmail());
       dto.setFullName(player.getPerson().getFullName());
       dto.setHeight(player.getHeight());
@@ -59,9 +63,44 @@ public class PlayerDTOConverter {
       dto.setWeight(player.getWeight());
       dto.setVersion(player.getVersion());
       dto.setRecordStatus(player.getRecordStatus().toString());
+      dto.setEventName(player.getCategorySetup().getEvent().getEventName());
+      dto.setEventId(player.getCategorySetup().getEvent().getId());
       return dto;
     }
     return null;
+  }
+
+  public static Player updateDomainFromRequest(PlayerUpdateRequest request, CategorySetup categorySetup, Player player,
+      Person person) {
+    if (!(request == null)) {
+      player.setCategorySetup(categorySetup);
+      player.setHeight(request.getHeight());
+      player.setPerson(constructPerson(person, request));
+      player.setPlayerNumber(request.getPlayerNumber());
+      player.setTeam(request.getTeam());
+      player.setWeight(request.getWeight());
+      return player;
+    }
+    return null;
+  }
+
+
+  private static Person constructPerson(Person person, PlayerUpdateRequest request) {
+    if (person == null) {
+      person = new Person();
+    }
+    person.setAddress(request.getAddress());
+    person.setContactNumber(request.getContactNumber());
+    person.setEmail(request.getEmail());
+    person.setFullName(request.getFullName());
+    person.setNic(request.getNic());
+    System.out.println("request.getSavedImagePath() " + request.getSavedImagePath());
+    if (StringUtils.isNotEmpty(request.getSavedImagePath())) {
+      person.setProfileImagePath(request.getSavedImagePath());
+    } else {
+      person.setProfileImagePath(request.getProfileImagePath());
+    }
+    return person;
   }
 
 

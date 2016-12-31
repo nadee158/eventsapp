@@ -15,7 +15,7 @@ define(['app'], function (app) {
 	    
 	    CategoryServiceFactory.updateCategory = function (categoryUpdateRequest, baseUrl) {
 	    	var url = baseUrl + '/categoryservice/update';
-	        return $http.post(url, categoryUpdateRequest);
+	        return $http.put(url, categoryUpdateRequest);
 	    };
 	    
 	    CategoryServiceFactory.deleteCategory = function (objectDeletionRequest, baseUrl) {

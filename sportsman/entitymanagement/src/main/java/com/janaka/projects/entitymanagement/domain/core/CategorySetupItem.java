@@ -37,6 +37,12 @@ public class CategorySetupItem extends AuditEntity implements Serializable {
   @Column(name = "item_name")
   private String itemName = StringUtils.EMPTY;
 
+  @Column(name = "text1")
+  private String text1;
+
+  @Column(name = "text2")
+  private String text2;
+
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
   @JoinColumn(name = "category_setup_id", referencedColumnName = "id")
   private CategorySetup categorySetup;
@@ -69,9 +75,26 @@ public class CategorySetupItem extends AuditEntity implements Serializable {
     this.categorySetup = categorySetup;
   }
 
+  public String getText1() {
+    return text1;
+  }
+
+  public void setText1(String text1) {
+    this.text1 = text1;
+  }
+
+  public String getText2() {
+    return text2;
+  }
+
+  public void setText2(String text2) {
+    this.text2 = text2;
+  }
+
   @Override
   public String toString() {
-    return "CategorySetupItem [id=" + id + ", itemName=" + itemName + "]";
+    return "CategorySetupItem [id=" + id + ", itemName=" + itemName + ", text1=" + text1 + ", text2=" + text2
+        + ", categorySetup=" + categorySetup + "]";
   }
 
 

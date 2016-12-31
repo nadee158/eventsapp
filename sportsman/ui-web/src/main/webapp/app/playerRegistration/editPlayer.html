@@ -1,3 +1,35 @@
+<style type="text/css">
+.dz-success-mark{
+ display: none;
+}
+.dz-error-mark{
+ display: none;
+}
+.dz-remove{
+ display: none;
+}
+.dz-details{
+display: none;
+}
+.dz-upload { 
+    display: block; 
+    background-color: red; 
+    height: 10px;
+    width: 0%;
+}
+</style> 
+
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Update Player
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Update Player</li>
+      </ol>
+    </section>
+
 <section class="content">    
 			
 	<div layout="column" ng-cloak class="md-inline-form" ng-controller="EditPlayerController" ng-init="initializeEditPlayerPage()">
@@ -5,6 +37,11 @@
 		<form name="editPlayerForm" id="editPlayerForm">
 		
 			<md-content layout-padding>	
+			
+			<input type="hidden" ng-readonly="true" ng-model="playerUserUpdateRequest.id" name="id"/>
+			<input type="hidden" ng-readonly="true" ng-model="playerUserUpdateRequest.profileImagePath" name="profileImagePath"/>
+			<input type="hidden" ng-readonly="true" ng-model="playerUserUpdateRequest.recordStatus" name="recordStatus"/>
+			<input type="hidden" ng-readonly="true" ng-model="playerUserUpdateRequest.version" name="version"/>
 			
 			<div layout="row" layout-xs="column">
 			  <div flex>
@@ -38,7 +75,7 @@
 		        <div layout="row">
 			        <md-input-container layout="column" flex>
 				           	<label translate>Player No</label>
-				           	<input ng-model="playerUserUpdateRequest.playerNumber" name="playerNumber"/>
+				           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.playerNumber" name="playerNumber"/>
 				    </md-input-container>
 		        </div>	
 		         <div layout="row">
@@ -79,7 +116,7 @@
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>IC/Passport</label>
 			           	<md-icon><i class="fa fa-info" aria-hidden="true"></i></md-icon>
-			           	<input ng-model="playerUserUpdateRequest.icPassport" name="icPassport" md-minlength="10" md-maxlength="12" required />
+			           	<input ng-model="playerUserUpdateRequest.nic" name="nic" md-minlength="10" md-maxlength="12" required />
 			            <span ng-show="editPlayerForm.nic.$dirty"> 
 							<span ng-show="editPlayerForm.nic.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
@@ -97,7 +134,7 @@
 			         <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Player Name</label>
 			           	<md-icon><i class="fa fa-user" aria-hidden="true"></i></md-icon>
-			           	<input ng-model="playerUserUpdateRequest.playerName" name="playerName" md-maxlength="240" required />
+			           	<input ng-model="playerUserUpdateRequest.fullName" name="fullName" md-maxlength="240" required />
 			           	<span ng-show="editPlayerForm.playerName.$dirty"> 
 							<span ng-show="editPlayerForm.playerName.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
@@ -174,9 +211,9 @@
 			         </md-input-container>
 		        </div>
 		        <div layout-gt-sm="row">
-		        	<md-button class="md-raised md-warn" ng-click="exitPlayerForm()">Exit</md-button>
-		        	<md-button class="md-raised md-warn" ng-click="resetPlayerForm()">Reset</md-button>
-		        	<md-button class="md-raised md-primary" ng-click="registerPlayer()">Create</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="exitForm()">Exit</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="resetForm()">Reset</md-button>
+		        	<md-button class="md-raised md-primary" ng-click="updatePlayer()">Update</md-button>
 		        </div>
 		        
 		        

@@ -1,0 +1,153 @@
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Update Category Setup
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Update Category Setup</li>
+      </ol>
+    </section>
+
+ 			<!-- Main content -->
+    <section class="content">
+
+	  <div class="box box-primary" ng-cloak class="md-inline-form" ng-controller="CategoryUpdateController" ng-init="initializeCategorySetupController()">
+	
+		<form name="categorySetupForm" id="categorySetupForm">
+			<md-content layout-padding>	
+			   <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Event Name</label>
+			           	<md-select ng-model="categoryUpdateRequest.eventId" required>
+						    <md-option ng-value="event.id" ng-repeat="event in events">{{ event.eventName }}</md-option>
+						</md-select>
+			           	<span ng-show="categorySetupForm.eventName.$dirty"> 
+							<span ng-show="categorySetupForm.eventName.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>			       
+			         </md-input-container>
+		        </div>		
+				<div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Event Type</label>
+			           	<input ng-model="categoryUpdateRequest.categorySetupName" name="categorySetupName" md-maxlength="240" required />
+			           	<span ng-show="categorySetupForm.categorySetupName.$dirty"> 
+							<span ng-show="categorySetupForm.categorySetupName.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+							<span ng-show="categorySetupForm.categorySetupName.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Event type should be less than 240 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Age Group</label>
+			           	<md-select ng-model="categoryUpdateRequest.ageGroupId" required>
+						    <md-option ng-value="ageGroup.id" ng-repeat="ageGroup in ageGroups">{{ ageGroup.fromAge }} - {{ ageGroup.toAge }}</md-option>
+						</md-select>
+			           	<span ng-show="categorySetupForm.ageGroupId.$dirty"> 
+							<span ng-show="categorySetupForm.ageGroupId.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>			       
+			         </md-input-container>
+		        </div>	
+		         <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Gender</label>
+			           	<md-select ng-model="categoryUpdateRequest.gender" required name="gender">
+						    <md-option ng-value="gender" ng-repeat="gender in genders">{{ gender }}</md-option>
+						</md-select>
+			           	<span ng-show="categorySetupForm.gender.$dirty"> 
+							<span ng-show="categorySetupForm.gender.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+						</span>			       
+			         </md-input-container>
+		        </div>	
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Category/Belt</label>
+			           	<input ng-model="categoryUpdateRequest.gradeOrBelt" name="gradeOrBelt" md-maxlength="240" required />
+			           	<span ng-show="categorySetupForm.gradeOrBelt.$dirty"> 
+							<span ng-show="categorySetupForm.gradeOrBelt.$error.required">
+								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
+							</span>
+							<span ng-show="categorySetupForm.gradeOrBelt.$error['md-maxlength']">
+								<span class="md-input-validation-message" translate>Category name should be less than 240 characters long!</span>
+							</span>					
+						</span>			       
+			         </md-input-container>
+		        </div>
+		        
+		         <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Select Box</label>
+			           	<md-select ng-model="selectBox"  name="selectBox">
+						    <md-option ng-value="item" ng-repeat="item in itemDropDowns">{{ item }}</md-option>
+						</md-select>
+			         </md-input-container>
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Text 1</label>
+			           	<input ng-model="text1" name="text1" />
+			         </md-input-container>
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Text 2</label>
+			           	<input ng-model="text2" name="text2" />
+			         </md-input-container>
+			         <md-input-container class="md-block" flex-gt-sm>
+			           <md-button class="md-raised md-primary"  ng-click="addItem()" >Add</md-button>
+			         </md-input-container>
+		        </div>
+		        
+		       
+				  
+				<div layout-gt-sm="row">  
+				
+				    <md-chips ng-model="categoryUpdateRequest.categorySetupItems" name="categorySetupItems" readonly="false"
+				         md-removable="true" md-max-chips="12" md-min-chips="1" md-chips-disable-input>
+				      <md-chip-template>
+				        <span>
+				          <strong>{{$chip.itemName}}</strong>
+				          <em>({{$chip.text1}} | {{$chip.text2}})</em>
+				        </span>
+				      </md-chip-template>
+				    </md-chips>
+				    
+				    <span ng-show="categoryUpdateRequest.categorySetupItems.$dirty"> 
+						<span ng-show="categorySetupForm.categorySetupItems.$error['md-max-chips']">
+							<span class="md-input-validation-message" translate>The maxmium of chips is reached.</span>
+						</span>	
+						<span ng-show="categorySetupForm.categorySetupItems.$error.md-min-chips">
+						<span class="md-input-validation-message" translate>At least one screen item should be assigned</span>
+					</span>				
+					</span>	
+				  
+		        </div>
+		        
+		         <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>			           	
+			           	<md-switch ng-model="categoryUpdateRequest.recordStatus" aria-label="Active Status"  
+			           	    ng-true-value="'N'" ng-false-value="'A'" class="md-warn" ng-change="setValueRecordStatus(categoryUpdateRequest.recordStatus)">
+			           	   <label translate>Active Status : {{activeStatus}}</label>
+			           	</md-switch>
+			         </md-input-container>
+		        </div>
+		        
+		        <div layout-gt-sm="row">
+		        	<md-button class="md-raised md-warn" ng-click="exitCategoryForm()">Exit</md-button>
+		        	<md-button class="md-raised md-warn" ng-click="resetCategoryForm()">Reset</md-button>
+		        	<md-button class="md-raised md-primary" ng-click="updateCategory()">Update</md-button>
+		        </div>
+		        
+		        
+	        </md-content>
+       	</form>
+	</div>
+
+    </section>
+<!-- /.content -->

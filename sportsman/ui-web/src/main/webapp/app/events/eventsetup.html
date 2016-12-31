@@ -60,13 +60,13 @@
 			         </md-input-container>
 			         <md-input-container  class="md-block" flex-gt-sm>
 				        <label>Time of the Event</label>
-				        <input mdc-datetime-picker date="false" time="true" type="text" id="time" short-time="true"
+				        <input mdc-datetime-picker date="false" time="true" type="text" id="eventTime" short-time="true"
 				               placeholder="Event Time"
 				               min-date="minDate"
 				               format="hh:mm a"
 				               ng-model="eventTime" required>	
-				         <span ng-show="eventSetupForm.eventDate.$dirty">
-							<span ng-show="eventSetupForm.eventDate.$error.required">
+				         <span ng-show="eventSetupForm.eventTime.$dirty">
+							<span ng-show="eventSetupForm.eventTime.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
 						</span>	   

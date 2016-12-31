@@ -6,12 +6,14 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.datatables.mapping.DataTablesOutput;
 import org.springframework.stereotype.Service;
 
 import com.janaka.projects.common.constant.ApplicationConstants;
 import com.janaka.projects.common.datamanagement.TabularDataRequestModel;
 import com.janaka.projects.common.datamanagement.TabularDataResponseModel;
 import com.janaka.projects.dtos.domain.core.CategoryDTO;
+import com.janaka.projects.dtos.exceptions.ResultsNotFoundException;
 import com.janaka.projects.dtos.requests.common.ObjectDeletionRequest;
 import com.janaka.projects.dtos.requests.common.ObjectRetrievalRequest;
 import com.janaka.projects.dtos.requests.core.CategoryCreationRequest;
@@ -27,6 +29,7 @@ import com.janaka.projects.entitymanagement.dataaccessobjects.core.EventReposito
 import com.janaka.projects.entitymanagement.domain.core.AgeGroup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.Event;
+import com.janaka.projects.entitymanagement.enums.RecordStatus;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.CategorySetupDTOConverter;
 import com.janaka.projects.services.core.CategoryService;
@@ -63,32 +66,94 @@ public class CategoryServiceImpl extends BusinessService implements CategoryServ
 
   @Override
   public CategoryUpdateResponse updateEvent(CategoryUpdateRequest request) {
-    // TODO Auto-generated method stub
-    return null;
+    CategorySetup categorySetupFromDb = categorySetupRepository.findOne(request.getId());
+    if (!(categorySetupFromDb == null)) {
+      System.out.println("request " + request);
+      Event event = eventRepository.findOne(request.getEventId());
+      AgeGroup ageGroup = ageGroupRepository.findOne(request.getAgeGroupId());
+
+      categorySetupFromDb =
+          CategorySetupDTOConverter.updateDomainFromRequest(request, categorySetupFromDb, event, ageGroup);
+      CategorySetup updatedCategorySetup = categorySetupRepository.save(categorySetupFromDb);
+      CategoryUpdateResponse response = new CategoryUpdateResponse();
+      response.setCategoryDTO(CategorySetupDTOConverter.convertDomainToDTO(updatedCategorySetup));
+      response.setId(updatedCategorySetup.getId());
+      response.setMessage("UPDATED_SUCCESSFULLY");
+      response.setStatus(ApplicationConstants.STATUS_CODE_OK);
+      return response;
+    } else {
+      throw new ResultsNotFoundException("Event was not found!");
+    }
   }
 
   @Override
   public ObjectDeletionResponse deleteCategory(ObjectDeletionRequest request) {
-    // TODO Auto-generated method stub
-    return null;
+    CategorySetup categorySetupFromDb = categorySetupRepository.findOne(request.getId());
+    if (!(categorySetupFromDb == null)) {
+      categorySetupFromDb.setRecordStatus(RecordStatus.INACTIVE);
+      CategorySetup updatedCategorySetup = categorySetupRepository.save(categorySetupFromDb);
+      ObjectDeletionResponse response = new ObjectDeletionResponse();
+      response.setId(updatedCategorySetup.getId());
+      response.setMessage("DELETED_SUCCESSFULLY");
+      response.setStatus(ApplicationConstants.STATUS_CODE_OK);
+      return response;
+    } else {
+      throw new ResultsNotFoundException("Event was not found!");
+    }
   }
 
   @Override
   public ObjectListResponse<CategoryDTO> getAllActiveCategories() {
-    // TODO Auto-generated method stub
+    List<CategorySetup> activeCategories = categorySetupRepository.findByRecordStatus(RecordStatus.ACTIVE);
+    System.out.println("activeEvents :" + activeCategories);
+    if (!(activeCategories == null || activeCategories.isEmpty())) {
+      ObjectListResponse<CategoryDTO> response = new ObjectListResponse<CategoryDTO>();
+      List<CategoryDTO> dtoList = new ArrayList<CategoryDTO>();
+      activeCategories.forEach(event -> {
+        dtoList.add(CategorySetupDTOConverter.convertDomainToDTO(event));
+      });
+      response.setDtoList(dtoList);
+      response.setListSize(dtoList.size());
+      response.setMessage("LISTED_SUCCESSFULLY");
+      response.setStatus(ApplicationConstants.STATUS_CODE_OK);
+      return response;
+    }
     return null;
   }
 
   @Override
   public ObjectRetrievalResponse<CategoryDTO> getCategoryById(ObjectRetrievalRequest request) {
-    // TODO Auto-generated method stub
-    return null;
+    CategorySetup categorySetupFromDb = categorySetupRepository.findOne(request.getId());
+    if (!(categorySetupFromDb == null)) {
+      ObjectRetrievalResponse<CategoryDTO> response = new ObjectRetrievalResponse<CategoryDTO>();
+      response.setDto(CategorySetupDTOConverter.convertDomainToDTO(categorySetupFromDb));
+      response.setId(categorySetupFromDb.getId());
+      response.setMessage("RETRIEVED_SUCCESSFULLY");
+      response.setStatus(ApplicationConstants.STATUS_CODE_OK);
+      return response;
+    } else {
+      throw new ResultsNotFoundException("Event was not found!");
+    }
   }
 
   @Override
   public TabularDataResponseModel<CategoryDTO> getCategories(TabularDataRequestModel request) {
-    // TODO Auto-generated method stub
-    return null;
+    DataTablesOutput<CategorySetup> domainResponse = categorySetupRepository.findAll(request);
+    TabularDataResponseModel<CategoryDTO> response = new TabularDataResponseModel<CategoryDTO>();
+    if (!(domainResponse == null)) {
+      if (!(domainResponse.getData() == null || domainResponse.getData().isEmpty())) {
+        List<CategoryDTO> dtoList = new ArrayList<CategoryDTO>();
+        domainResponse.getData().forEach(event -> {
+          dtoList.add(CategorySetupDTOConverter.convertDomainToDTO(event));
+        });
+        response.setData(dtoList);
+      }
+      response.setDraw(domainResponse.getDraw());
+      response.setError(domainResponse.getError());
+      response.setRecordsFiltered(domainResponse.getRecordsFiltered());
+      response.setRecordsTotal(domainResponse.getRecordsTotal());
+    }
+    return response;
   }
 
   @Override

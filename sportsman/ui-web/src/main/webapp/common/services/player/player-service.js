@@ -26,9 +26,28 @@ define(['app'], function (app) {
 	        });
 	    };
 	    
-	    PlayerServiceFactory.updatePlayer = function (PlayerUpdateRequest, baseUrl) {
-	    	var url = baseUrl + '/playerservice/update';
-	        return $http.put(url, PlayerUpdateRequest);
+	    PlayerServiceFactory.updatePlayer = function (PlayerUpdateRequest,file, baseUrl) {
+	    	if(file){
+	    		var url = baseUrl + '/playerservice/updatewithfile';
+		        return $http({
+		            method: 'POST',
+		            url: url,
+		            headers: {'Content-Type': undefined },
+		            transformRequest: function (data) {
+		                var formData = new FormData();
+		                formData.append('playerUpdateRequest', new Blob([angular.toJson(data.playerUpdateRequest)], {
+		                    type: "application/json"
+		                }));
+		                formData.append("file", data.file);
+		                return formData;
+		            },
+		            data: { playerUpdateRequest: PlayerUpdateRequest, file: file }
+		        });
+	    	}else{
+	    		var url = baseUrl + '/playerservice/update';
+		        return $http.put(url, PlayerUpdateRequest);
+	    	}
+	    	
 	    };
 	    
 	    PlayerServiceFactory.deletePlayer = function (objectDeletionRequest, baseUrl) {

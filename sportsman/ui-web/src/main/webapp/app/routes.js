@@ -170,6 +170,7 @@ define([], function()
                 	dependencies:[
                 	              '../app/category/categorysetup',
                 	              '../common/services/events/event-service',
+                	              '../common/services/agegroup/age-group-service',
                 	              '../common/services/category/category-service'],
                 	              access:{
                 	            	  isFree:false
@@ -196,6 +197,18 @@ define([], function()
                 	templateUrl:'app/playerRegistration/editPlayer.html',
                 	dependencies:[
                 	              '../app/playerRegistration/editPlayer',
+                	              '../common/services/events/event-service',
+                	              '../common/services/category/category-service',
+                	              '../common/services/player/player-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/viewplayer':{
+                	templateUrl:'app/playerRegistration/viewPlayer.html',
+                	dependencies:[
+                	              '../app/playerRegistration/viewPlayer',
+                	              '../common/services/events/event-service',
+                	              '../common/services/category/category-service',
                 	              '../common/services/player/player-service'],
                 	              access:{
                 	            	  isFree:false
@@ -221,6 +234,72 @@ define([], function()
                 	dependencies:[
                 	              '../app/ageGroup/editAgeGroup',
                 	              '../common/services/agegroup/age-group-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/listcategories':{
+                	templateUrl:'app/category/listCategories.html',
+                	dependencies:[
+                	              '../app/category/listCategories',
+                	              '../common/services/category/category-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/editcategory':{
+                	templateUrl:'app/category/updateCategory.html',
+                	dependencies:[
+                	              '../app/category/updateCategory',
+                	              '../common/services/events/event-service',
+                	              '../common/services/agegroup/age-group-service',
+                	              '../common/services/category/category-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/addteam':{
+                	templateUrl:'app/team/addTeam.html',
+                	dependencies:[
+                	              '../app/team/addTeam',
+                	              '../common/services/team/team-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/listteams':{
+                	templateUrl:'app/team/listTeams.html',
+                	dependencies:[
+                	              '../app/team/listTeams',
+                	              '../common/services/team/team-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/editteam':{
+                	templateUrl:'app/team/editTeam.html',
+                	dependencies:[
+                	              '../app/team/editTeam',
+                	              '../common/services/team/team-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/addgradebelt':{
+                	templateUrl:'app/gradeBelt/addGradeBelt.html',
+                	dependencies:[
+                	              '../app/gradeBelt/addGradeBelt',
+                	              '../common/services/gradeBelt/grade-belt-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/listgradebelts':{
+                	templateUrl:'app/gradeBelt/listGradeBelts.html',
+                	dependencies:[
+                	              '../app/gradeBelt/listGradeBelts',
+                	              '../common/services/gradeBelt/grade-belt-service'],
+                	              access:{
+                	            	  isFree:false
+                	              }
+                },'/editgradebelt':{
+                	templateUrl:'app/gradeBelt/editGradeBelt.html',
+                	dependencies:[
+                	              '../app/gradeBelt/editGradeBelt',
+                	              '../common/services/gradeBelt/grade-belt-service'],
                 	              access:{
                 	            	  isFree:false
                 	              }

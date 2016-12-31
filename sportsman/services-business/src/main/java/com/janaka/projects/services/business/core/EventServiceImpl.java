@@ -24,7 +24,6 @@ import com.janaka.projects.dtos.responses.core.EventUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.EventRepository;
 import com.janaka.projects.entitymanagement.domain.core.Event;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
-import com.janaka.projects.entitymanagement.specifications.core.EventSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.EventDTOConverter;
 import com.janaka.projects.services.core.EventService;
@@ -116,7 +115,7 @@ public class EventServiceImpl extends BusinessService implements EventService {
 
   @Override
   public TabularDataResponseModel<EventDTO> getEvents(TabularDataRequestModel request) {
-    DataTablesOutput<Event> domainResponse = eventRepository.findAll(request, EventSpecifications.isNotDeleted());
+    DataTablesOutput<Event> domainResponse = eventRepository.findAll(request);
     TabularDataResponseModel<EventDTO> response = new TabularDataResponseModel<EventDTO>();
     if (!(domainResponse == null)) {
       if (!(domainResponse.getData() == null || domainResponse.getData().isEmpty())) {

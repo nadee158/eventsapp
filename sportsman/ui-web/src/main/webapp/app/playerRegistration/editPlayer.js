@@ -3,10 +3,18 @@
 define(['app'], function (app) {
 	app.controller('EditPlayerController', ['$scope', '$rootScope','$location','$filter', 
 	                                            'PlayerServiceFactory',
-	                                            'CommonStorageFactory','NotificationServiceFactory','PubSub','Constants','Page','ModalDialogServiceFactory','CommonServiceFactory',
+	                                            'CommonStorageFactory',
+	                                            'CategoryServiceFactory',
+	                                            'EventServiceFactory',
+	                                            'NotificationServiceFactory',
+	                                            'PubSub','Constants','Page','ModalDialogServiceFactory','CommonServiceFactory',
 	    function ($scope, $rootScope,$location,$filter, 
 	    										PlayerServiceFactory,
-	    										CommonStorageFactory,NotificationServiceFactory,PubSub,Constants,Page,ModalDialogServiceFactory,CommonServiceFactory) {
+	    										CommonStorageFactory,
+	    										CategoryServiceFactory,
+	                                   		    EventServiceFactory,
+	    										NotificationServiceFactory,
+	    										PubSub,Constants,Page,ModalDialogServiceFactory,CommonServiceFactory) {
 			
 		    var $translate = $filter('translate');
 		
@@ -16,21 +24,44 @@ define(['app'], function (app) {
 	  
 	        var baseUrl=$rootScope.baseUrl;
 	        
+	        $scope.buttonVisible = true;
+	        
 	        $scope.initializeEditPlayerPage = function() {
+	        	$scope.imageUrl=$rootScope.uiBaseUrl + '/assets/app/images/avatar_2x.png';
 	        	$scope.playerUserUpdateRequest={};
+	        	 loadEvents();
 	        	var queryString = $location.search();
 	        	playerId=queryString["id"]
 	        	loadEditedPlayer(playerId);
 	        };
 	        
+	        function loadEvents(){
+	      	  var response=EventServiceFactory.getActiveEvents(baseUrl);	
+	      	  response.success(function(data, status, headers, config) {	
+	        		if(data.apiResponseResults.dtoList){
+	        			$scope.events=data.apiResponseResults.dtoList;	
+	        		} 
+	  	        }).error(function(data, status, headers, config){
+	  	            	NotificationServiceFactory.error(data.message);
+	  	            	console.error('Error while getting events ' + data.message);
+	  	        })
+	        }
 	        
-	        $scope.listenerSaveClicked = function() {
-			    	editPlayer();
-			}
+	        $scope.getEventTypes=function(eventId){
+	          	var eventTypeListRequest={id:eventId};
+	          	var response=CategoryServiceFactory.getCategoryByEventId(eventTypeListRequest,baseUrl);	        	 
+	          	response.success(function(data, status, headers, config) {	
+	    	      		$scope.categories=data.apiResponseResults.dtoList;		                
+	    	        }).error(function(data, status, headers, config){
+	    	            	NotificationServiceFactory.error(data.message);
+	    	            	console.error('Error while creating Application ' + data.message);
+	    	        })
+	          }
 	        
 	        
 	        
-	        function editPlayer() {
+	        
+	        $scope.updatePlayer= function() {
 	        	
 	        	angular.forEach($scope.editPlayerForm.$error.required, function(field) {
 	        	    field.$setDirty();
@@ -62,59 +93,48 @@ define(['app'], function (app) {
 	        	} 
 	        };
 	        
+	        
 	        function submitPlayer(playerUserUpdateRequest){
-	        	//Do something
-	        	var response=PlayerServiceFactory.updatePlayer(playerUserUpdateRequest,baseUrl);		         
-                
-		        response.success(function(data, status, headers, config) {
-		        	
-		        	if(data.status==409){
-		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.message));
-		      		}else{
-		      			$scope.PlayerCreation=data;
-		      			
-		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_UPDATED'));
-		      			
-		      			$location.path("/listsecurityusers");
-		      		}	
-		      			
+	          	
+	        	var response=PlayerServiceFactory.updatePlayer(playerUserUpdateRequest,$scope.file,baseUrl);		         
+	            
+	  	        response.success(function(data, status, headers, config) {
+	  	        	if(data.apiResponseStatus){
+	  	        		if(data.apiResponseStatus==200){
+	  	        			$scope.playerCreationResponse=data.apiResponseResults;
+	  		      			
+	  		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
+	  		      			
+	  		      			$location.path("/listplayers");
+	  		      		}else{
+	  		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.apiResponseResults.message));
+	  		      			
+	  		      		}	
+	  	        	}
+	  	      		
+	                
 	            }).error(function(data, status, headers, config){
-	            	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_UPDATING_RECORD'));
-	            	console.error($translate('common.notification.message.ERROR_WHILE_UPDATING_RECORD') + " " + data.message);
+	            	 NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD'));
+	            	 console.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + " " + data);
 	            }) 
 	        }
 	        
 	        function loadEditedPlayer(playerId){
-	        	var ObjectRetrievalRequest={id:playerId};
-	        	
-	        	var response=PlayerServiceFactory.getPlayerById(ObjectRetrievalRequest,baseUrl);		         
-                
-		        response.success(function(data, status, headers, config) {
-		      	
-		        	  var objectRetrievalResponse=data.apiResponseResults;
-	      			   var playerDto=data.dto;
-		        	
-		        	  $scope.playerUserUpdateRequest.id=playerDto.id;
-
-		        	  if(playerDto.person){
-		        		 
-		        		  $scope.playerUserUpdateRequest.playerNumber=playerDto.person.playerNumber;
-		        		  $scope.playerUserUpdateRequest.fullName=playerDto.person.fullName;
-		        		  $scope.playerUserUpdateRequest.email=playerDto.person.email;
-		        		  $scope.playerUserUpdateRequest.nic=playerDto.person.nic;
-		        		  $scope.playerUserUpdateRequest.contactNumber=playerDto.contactNumber;
-		        		  $scope.playerUserUpdateRequest.address=playerDto.person.address;
-		        	  }
-		        	  
-		        	  $scope.playerUserUpdateRequest.versionNumber=playerDto.version;
-		        	  $scope.playerUserUpdateRequest.recordStatus=playerDto.recordStatus;
-	      			
-	      			
-	            }).error(function(data, status, headers, config){
-	            	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD'));
-	            	console.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD') + " " + data.message);
-	            })    
-	        }
+	          	var ObjectRetrievalRequest={id:playerId};
+	          	
+	          	var response=PlayerServiceFactory.getPlayerById(ObjectRetrievalRequest,baseUrl);		         
+	              
+	    	      response.success(function(data, status, headers, config) {
+	    	      	
+	    	        	  $scope.playerUserUpdateRequest=data.apiResponseResults.dto;
+	    	        	  $scope.imageUrl=baseUrl + '/commonservice/findfile?fn=' + data.apiResponseResults.dto.profileImagePath;
+	    	        	  $scope.getEventTypes(data.apiResponseResults.dto.eventId);
+	        			
+	              }).error(function(data, status, headers, config){
+	              	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD'));
+	              	console.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD') + " " + data.message);
+	              })    
+	          }
 	        
 	        $scope.resetForm = function() {
 		      	  ModalDialogServiceFactory.confirmBox(
@@ -150,8 +170,75 @@ define(['app'], function (app) {
 		        };
 		        
 		        function exitFormInner(){
-		        	$location.path("/listsecurityusers");
+		        	$location.path("/listplayers");
 		        }
+		        
+		        
+		        var myDropzone = new Dropzone("#fileUploadBtn", { 
+		      	  url: "#",
+		      	  maxFilesize:0.5,
+		      	  uploadMultiple:false,
+		      	  addRemoveLinks:true,
+		      	  previewsContainer:'#imagePreview',
+		      	  thumbnailWidth:200,
+		            thumbnailHeight:200,
+		            maxFiles:1,
+		            acceptedFiles:'image/jpeg,image/png,image/gif,image/jpg,image/bmp',
+		            autoProcessQueue: false,
+		            parallelUploads:1,
+		            init: function() {
+		          	    
+		          	    myDropzone = this;
+		          	    
+		          	    // Using a closure.
+		                  var _this = this;
+		            	  
+		                  var myEl = angular.element(document.querySelector('#fileRemoveBtn'));
+		      	        myEl.bind("click", function(){
+		      	        	 _this.removeAllFiles();
+		      	        	  $scope.$apply(function(){
+		      	        		  $scope.buttonVisible = true;
+		      	        	 });
+		      	        });
+		            	    
+		          	    
+		          	    this.on("addedfile", function(file) {
+		          	    	$scope.$apply(function(){
+		    	        		  $scope.buttonVisible = false;
+		    	        	    });
+		          	    	$scope.file=file;
+		          	    	console.log('addedfile' + $scope.buttonVisible)
+		          	    	$('#imageSuccessMessage').html("Added!");
+		          	    });  //will remove background after file added
+		          	    
+		          	    
+		          	    this.on("maxfilesexceeded", function(file){
+		          	    	console.log('maxfilesexceeded')
+		                      this.removeFile(file);
+		                      $('#imageErrorMessage').html("No more files please!");
+		                      $scope.$apply(function(){
+		    	        		  $scope.buttonVisible = true;
+		    	        	    });
+		                  });
+		                  this.on('error', function(file, response) {
+		                  	  console.log('error')
+		                        var errorMessage = "Error";
+		                        this.removeFile(file);
+		                        $('#imageErrorMessage').html(response);
+		                        $scope.$apply(function(){
+		      	        		  $scope.buttonVisible = true;
+		      	        	 });
+		                  });
+		                  this.on('success', function(file, response) {
+		                      $('#imageSuccessMessage').html(response);
+		                      $scope.file=file;
+		                      $scope.$apply(function(){
+		    	        		  $scope.buttonVisible = false;
+		    	        	    });
+		                      console.log('success' + $scope.buttonVisible)
+		                  });
+		            }
+		        });
 	          
 	  } 
 	

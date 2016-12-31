@@ -8,11 +8,13 @@ import org.apache.commons.lang3.StringUtils;
 import com.janaka.projects.dtos.domain.core.CategoryDTO;
 import com.janaka.projects.dtos.domain.core.CategorySetupItemDTO;
 import com.janaka.projects.dtos.requests.core.CategoryCreationRequest;
+import com.janaka.projects.dtos.requests.core.CategoryUpdateRequest;
 import com.janaka.projects.entitymanagement.domain.core.AgeGroup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetupItem;
 import com.janaka.projects.entitymanagement.domain.core.Event;
 import com.janaka.projects.entitymanagement.enums.Gender;
+import com.janaka.projects.entitymanagement.enums.RecordStatus;
 
 public class CategorySetupDTOConverter {
 
@@ -38,11 +40,15 @@ public class CategorySetupDTOConverter {
 
   private static List<CategorySetupItem> constructCategorySetupItems(CategorySetup categorySetup,
       List<CategorySetupItemDTO> categorySetupItems) {
+    List<CategorySetupItem> items = categorySetup.getCategorySetupItems();
     if (!(categorySetupItems == null)) {
-      List<CategorySetupItem> items = new ArrayList<CategorySetupItem>();
-      categorySetupItems.forEach(item -> {
-        items.add(constructCategorySetupItem(item, categorySetup));
-      });
+      if (items == null) {
+        items = new ArrayList<CategorySetupItem>();
+      }
+      items.clear();
+      for (CategorySetupItemDTO itemDTO : categorySetupItems) {
+        items.add(constructCategorySetupItem(itemDTO, categorySetup));
+      }
       return items;
     }
     return null;
@@ -53,6 +59,8 @@ public class CategorySetupDTOConverter {
     CategorySetupItem setupItem = new CategorySetupItem();
     setupItem.setCategorySetup(categorySetup);
     setupItem.setItemName(item.getItemName());
+    setupItem.setText1(item.getText1());
+    setupItem.setText2(item.getText2());
     return setupItem;
   }
 
@@ -63,10 +71,13 @@ public class CategorySetupDTOConverter {
       dto.setCategorySetupName(categorySetup.getCategorySetupName());
       dto.setEventId(categorySetup.getEvent().getId());
       dto.setFromAge(categorySetup.getAgeGroup().getFromAge());
+      dto.setAgeGroupId(categorySetup.getAgeGroup().getId());
       dto.setGender(categorySetup.getGender().toString());
       dto.setGradeOrBelt(categorySetup.getGradeOrBelt());
       dto.setId(categorySetup.getId());
       dto.setToAge(categorySetup.getAgeGroup().getToAge());
+      dto.setEventName(categorySetup.getEvent().getEventName());
+      dto.setRecordStatus(categorySetup.getRecordStatus().getRecordStatusCode());
       return dto;
     }
     return null;
@@ -87,7 +98,30 @@ public class CategorySetupDTOConverter {
   private static CategorySetupItemDTO constructCategorySetupItemDTO(CategorySetupItem item) {
     CategorySetupItemDTO dto = new CategorySetupItemDTO();
     dto.setItemName(item.getItemName());
+    dto.setText1(item.getText1());
+    dto.setText2(item.getText2());
     return dto;
+  }
+
+
+  public static CategorySetup updateDomainFromRequest(CategoryUpdateRequest request, CategorySetup categorySetupFromDb,
+      Event event, AgeGroup ageGroup) {
+    categorySetupFromDb.setAgeGroup(ageGroup);
+    if (!(categorySetupFromDb.getCategorySetupItems() == null)) {
+      categorySetupFromDb.getCategorySetupItems().clear();
+    }
+    categorySetupFromDb
+        .setCategorySetupItems(constructCategorySetupItems(categorySetupFromDb, request.getCategorySetupItems()));
+    categorySetupFromDb.setCategorySetupName(request.getCategorySetupName());
+    categorySetupFromDb.setEvent(event);
+    if (StringUtils.isNoneEmpty(request.getGender())) {
+      categorySetupFromDb.setGender(Gender.valueOf(request.getGender()));
+    }
+    categorySetupFromDb.setGradeOrBelt(request.getGradeOrBelt());
+    if (StringUtils.isNoneEmpty(request.getRecordStatus())) {
+      categorySetupFromDb.setRecordStatus(RecordStatus.fromRecordStatusCode(request.getRecordStatus()));
+    }
+    return categorySetupFromDb;
   }
 
 

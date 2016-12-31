@@ -83,6 +83,9 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       	    
       	});
     	
+    	console.log($scope.eventSetupForm.$error);
+    	console.log($scope.eventSetupForm.$valid);
+    	
       	if($scope.eventSetupForm.$valid) {
       		
       		ModalDialogServiceFactory.confirmBox(

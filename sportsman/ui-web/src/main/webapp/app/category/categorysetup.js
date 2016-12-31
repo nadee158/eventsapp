@@ -2,30 +2,33 @@
 
 define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
 
-  app.controller('CategorySetupController', ['$scope', '$rootScope', '$log', '$sce', '$filter',
+  app.controller('CategorySetupController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
                                           'NotificationServiceFactory',
                                           'SecurityServiceFactory','Page', 
                                           'EventServiceFactory',
+                                          'AgeGroupServiceFactory',
                                           'CategoryServiceFactory',
                                           'CommonServiceFactory',
                                           'ModalDialogServiceFactory',
-                                  function($scope, $rootScope, $log, $sce, $filter,
+                                  function($scope, $rootScope, $log, $sce, $filter, $location,
                                 		  NotificationServiceFactory,
                                 		  SecurityServiceFactory,Page, 
                                 		  EventServiceFactory,
+                                		  AgeGroupServiceFactory,
                                 		  CategoryServiceFactory,
                                 		  CommonServiceFactory,
                                 		  ModalDialogServiceFactory) {
-	  Page.setTitle("Event Setup");
+	Page.setTitle("Category Setup");
 	  
-     var $translate = $filter('translate');
+    var $translate = $filter('translate');
 	  
-	  var baseUrl=$rootScope.baseUrl;
+	var baseUrl=$rootScope.baseUrl;
 	  
 	  
 	  
 	  $scope.initializeCategorySetupController = function() {
 		  loadEvents();
+		  loadAgeGroups();
 		  loadGenders();
 		  loadItemDropDown();
 		  resetForm();
@@ -76,7 +79,7 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
   		      			
   		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
   		      			
-  		      			$location.path("/home");
+  		      			$location.path("/listcategories");
   		      		}else{
   		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.apiResponseResults.message));
   		      			
@@ -133,7 +136,7 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
       };
       
       function exitForm(){
-    	  $location.path("/home");
+    	  $location.path("/listcategories");
       }
       
       $scope.addItem = function() {
@@ -163,6 +166,18 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
     	  response.success(function(data, status, headers, config) {	
       		if(data.apiResponseResults.dtoList){
       			$scope.events=data.apiResponseResults.dtoList;	
+      		} 
+	        }).error(function(data, status, headers, config){
+	            	NotificationServiceFactory.error(data.message);
+	            	console.error('Error while getting events ' + data.message);
+	        })
+      }
+      
+      function loadAgeGroups(){
+    	  var response=AgeGroupServiceFactory.getActiveAgeGroups(baseUrl);	
+    	  response.success(function(data, status, headers, config) {	
+      		if(data.apiResponseResults.dtoList){
+      			$scope.ageGroups=data.apiResponseResults.dtoList;	
       		} 
 	        }).error(function(data, status, headers, config){
 	            	NotificationServiceFactory.error(data.message);

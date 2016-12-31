@@ -141,6 +141,7 @@ public class FileServiceImpl extends BusinessService implements FileService {
         // example), closes both streams.
         FileCopyUtils.copy(inputStream, response.getOutputStream());
       } catch (Exception e) {
+        e.printStackTrace();
         throw new RuntimeException("IOError writing file to output stream");
       }
     }

@@ -16,6 +16,16 @@ public class CategoryDTO implements Serializable {
 
   private String categorySetupName = StringUtils.EMPTY;
 
+  private long ageGroupId;
+
+  public long getAgeGroupId() {
+    return ageGroupId;
+  }
+
+  public void setAgeGroupId(long ageGroupId) {
+    this.ageGroupId = ageGroupId;
+  }
+
   private int fromAge;
 
   private int toAge;
@@ -26,7 +36,11 @@ public class CategoryDTO implements Serializable {
 
   private long eventId;
 
+  private String eventName;
+
   private List<CategorySetupItemDTO> categorySetupItems;
+
+  private String recordStatus;
 
   public long getId() {
     return id;
@@ -90,6 +104,22 @@ public class CategoryDTO implements Serializable {
 
   public void setCategorySetupItems(List<CategorySetupItemDTO> categorySetupItems) {
     this.categorySetupItems = categorySetupItems;
+  }
+
+  public String getEventName() {
+    return eventName;
+  }
+
+  public void setEventName(String eventName) {
+    this.eventName = eventName;
+  }
+
+  public String getRecordStatus() {
+    return recordStatus;
+  }
+
+  public void setRecordStatus(String recordStatus) {
+    this.recordStatus = recordStatus;
   }
 
 

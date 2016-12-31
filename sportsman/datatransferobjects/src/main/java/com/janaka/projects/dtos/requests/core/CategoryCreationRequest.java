@@ -18,8 +18,6 @@ public class CategoryCreationRequest implements Serializable {
 
   private long ageGroupId;
 
-  private int toAge;
-
   private String gender;
 
   private String gradeOrBelt = StringUtils.EMPTY;
@@ -36,14 +34,6 @@ public class CategoryCreationRequest implements Serializable {
     this.categorySetupName = categorySetupName;
   }
 
-
-  public int getToAge() {
-    return toAge;
-  }
-
-  public void setToAge(int toAge) {
-    this.toAge = toAge;
-  }
 
   public String getGender() {
     return gender;
@@ -87,9 +77,9 @@ public class CategoryCreationRequest implements Serializable {
 
   @Override
   public String toString() {
-    return "CategoryCreationRequest [categorySetupName=" + categorySetupName + ", ageGroupId=" + ageGroupId + ", toAge="
-        + toAge + ", gender=" + gender + ", gradeOrBelt=" + gradeOrBelt + ", eventId=" + eventId
-        + ", categorySetupItems=" + categorySetupItems + "]";
+    return "CategoryCreationRequest [categorySetupName=" + categorySetupName + ", ageGroupId=" + ageGroupId
+        + ", gender=" + gender + ", gradeOrBelt=" + gradeOrBelt + ", eventId=" + eventId + ", categorySetupItems="
+        + categorySetupItems + "]";
   }
 
 

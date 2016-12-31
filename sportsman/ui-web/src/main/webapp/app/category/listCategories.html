@@ -1,0 +1,9 @@
+<section class="content">    
+			
+	<div ng-controller="ListCategoriesController as listItems" ng-init="initializeListUsersPage()">
+	
+	    <table datatable="" dt-instance="listItems.dtInstance" dt-options="listItems.dtOptions" dt-columns="listItems.dtColumns" class="mdl-data-table" width="100%"></table>
+	    <input type="hidden" ng-model="formKey" />
+	</div>
+	
+</section>

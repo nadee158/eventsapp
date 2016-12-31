@@ -1,0 +1,137 @@
+<style type="text/css">
+.dz-success-mark{
+ display: none;
+}
+.dz-error-mark{
+ display: none;
+}
+.dz-remove{
+ display: none;
+}
+.dz-details{
+display: none;
+}
+.dz-upload { 
+    display: block; 
+    background-color: red; 
+    height: 10px;
+    width: 0%;
+}
+</style> 
+ 
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        View Player
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">View Player</li>
+      </ol>
+    </section>
+
+ 			<!-- Main content -->
+    <section class="content">
+
+	  <div class="box box-primary" ng-cloak class="md-inline-form" ng-controller="ViewPlayerController" ng-init="initializePRController()">
+	
+		<form name="playerRegistrationForm" id="playerRegistrationForm">
+		
+			<md-content layout-padding>	
+			
+			<div layout="row" layout-xs="column">
+			  <div flex>
+			    <div layout="row">
+			         <md-input-container layout="column" flex>
+			           	<label translate>Name Of the Event</label>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.eventName" name="eventName"/>		       
+			         </md-input-container>
+		         </div>
+		         <div layout="row">
+			         <md-input-container layout="column" flex>
+			           	<label translate>Event Type</label>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.categorySetupName" name="categorySetupName"/>			       
+			         </md-input-container>
+		        </div>	
+		        <div layout="row">
+			        <md-input-container layout="column" flex>
+				           	<label translate>Player No</label>
+				           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.playerNumber" name="playerNumber"/>	
+				    </md-input-container>
+		        </div>	
+		         <div layout="row">
+			        <md-input-container layout="column" flex>
+		           		<label translate>Team</label>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.team" name="team"/>	
+				    </md-input-container>
+		        </div>	
+			  </div>
+			  <div flex>
+		    	 <div layout="row" layout-align="center center">
+				   	<div id="imagePreview" style="width:200px;height:200px;background-size: contain;background-repeat:no-repeat;background-image: url('{{imageUrl}}');">
+				   	</div>
+				  </div>
+			  </div>
+			</div>
+			
+		       
+		        
+		       
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>IC/Passport</label>
+			           	<md-icon><i class="fa fa-info" aria-hidden="true"></i></md-icon>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.nic" name="nic"/>	       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Player Name</label>
+			           	<md-icon><i class="fa fa-user" aria-hidden="true"></i></md-icon>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.fullName" name="fullName"/>	       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Address</label>
+			           	<md-icon><i class="fa fa-home" aria-hidden="true"></i></md-icon>
+			           	<textarea ng-readonly="true" ng-model="playerUserUpdateRequest.address" name="address" ></textarea>
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Email ID</label>
+			           	<md-icon><i class="fa fa-envelope" aria-hidden="true"></i></md-icon>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.email" name="email"/>	      	       
+			         </md-input-container>
+<!-- 		        </div> -->
+<!-- 		        <div layout-gt-sm="row"> -->
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Contact Number</label>
+			           	<md-icon><i class="fa fa-mobile" aria-hidden="true"></i></md-icon>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.contactNumber" name="contactNumber"/>	         
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Weight</label>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.weight" name="weight"/>		       
+			         </md-input-container>
+<!-- 		        </div> -->
+<!-- 		        <div layout-gt-sm="row"> -->
+			         <md-input-container class="md-block" flex-gt-sm>
+			           	<label translate>Height</label>
+			           	<input ng-readonly="true" ng-model="playerUserUpdateRequest.height" name="height"/>		 		       
+			         </md-input-container>
+		        </div>
+		        <div layout-gt-sm="row">
+		        	<md-button class="md-raised md-warn" ng-click="exitPlayerForm()">Exit</md-button>
+		        </div>
+		        
+		        
+	        </md-content>
+       	</form>
+	</div>
+
+    </section>
+<!-- /.content -->
