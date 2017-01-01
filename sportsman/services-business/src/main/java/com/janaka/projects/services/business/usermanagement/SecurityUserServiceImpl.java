@@ -28,6 +28,7 @@ import com.janaka.projects.dtos.responses.usermanagement.SecurityUserCreationRes
 import com.janaka.projects.dtos.responses.usermanagement.SecurityUserUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.SecurityUserRepository;
 import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.UserRoleRepository;
+import com.janaka.projects.entitymanagement.specifications.usermanagement.SecurityUserSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.common.JmxNotificationPublisher;
 import com.janaka.projects.services.business.unitsofwork.usermanagement.MaritalStatusRetrievalUnitOfWork;
@@ -161,6 +162,11 @@ public class SecurityUserServiceImpl extends BusinessService implements Security
     MaritalStatusRetrievalUnitOfWork uow = new MaritalStatusRetrievalUnitOfWork(jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
+  }
+
+  @Override
+  public long getActiveCount() {
+    return securityUserRepository.count(SecurityUserSpecifications.isNotDeleted());
   }
 
 

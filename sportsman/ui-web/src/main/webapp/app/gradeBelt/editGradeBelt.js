@@ -2,16 +2,16 @@
 
 define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstrap, moment) {
 
-  app.controller('EditAgeGroupController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
+  app.controller('EditGradeBeltController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
                                           'NotificationServiceFactory',
                                           'Page', 
-                                          'AgeGroupServiceFactory',
+                                          'GradeBeltServiceFactory',
                                           'CommonServiceFactory',
                                           'ModalDialogServiceFactory',
                                   function($scope, $rootScope, $log, $sce, $filter, $location,
                                 		  NotificationServiceFactory,
                                 		  Page, 
-                                		  AgeGroupServiceFactory,
+                                		  GradeBeltServiceFactory,
                                 		  CommonServiceFactory,
                                 		  ModalDialogServiceFactory) {
 	  Page.setTitle("Edit Age Group");
@@ -20,27 +20,39 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 	  
 	  var baseUrl=$rootScope.baseUrl;
 	  
-	  var ageGroupId = 0;
+	  var gradeBeltId = 0;
 	  
 	  
-	  $scope.initializeAgeGroupPage = function() {
+	  $scope.initializeGradeBeltPage = function() {
 		  $scope.activeStatus ='Active';
 		  var queryString = $location.search();
-		  ageGroupId=queryString["id"]
-		  loadAgeGroup(ageGroupId);
+		  gradeBeltId=queryString["id"]
+		  loadGradeBelt(gradeBeltId);
       };
       
-      function loadAgeGroup(ageGroupId){
-      	var ObjectRetrievalRequest={id:ageGroupId};
+      $scope.setValueRecordStatus = function(recordStatus) {
+      	setRecordStatus(recordStatus);
+      };
+      
+      function setRecordStatus(recordStatus){
+      	if(recordStatus=='A'){
+  			$scope.activeStatus = 'Active';
+  		}else{
+  			$scope.activeStatus = 'Inactive';
+  		}  
+  	 }
+      
+      function loadGradeBelt(gradeBeltId){
+      	var ObjectRetrievalRequest={id:gradeBeltId};
       	
-      	var response=AgeGroupServiceFactory.getAgeGroupById(ObjectRetrievalRequest,baseUrl);		         
+      	var response=GradeBeltServiceFactory.getGradeBeltById(ObjectRetrievalRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
 	      	
 	        	  var objectRetrievalResponse=data;
     			  var dto=data.apiResponseResults.dto;
-	        	
-	        	  $scope.ageGroupUpdateRequest=dto;
+    			  setRecordStatus(dto.recordStatus);
+	        	  $scope.gradeBeltUpdateRequest=dto;
     			
           }).error(function(data, status, headers, config){
           	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD'));
@@ -49,15 +61,15 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       }
       
        
-    $scope.updateAgeGroup= function() {
+    $scope.updateGradeBelt= function() {
     
-    	angular.forEach($scope.ageGroupSetupForm.$error.required, function(field) {
+    	angular.forEach($scope.gradeBeltSetupForm.$error.required, function(field) {
       	    field.$setDirty();
       	});
     	
-      	if($scope.ageGroupSetupForm.$valid) {
+      	if($scope.gradeBeltSetupForm.$valid) {
       		
-      		if($scope.ageGroupUpdateRequest.toAge<=$scope.ageGroupUpdateRequest.fromAge){
+      		if($scope.gradeBeltUpdateRequest.toAge<=$scope.gradeBeltUpdateRequest.fromAge){
       			ModalDialogServiceFactory.alert(
               		  $translate('common.notification.message.NOTIFY_FORM_VALIDATION_ERRORS'), 
               		  'To age must be less than from age!', 
@@ -74,7 +86,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
               		  $translate('common.button.text.SUBMIT'), 
               		  $translate('common.button.text.CANCEL'), 
               		  submitEvent, 
-              		  $scope.ageGroupUpdateRequest, 
+              		  $scope.gradeBeltUpdateRequest, 
               		  null, 
               		  null
                 );
@@ -97,10 +109,10 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 
       
       
-      function submitEvent(ageGroupUpdateRequest){
+      function submitEvent(gradeBeltUpdateRequest){
     	
       	//Do something
-      	var response=AgeGroupServiceFactory.updateAgeGroup(ageGroupUpdateRequest,baseUrl);		         
+      	var response=GradeBeltServiceFactory.updateGradeBelt(gradeBeltUpdateRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
 	        	if(data.apiResponseStatus){
@@ -109,7 +121,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 		      			
 		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
 		      			
-		      			$location.path("/listagegroups");
+		      			$location.path("/listgradebelts");
 		      		}else{
 		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.apiResponseResults.message));
 		      			
@@ -139,7 +151,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       };
       
       function resetFormInner(){
-    	  $scope.ageGroupUpdateRequest=new Object();
+    	  $scope.gradeBeltUpdateRequest=new Object();
       }
       
       $scope.exitForm = function() {

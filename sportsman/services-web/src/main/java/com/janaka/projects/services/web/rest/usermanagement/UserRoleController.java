@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,8 @@ import com.janaka.projects.common.datamanagement.TabularDataResponseModel;
 import com.janaka.projects.common.security.AuditContext;
 import com.janaka.projects.common.security.SecurityContext;
 import com.janaka.projects.common.security.SecurityHelper;
+import com.janaka.projects.dtos.domain.core.ApiResponseObject;
+import com.janaka.projects.dtos.domain.core.CustomResponseEntity;
 import com.janaka.projects.dtos.domain.usermanagement.UserRoleDTO;
 import com.janaka.projects.dtos.requests.common.ObjectDeletionRequest;
 import com.janaka.projects.dtos.requests.common.ObjectRetrievalRequest;
@@ -85,6 +88,13 @@ public class UserRoleController {
     SecurityContext securityContext = SecurityHelper.getSecurityContext();
     AuditContext auditContext = SecurityHelper.getAuditContext();
     return service.getUserRolesBySecurityUserId(auditContext, securityContext, request);
+  }
+
+  @RequestMapping(value = ServiceEndpoints.COUNT, method = RequestMethod.GET)
+  public CustomResponseEntity<ApiResponseObject<?>> getActiveCount() {
+    long count = service.getActiveCount();
+    return new CustomResponseEntity<ApiResponseObject<?>>(new ApiResponseObject<Long>(HttpStatus.OK, count),
+        HttpStatus.OK);
   }
 
 }

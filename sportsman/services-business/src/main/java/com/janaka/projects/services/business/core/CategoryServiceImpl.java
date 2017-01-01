@@ -26,10 +26,13 @@ import com.janaka.projects.dtos.responses.core.CategoryUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.AgeGroupRepository;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.CategorySetupRepository;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.EventRepository;
+import com.janaka.projects.entitymanagement.dataaccessobjects.core.GradeBeltRepository;
 import com.janaka.projects.entitymanagement.domain.core.AgeGroup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.Event;
+import com.janaka.projects.entitymanagement.domain.core.GradeBelt;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
+import com.janaka.projects.entitymanagement.specifications.core.CategorySetupSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.CategorySetupDTOConverter;
 import com.janaka.projects.services.core.CategoryService;
@@ -47,14 +50,16 @@ public class CategoryServiceImpl extends BusinessService implements CategoryServ
   @Autowired
   private CategorySetupRepository categorySetupRepository;
 
-
+  @Autowired
+  private GradeBeltRepository gradeBeltRepository;
 
   @Override
   public CategoryCreationResponse createEvent(CategoryCreationRequest request) {
     System.out.println("request " + request);
     Event event = eventRepository.findOne(request.getEventId());
     AgeGroup ageGroup = ageGroupRepository.findOne(request.getAgeGroupId());
-    CategorySetup categorySetup = CategorySetupDTOConverter.convertRequestToDomain(request, event, ageGroup);
+    GradeBelt gradeBelt = gradeBeltRepository.findOne(request.getGradeOrBeltId());
+    CategorySetup categorySetup = CategorySetupDTOConverter.convertRequestToDomain(request, event, ageGroup, gradeBelt);
     CategorySetup persisted = categorySetupRepository.save(categorySetup);
     CategoryCreationResponse response = new CategoryCreationResponse();
     response.setCategoryDTO(CategorySetupDTOConverter.convertDomainToDTO(persisted));
@@ -71,9 +76,9 @@ public class CategoryServiceImpl extends BusinessService implements CategoryServ
       System.out.println("request " + request);
       Event event = eventRepository.findOne(request.getEventId());
       AgeGroup ageGroup = ageGroupRepository.findOne(request.getAgeGroupId());
-
+      GradeBelt gradeBelt = gradeBeltRepository.findOne(request.getGradeOrBeltId());
       categorySetupFromDb =
-          CategorySetupDTOConverter.updateDomainFromRequest(request, categorySetupFromDb, event, ageGroup);
+          CategorySetupDTOConverter.updateDomainFromRequest(request, categorySetupFromDb, event, ageGroup, gradeBelt);
       CategorySetup updatedCategorySetup = categorySetupRepository.save(categorySetupFromDb);
       CategoryUpdateResponse response = new CategoryUpdateResponse();
       response.setCategoryDTO(CategorySetupDTOConverter.convertDomainToDTO(updatedCategorySetup));
@@ -171,6 +176,11 @@ public class CategoryServiceImpl extends BusinessService implements CategoryServ
       return response;
     }
     return null;
+  }
+
+  @Override
+  public long getActiveCount() {
+    return categorySetupRepository.count(CategorySetupSpecifications.isNotDeleted());
   }
 
 }

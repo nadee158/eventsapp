@@ -4,7 +4,7 @@
         Update Category Setup
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#home"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Update Category Setup</li>
       </ol>
     </section>
@@ -70,18 +70,18 @@
 			         </md-input-container>
 		        </div>	
 		        <div layout-gt-sm="row">
-			         <md-input-container class="md-block" flex-gt-sm>
+			          <md-input-container class="md-block" flex-gt-sm>
 			           	<label translate>Category/Belt</label>
-			           	<input ng-model="categoryUpdateRequest.gradeOrBelt" name="gradeOrBelt" md-maxlength="240" required />
-			           	<span ng-show="categorySetupForm.gradeOrBelt.$dirty"> 
-							<span ng-show="categorySetupForm.gradeOrBelt.$error.required">
+			           	<md-select ng-model="categoryUpdateRequest.gradeOrBeltId" required>
+						    <md-option ng-value="gradeOrBelt.id" ng-repeat="gradeOrBelt in gradeOrBelts">{{ gradeOrBelt.gradeBeltName }}</md-option>
+						</md-select>
+			           	<span ng-show="categorySetupForm.gradeOrBeltId.$dirty"> 
+							<span ng-show="categorySetupForm.gradeOrBeltId.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
-							<span ng-show="categorySetupForm.gradeOrBelt.$error['md-maxlength']">
-								<span class="md-input-validation-message" translate>Category name should be less than 240 characters long!</span>
-							</span>					
 						</span>			       
 			         </md-input-container>
+			         
 		        </div>
 		        
 		         <div layout-gt-sm="row">
@@ -132,7 +132,7 @@
 		         <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>			           	
 			           	<md-switch ng-model="categoryUpdateRequest.recordStatus" aria-label="Active Status"  
-			           	    ng-true-value="'N'" ng-false-value="'A'" class="md-warn" ng-change="setValueRecordStatus(categoryUpdateRequest.recordStatus)">
+			           	    ng-true-value="'A'" ng-false-value="'I'" class="md-warn" ng-change="setValueRecordStatus(categoryUpdateRequest.recordStatus)">
 			           	   <label translate>Active Status : {{activeStatus}}</label>
 			           	</md-switch>
 			         </md-input-container>

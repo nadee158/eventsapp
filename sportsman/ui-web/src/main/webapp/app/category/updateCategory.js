@@ -7,6 +7,7 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
                                           'SecurityServiceFactory','Page', 
                                           'EventServiceFactory',
                                           'AgeGroupServiceFactory',
+                                          'GradeBeltServiceFactory',
                                           'CategoryServiceFactory',
                                           'CommonServiceFactory',
                                           'ModalDialogServiceFactory',
@@ -15,6 +16,7 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
                                 		  SecurityServiceFactory,Page, 
                                 		  EventServiceFactory,
                                 		  AgeGroupServiceFactory,
+                                		  GradeBeltServiceFactory,
                                 		  CategoryServiceFactory,
                                 		  CommonServiceFactory,
                                 		  ModalDialogServiceFactory) {
@@ -32,7 +34,7 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
 		  loadAgeGroups();
 		  loadGenders();
 		  loadItemDropDown();
-		  
+		  loadGradeOrBelts();
 		  $scope.activeStatus ='Active';
 		  var queryString = $location.search();
 		  categoryId=queryString["id"]
@@ -197,6 +199,20 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
       
       function loadItemDropDown(){
     	  $scope.itemDropDowns=["test1","test2","test3"];
+      }
+      
+      
+      
+      function loadGradeOrBelts(){
+    	  var response=GradeBeltServiceFactory.getActiveGradeBelts(baseUrl);	
+    	  response.success(function(data, status, headers, config) {	
+      		if(data.apiResponseResults.dtoList){
+      			$scope.gradeOrBelts=data.apiResponseResults.dtoList;	
+      		} 
+	        }).error(function(data, status, headers, config){
+	            	NotificationServiceFactory.error(data.message);
+	            	console.error('Error while getting events ' + data.message);
+	        })
       }
       
       function loadEvents(){

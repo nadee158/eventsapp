@@ -2,20 +2,22 @@
 
 define(['app', 'ui_bootstrap'], function (app, ui_bootstrap) {
 
-  app.controller('PlayerRegistrationController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$compile', 
+  app.controller('PlayerRegistrationController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$compile', '$location',
                                           'NotificationServiceFactory',
                                           'SecurityServiceFactory','Page', 
                                           'PlayerServiceFactory',
                                           'CategoryServiceFactory',
                                           'EventServiceFactory',
+                                          'TeamServiceFactory',
                                           'CommonServiceFactory',
                                           'ModalDialogServiceFactory',
-                                  function($scope, $rootScope, $log, $sce, $filter,$compile,
+                                  function($scope, $rootScope, $log, $sce, $filter,$compile,$location,
                                 		  NotificationServiceFactory,
                                 		  SecurityServiceFactory,Page, 
                                 		  PlayerServiceFactory,
                                 		  CategoryServiceFactory,
                                 		  EventServiceFactory,
+                                		  TeamServiceFactory,
                                 		  CommonServiceFactory,
                                 		  ModalDialogServiceFactory) {
 	  Page.setTitle("Player Registration");
@@ -32,6 +34,7 @@ define(['app', 'ui_bootstrap'], function (app, ui_bootstrap) {
 	  $scope.initializePRController = function() {
 		  $scope.imageUrl=$rootScope.uiBaseUrl + '/assets/app/images/avatar_2x.png';
 		  loadEvents();
+		  loadTeams();
       };
       
       function loadEvents(){
@@ -45,6 +48,18 @@ define(['app', 'ui_bootstrap'], function (app, ui_bootstrap) {
 	            	console.error('Error while getting events ' + data.message);
 	        })
       }
+      
+      function loadTeams(){
+      	  var response=TeamServiceFactory.getActiveTeams(baseUrl);	
+      	  response.success(function(data, status, headers, config) {	
+        		if(data.apiResponseResults.dtoList){
+        			$scope.teams=data.apiResponseResults.dtoList;	
+        		} 
+  	        }).error(function(data, status, headers, config){
+  	            	NotificationServiceFactory.error(data.message);
+  	            	console.error('Error while getting events ' + data.message);
+  	        })
+    }
       
       $scope.exitPlayerForm=function(){
     	  ModalDialogServiceFactory.confirmBox(

@@ -35,6 +35,7 @@ define(['app'], function (app) {
                data.columns[0].data = "event.eventName";
                data.columns[2].data = "ageGroup.fromAge";
                data.columns[3].data = "ageGroup.toAge";
+               data.columns[5].data = "gradeOrBelt.gradeBeltName";
 
                // Any values you set on the data object will be passed along as parameters to the server
                //data.access_token = AuthenticationService.getAccessToken();
@@ -61,7 +62,7 @@ define(['app'], function (app) {
           DTColumnBuilder.newColumn('fromAge').withTitle('From Age'),//2
           DTColumnBuilder.newColumn('toAge').withTitle('To Age'),//3
           DTColumnBuilder.newColumn('gender').withTitle('Gender'),//4
-          DTColumnBuilder.newColumn('gradeOrBelt').withTitle('Category/Belt'),//5
+          DTColumnBuilder.newColumn('gradeOrBeltName').withTitle('Grade/Belt'),//5
           DTColumnBuilder.newColumn('recordStatus').withTitle('Record Status'),//6
           DTColumnBuilder.newColumn('id').withTitle("Category Id").notVisible().notSortable().withOption('searchable', false),//7
           DTColumnBuilder.newColumn(null).withTitle($translate('common.label.text.ACTIONS')).withOption('searchable', false).notSortable().withOption('width','20%')//4

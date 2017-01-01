@@ -31,5 +31,7 @@ public interface PlayerService {
 
   public ObjectRetrievalResponse<PlayerDTO> getPlayerByPlayerNo(ObjectRetrievalRequest request);
 
+  public long getActiveCount();
+
 
 }

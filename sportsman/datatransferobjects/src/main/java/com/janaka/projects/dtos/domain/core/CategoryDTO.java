@@ -32,7 +32,9 @@ public class CategoryDTO implements Serializable {
 
   private String gender;
 
-  private String gradeOrBelt = StringUtils.EMPTY;
+  private long gradeOrBeltId;
+
+  private String gradeOrBeltName = StringUtils.EMPTY;
 
   private long eventId;
 
@@ -82,12 +84,21 @@ public class CategoryDTO implements Serializable {
     this.gender = gender;
   }
 
-  public String getGradeOrBelt() {
-    return gradeOrBelt;
+
+  public long getGradeOrBeltId() {
+    return gradeOrBeltId;
   }
 
-  public void setGradeOrBelt(String gradeOrBelt) {
-    this.gradeOrBelt = gradeOrBelt;
+  public void setGradeOrBeltId(long gradeOrBeltId) {
+    this.gradeOrBeltId = gradeOrBeltId;
+  }
+
+  public String getGradeOrBeltName() {
+    return gradeOrBeltName;
+  }
+
+  public void setGradeOrBeltName(String gradeOrBeltName) {
+    this.gradeOrBeltName = gradeOrBeltName;
   }
 
   public long getEventId() {

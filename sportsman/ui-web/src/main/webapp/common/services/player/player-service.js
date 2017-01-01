@@ -65,6 +65,10 @@ define(['app'], function (app) {
 	    	return $http.post(url, objectRetrievalRequest);
 	    };
 	    
+	    PlayerServiceFactory.count = function (baseUrl) {
+	    	var url = baseUrl + '/playerservice/count';
+	    	return $http.get(url);
+	    };
 	    
 	    return PlayerServiceFactory;
 	}]);

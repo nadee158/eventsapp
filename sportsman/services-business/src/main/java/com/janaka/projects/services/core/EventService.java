@@ -26,4 +26,6 @@ public interface EventService {
   public ObjectRetrievalResponse<EventDTO> getEventById(ObjectRetrievalRequest request);
 
   public TabularDataResponseModel<EventDTO> getEvents(TabularDataRequestModel request);
+
+  public long getActiveCount();
 }

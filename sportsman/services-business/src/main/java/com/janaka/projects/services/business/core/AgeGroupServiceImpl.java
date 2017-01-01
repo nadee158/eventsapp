@@ -25,6 +25,7 @@ import com.janaka.projects.dtos.responses.core.AgeGroupUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.AgeGroupRepository;
 import com.janaka.projects.entitymanagement.domain.core.AgeGroup;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
+import com.janaka.projects.entitymanagement.specifications.core.AgeGroupSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.AgeGroupDTOConverter;
 import com.janaka.projects.services.core.AgeGroupService;
@@ -145,6 +146,11 @@ public class AgeGroupServiceImpl extends BusinessService implements AgeGroupServ
       response.setRecordsTotal(domainResponse.getRecordsTotal());
     }
     return response;
+  }
+
+  @Override
+  public long getActiveCount() {
+    return ageGroupRepository.count(AgeGroupSpecifications.isNotDeleted());
   }
 
 

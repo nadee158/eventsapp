@@ -19,7 +19,9 @@ public class PlayerDTO implements Serializable {
 
   private String eventName;
 
-  private String team;
+  private long teamId;
+
+  private String teamName;
 
   private double height;
 
@@ -61,14 +63,6 @@ public class PlayerDTO implements Serializable {
 
   public void setPlayerNumber(String playerNumber) {
     this.playerNumber = playerNumber;
-  }
-
-  public String getTeam() {
-    return team;
-  }
-
-  public void setTeam(String team) {
-    this.team = team;
   }
 
   public double getHeight() {
@@ -159,13 +153,6 @@ public class PlayerDTO implements Serializable {
     this.categorySetupName = categorySetupName;
   }
 
-  @Override
-  public String toString() {
-    return "PlayerDTO [id=" + id + ", playerNumber=" + playerNumber + ", team=" + team + ", height=" + height
-        + ", weight=" + weight + ", categoryId=" + categoryId + ", categorySetupName=" + categorySetupName
-        + ", personId=" + personId + ", fullName=" + fullName + ", nic=" + nic + ", contactNumber=" + contactNumber
-        + ", email=" + email + ", profileImagePath=" + profileImagePath + ", address=" + address + "]";
-  }
 
   public String getRecordStatus() {
     return recordStatus;
@@ -201,6 +188,32 @@ public class PlayerDTO implements Serializable {
 
   public void setEventName(String eventName) {
     this.eventName = eventName;
+  }
+
+  public long getTeamId() {
+    return teamId;
+  }
+
+  public void setTeamId(long teamId) {
+    this.teamId = teamId;
+  }
+
+  public String getTeamName() {
+    return teamName;
+  }
+
+  public void setTeamName(String teamName) {
+    this.teamName = teamName;
+  }
+
+  @Override
+  public String toString() {
+    return "PlayerDTO [id=" + id + ", playerNumber=" + playerNumber + ", eventId=" + eventId + ", eventName="
+        + eventName + ", teamId=" + teamId + ", teamName=" + teamName + ", height=" + height + ", weight=" + weight
+        + ", categoryId=" + categoryId + ", categorySetupName=" + categorySetupName + ", personId=" + personId
+        + ", fullName=" + fullName + ", nic=" + nic + ", contactNumber=" + contactNumber + ", email=" + email
+        + ", profileImagePath=" + profileImagePath + ", address=" + address + ", recordStatus=" + recordStatus
+        + ", version=" + version + "]";
   }
 
 

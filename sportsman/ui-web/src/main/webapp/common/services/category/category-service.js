@@ -40,6 +40,11 @@ define(['app'], function (app) {
 	    };
 	    
 	    
+	    CategoryServiceFactory.count = function (baseUrl) {
+	    	var url = baseUrl + '/categoryservice/count';
+	    	return $http.get(url);
+	    };
+	    
 	    return CategoryServiceFactory;
 	}]);
 

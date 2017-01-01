@@ -20,7 +20,7 @@ public class CategoryCreationRequest implements Serializable {
 
   private String gender;
 
-  private String gradeOrBelt = StringUtils.EMPTY;
+  private long gradeOrBeltId;
 
   private long eventId;
 
@@ -41,14 +41,6 @@ public class CategoryCreationRequest implements Serializable {
 
   public void setGender(String gender) {
     this.gender = gender;
-  }
-
-  public String getGradeOrBelt() {
-    return gradeOrBelt;
-  }
-
-  public void setGradeOrBelt(String gradeOrBelt) {
-    this.gradeOrBelt = gradeOrBelt;
   }
 
   public long getEventId() {
@@ -75,10 +67,18 @@ public class CategoryCreationRequest implements Serializable {
     this.ageGroupId = ageGroupId;
   }
 
+  public long getGradeOrBeltId() {
+    return gradeOrBeltId;
+  }
+
+  public void setGradeOrBeltId(long gradeOrBeltId) {
+    this.gradeOrBeltId = gradeOrBeltId;
+  }
+
   @Override
   public String toString() {
     return "CategoryCreationRequest [categorySetupName=" + categorySetupName + ", ageGroupId=" + ageGroupId
-        + ", gender=" + gender + ", gradeOrBelt=" + gradeOrBelt + ", eventId=" + eventId + ", categorySetupItems="
+        + ", gender=" + gender + ", gradeOrBeltId=" + gradeOrBeltId + ", eventId=" + eventId + ", categorySetupItems="
         + categorySetupItems + "]";
   }
 

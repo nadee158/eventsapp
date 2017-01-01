@@ -22,6 +22,7 @@ import com.janaka.projects.dtos.responses.usermanagement.UserRoleCreationRespons
 import com.janaka.projects.dtos.responses.usermanagement.UserRoleUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.SecurityUserRepository;
 import com.janaka.projects.entitymanagement.dataaccessobjects.usermanagement.UserRoleRepository;
+import com.janaka.projects.entitymanagement.specifications.usermanagement.UserRoleSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.common.JmxNotificationPublisher;
 import com.janaka.projects.services.business.unitsofwork.usermanagement.UserRoleCreationUnitOfWork;
@@ -110,6 +111,11 @@ public class UserRoleServiceImpl extends BusinessService implements UserRoleServ
         new UserRoleListBySecurityUserIdUnitOfWork(securityUserRepository, request, jmxNotificationPublisher);
     this.doWork(uow);
     return uow.getResponse();
+  }
+
+  @Override
+  public long getActiveCount() {
+    return userRoleRepository.count(UserRoleSpecifications.isNotDeleted());
   }
 
 

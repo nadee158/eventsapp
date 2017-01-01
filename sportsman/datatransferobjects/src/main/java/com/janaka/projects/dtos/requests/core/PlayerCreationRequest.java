@@ -29,7 +29,9 @@ public class PlayerCreationRequest implements Serializable {
 
   private long categoryId;
 
-  private String team;
+  private long teamId;
+
+  private String teamName;
 
   private MultipartFile file;
 
@@ -121,14 +123,6 @@ public class PlayerCreationRequest implements Serializable {
     this.categoryId = categoryId;
   }
 
-  @Override
-  public String toString() {
-    return "PlayerCreationRequest [eventId=" + eventId + ", playerNumber=" + playerNumber + ", playerName=" + playerName
-        + ", icPassport=" + icPassport + ", address=" + address + ", contactNumber=" + contactNumber + ", weight="
-        + weight + ", height=" + height + ", categoryId=" + categoryId + ", team=" + team + ", file=" + file
-        + ", savedImagePath=" + savedImagePath + ", dateOfBirth=" + dateOfBirth + ", email=" + email + "]";
-  }
-
   public MultipartFile getFile() {
     return file;
   }
@@ -137,12 +131,21 @@ public class PlayerCreationRequest implements Serializable {
     this.file = file;
   }
 
-  public String getTeam() {
-    return team;
+
+  public long getTeamId() {
+    return teamId;
   }
 
-  public void setTeam(String team) {
-    this.team = team;
+  public void setTeamId(long teamId) {
+    this.teamId = teamId;
+  }
+
+  public String getTeamName() {
+    return teamName;
+  }
+
+  public void setTeamName(String teamName) {
+    this.teamName = teamName;
   }
 
   public String getDateOfBirth() {
@@ -167,6 +170,15 @@ public class PlayerCreationRequest implements Serializable {
 
   public void setPersonId(long personId) {
     this.personId = personId;
+  }
+
+  @Override
+  public String toString() {
+    return "PlayerCreationRequest [eventId=" + eventId + ", playerNumber=" + playerNumber + ", playerName=" + playerName
+        + ", icPassport=" + icPassport + ", address=" + address + ", contactNumber=" + contactNumber + ", weight="
+        + weight + ", height=" + height + ", categoryId=" + categoryId + ", teamId=" + teamId + ", teamName=" + teamName
+        + ", file=" + file + ", savedImagePath=" + savedImagePath + ", dateOfBirth=" + dateOfBirth + ", email=" + email
+        + ", personId=" + personId + "]";
   }
 
 

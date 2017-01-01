@@ -90,6 +90,8 @@ define(['app'], function (app) {
           DTColumnBuilder.newColumn('nic').withTitle('IC/Passport'),//2
           DTColumnBuilder.newColumn('contactNumber').withTitle($translate('usrmgt.security_user.label.MOBILE_NUMBER'))
           .withOption('width', '5%'),//3
+          DTColumnBuilder.newColumn('recordStatus').withTitle('Active Status')
+          .withOption('width', '5%'),//3
           DTColumnBuilder.newColumn('id').withTitle("Player Id").notVisible().notSortable().withOption('searchable', false),//4
           DTColumnBuilder.newColumn(null).withTitle($translate('common.label.text.ACTIONS')).withOption('searchable', false).notSortable().withOption('width','20%')//4
           .renderWith(function(data, type, full, meta) {

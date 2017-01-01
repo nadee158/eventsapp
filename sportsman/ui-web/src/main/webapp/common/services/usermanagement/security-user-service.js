@@ -68,6 +68,10 @@ define(['app'], function (app) {
 	    	return $http.get(url);
 	    };
 	    
+	    SecurityUserServiceFactory.count = function (baseUrl) {
+	    	var url = baseUrl + '/SecurityUserService/count';
+	    	return $http.get(url);
+	    };
 	
 	    return SecurityUserServiceFactory;
 	}]);

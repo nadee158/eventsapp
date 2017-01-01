@@ -33,6 +33,11 @@ define(['app'], function (app) {
 	    	return $http.post(url, objectRetrievalRequest);
 	    };
 	    
+	    AgeGroupServiceFactory.count = function (baseUrl) {
+	    	var url = baseUrl + '/agegroupservice/count';
+	    	return $http.get(url);
+	    };
+	    
 	    
 	    return AgeGroupServiceFactory;
 	}]);

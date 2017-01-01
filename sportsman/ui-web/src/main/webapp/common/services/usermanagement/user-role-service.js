@@ -38,6 +38,11 @@ define(['app'], function (app) {
 	    	return $http.post(url, userRoleListRetrievalRequest);
 	    };
 	    
+	    UserRoleServiceFactory.count = function (baseUrl) {
+	    	var url = baseUrl + '/UserRoleService/count';
+	    	return $http.get(url);
+	    };
+	    
 	    return UserRoleServiceFactory;
 	}]);
 

@@ -42,8 +42,9 @@ public class Player extends AuditEntity implements Serializable {
   @Column(name = "player_number")
   private String playerNumber = StringUtils.EMPTY;
 
-  @Column(name = "team")
-  private String team;
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+  @JoinColumn(name = "team_id", referencedColumnName = "id", nullable = false)
+  private Team team;
 
   @Column(name = "height")
   private double height;
@@ -76,11 +77,12 @@ public class Player extends AuditEntity implements Serializable {
     this.playerNumber = playerNumber;
   }
 
-  public String getTeam() {
+
+  public Team getTeam() {
     return team;
   }
 
-  public void setTeam(String team) {
+  public void setTeam(Team team) {
     this.team = team;
   }
 

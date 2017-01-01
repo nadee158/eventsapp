@@ -20,7 +20,9 @@ public class TeamDTOConverter {
     if (!(team == null)) {
       TeamDTO teamDto = new TeamDTO();
       teamDto.setId(team.getId());
-      teamDto.setRecordStatus(team.getRecordStatus().getRecordStatusCode());
+      if (!(team.getRecordStatus() == null)) {
+        teamDto.setRecordStatus(team.getRecordStatus().getRecordStatusCode());
+      }
       teamDto.setTeamName(team.getTeamName());
       teamDto.setVersion(team.getVersion());
       return teamDto;

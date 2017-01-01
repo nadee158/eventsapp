@@ -23,4 +23,6 @@ public interface GradeBeltService {
   public ObjectRetrievalResponse<GradeBeltDTO> getGradeBeltById(ObjectRetrievalRequest request);
 
   public TabularDataResponseModel<GradeBeltDTO> getGradeBelts(TabularDataRequestModel request);
+
+  public long getActiveCount();
 }

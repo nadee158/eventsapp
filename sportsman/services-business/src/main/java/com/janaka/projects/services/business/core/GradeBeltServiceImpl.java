@@ -21,6 +21,7 @@ import com.janaka.projects.dtos.responses.core.GradeBeltResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.GradeBeltRepository;
 import com.janaka.projects.entitymanagement.domain.core.GradeBelt;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
+import com.janaka.projects.entitymanagement.specifications.core.GradeBeltSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.GradeBeltDTOConverter;
 import com.janaka.projects.services.core.GradeBeltService;
@@ -128,6 +129,11 @@ public class GradeBeltServiceImpl extends BusinessService implements GradeBeltSe
       response.setRecordsTotal(domainResponse.getRecordsTotal());
     }
     return response;
+  }
+
+  @Override
+  public long getActiveCount() {
+    return gradeBeltRepository.count(GradeBeltSpecifications.isNotDeleted());
   }
 
 

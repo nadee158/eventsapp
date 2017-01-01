@@ -22,7 +22,9 @@ public class CategoryUpdateRequest implements Serializable {
 
   private String gender;
 
-  private String gradeOrBelt = StringUtils.EMPTY;
+  private long gradeOrBeltId;
+
+  private String gradeOrBeltName = StringUtils.EMPTY;
 
   private long eventId;
 
@@ -62,14 +64,6 @@ public class CategoryUpdateRequest implements Serializable {
     this.gender = gender;
   }
 
-  public String getGradeOrBelt() {
-    return gradeOrBelt;
-  }
-
-  public void setGradeOrBelt(String gradeOrBelt) {
-    this.gradeOrBelt = gradeOrBelt;
-  }
-
   public long getEventId() {
     return eventId;
   }
@@ -92,6 +86,30 @@ public class CategoryUpdateRequest implements Serializable {
 
   public void setRecordStatus(String recordStatus) {
     this.recordStatus = recordStatus;
+  }
+
+  @Override
+  public String toString() {
+    return "CategoryUpdateRequest [id=" + id + ", categorySetupName=" + categorySetupName + ", ageGroupId=" + ageGroupId
+        + ", gender=" + gender + ", gradeOrBeltId=" + gradeOrBeltId + ", gradeOrBeltName=" + gradeOrBeltName
+        + ", eventId=" + eventId + ", categorySetupItems=" + categorySetupItems + ", recordStatus=" + recordStatus
+        + "]";
+  }
+
+  public long getGradeOrBeltId() {
+    return gradeOrBeltId;
+  }
+
+  public void setGradeOrBeltId(long gradeOrBeltId) {
+    this.gradeOrBeltId = gradeOrBeltId;
+  }
+
+  public String getGradeOrBeltName() {
+    return gradeOrBeltName;
+  }
+
+  public void setGradeOrBeltName(String gradeOrBeltName) {
+    this.gradeOrBeltName = gradeOrBeltName;
   }
 
 

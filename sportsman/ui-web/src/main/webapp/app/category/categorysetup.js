@@ -6,6 +6,7 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
                                           'NotificationServiceFactory',
                                           'SecurityServiceFactory','Page', 
                                           'EventServiceFactory',
+                                          'GradeBeltServiceFactory',
                                           'AgeGroupServiceFactory',
                                           'CategoryServiceFactory',
                                           'CommonServiceFactory',
@@ -14,6 +15,7 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
                                 		  NotificationServiceFactory,
                                 		  SecurityServiceFactory,Page, 
                                 		  EventServiceFactory,
+                                		  GradeBeltServiceFactory,
                                 		  AgeGroupServiceFactory,
                                 		  CategoryServiceFactory,
                                 		  CommonServiceFactory,
@@ -31,9 +33,23 @@ define(['app','nvd3', 'ui_bootstrap'], function (app, nvd3, ui_bootstrap) {
 		  loadAgeGroups();
 		  loadGenders();
 		  loadItemDropDown();
+		  loadGradeOrBelts();
 		  resetForm();
+		 
       };
       
+      
+      function loadGradeOrBelts(){
+    	  var response=GradeBeltServiceFactory.getActiveGradeBelts(baseUrl);	
+    	  response.success(function(data, status, headers, config) {	
+      		if(data.apiResponseResults.dtoList){
+      			$scope.gradeOrBelts=data.apiResponseResults.dtoList;	
+      		} 
+	        }).error(function(data, status, headers, config){
+	            	NotificationServiceFactory.error(data.message);
+	            	console.error('Error while getting events ' + data.message);
+	        })
+      }
       
       
       $scope.createCategory= function() {

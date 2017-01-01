@@ -38,4 +38,6 @@ public interface UserRoleService {
   public ObjectListResponse<UserRoleDTO> getUserRolesBySecurityUserId(AuditContext auditContext,
       SecurityContext securityContext, UserRoleListRetrievalRequest request);
 
+  public long getActiveCount();
+
 }

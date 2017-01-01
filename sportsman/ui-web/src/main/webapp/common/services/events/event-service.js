@@ -33,6 +33,10 @@ define(['app'], function (app) {
 	    	return $http.post(url, objectRetrievalRequest);
 	    };
 	    
+	    EventServiceFactory.count = function (baseUrl) {
+	    	var url = baseUrl + '/eventsservice/count';
+	    	return $http.get(url);
+	    };
 	    
 	    return EventServiceFactory;
 	}]);

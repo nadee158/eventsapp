@@ -33,6 +33,10 @@ define(['app'], function (app) {
 	    	return $http.post(url, objectRetrievalRequest);
 	    };
 	    
+	    GradeBeltServiceFactory.count = function (baseUrl) {
+	    	var url = baseUrl + '/gradebeltservice/count';
+	    	return $http.get(url);
+	    };
 	    
 	    return GradeBeltServiceFactory;
 	}]);

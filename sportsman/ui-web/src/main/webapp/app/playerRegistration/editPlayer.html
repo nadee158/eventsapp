@@ -25,7 +25,7 @@ display: none;
         Update Player
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+       <li><a href="#home"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Update Player</li>
       </ol>
     </section>
@@ -79,18 +79,17 @@ display: none;
 				    </md-input-container>
 		        </div>	
 		         <div layout="row">
-			        <md-input-container layout="column" flex>
-		           		<label translate>Team</label>
-			           	<input ng-model="playerUserUpdateRequest.team" name="team" md-maxlength="20" required />
-			           	<span ng-show="editPlayerForm.team.$dirty"> 
-							<span ng-show="editPlayerForm.team.$error.required">
+				    <md-input-container layout="column" flex>
+			           	<label translate>Team</label>
+			           	<md-select ng-model="playerUserUpdateRequest.teamId" name="teamId" required  >
+						    <md-option ng-value="team.id" ng-repeat="team in teams">{{ team.teamName }}</md-option>
+						</md-select>
+			           	<span ng-show="editPlayerForm.teamId.$dirty"> 
+							<span ng-show="editPlayerForm.teamId.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
-							<span ng-show="editPlayerForm.team.$error['md-maxlength']">
-								<span class="md-input-validation-message" translate>Event name should be less than 20 characters long!</span>
-							</span>					
-						</span>	
-				    </md-input-container>
+						</span>				       
+			         </md-input-container>
 		        </div>	
 			  </div>
 			  <div flex>
@@ -103,8 +102,8 @@ display: none;
 				  	 <div id="imageSuccessMessage" ng-show="!buttonVisible" style="color:#00ff00;"></div>
 				  </div>
 				  <div layout="row" layout-align="center center">
-				  	<md-button id="fileUploadBtn" ng-show="buttonVisible" class="md-raised md-primary">Browse</md-button>
-				   	<md-button id="fileRemoveBtn" ng-show="!buttonVisible" class="md-raised md-primary">Remove</md-button>
+				  	<md-button id="fileUploadBtnEdit" ng-show="buttonVisible" class="md-raised md-primary">Browse</md-button>
+				   	<md-button id="fileRemoveBtnEdit" ng-show="!buttonVisible" class="md-raised md-primary">Remove</md-button>
 				  </div>
 			  </div>
 			</div>
@@ -208,6 +207,14 @@ display: none;
 								<span class="md-input-validation-message" translate>Event name should be less than 4 characters long!</span>
 							</span>					
 						</span>			       
+			         </md-input-container>
+		        </div>
+		         <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>			           	
+			           	<md-switch ng-model="playerUserUpdateRequest.recordStatus" aria-label="Active Status"  
+			           	    ng-true-value="'A'" ng-false-value="'I'" class="md-warn" ng-change="setValueRecordStatus(playerUserUpdateRequest.recordStatus)">
+			           	   <label translate>Active Status : {{activeStatus}}</label>
+			           	</md-switch>
 			         </md-input-container>
 		        </div>
 		        <div layout-gt-sm="row">

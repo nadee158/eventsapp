@@ -76,6 +76,11 @@ public class TeamController {
     return teamService.getTeams(request);
   }
 
-
+  @RequestMapping(value = ServiceEndpoints.COUNT, method = RequestMethod.GET)
+  public CustomResponseEntity<ApiResponseObject<?>> getActiveCount() {
+    long count = teamService.getActiveCount();
+    return new CustomResponseEntity<ApiResponseObject<?>>(new ApiResponseObject<Long>(HttpStatus.OK, count),
+        HttpStatus.OK);
+  }
 
 }

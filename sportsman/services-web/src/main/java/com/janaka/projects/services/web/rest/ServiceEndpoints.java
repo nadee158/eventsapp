@@ -112,6 +112,8 @@ public final class ServiceEndpoints {
 
   public static final String UPDATE_WITH_FILE = "/updatewithfile";
 
+  public static final String COUNT = "/count";
+
 
 
 }

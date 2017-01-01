@@ -76,6 +76,13 @@ public class GradeBeltController {
     return gradeBeltService.getGradeBelts(request);
   }
 
+  @RequestMapping(value = ServiceEndpoints.COUNT, method = RequestMethod.GET)
+  public CustomResponseEntity<ApiResponseObject<?>> getActiveCount() {
+    long count = gradeBeltService.getActiveCount();
+    return new CustomResponseEntity<ApiResponseObject<?>>(new ApiResponseObject<Long>(HttpStatus.OK, count),
+        HttpStatus.OK);
+  }
+
 
 
 }

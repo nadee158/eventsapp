@@ -21,7 +21,9 @@ public class PlayerUpdateRequest implements Serializable {
 
   private String eventName;
 
-  private String team;
+  private long teamId;
+
+  private String teamName;
 
   private double height;
 
@@ -83,14 +85,6 @@ public class PlayerUpdateRequest implements Serializable {
 
   public void setEventName(String eventName) {
     this.eventName = eventName;
-  }
-
-  public String getTeam() {
-    return team;
-  }
-
-  public void setTeam(String team) {
-    this.team = team;
   }
 
   public double getHeight() {
@@ -201,15 +195,6 @@ public class PlayerUpdateRequest implements Serializable {
     return serialVersionUID;
   }
 
-  @Override
-  public String toString() {
-    return "PlayerUpdateRequest [id=" + id + ", playerNumber=" + playerNumber + ", eventId=" + eventId + ", eventName="
-        + eventName + ", team=" + team + ", height=" + height + ", weight=" + weight + ", categoryId=" + categoryId
-        + ", categorySetupName=" + categorySetupName + ", personId=" + personId + ", fullName=" + fullName + ", nic="
-        + nic + ", contactNumber=" + contactNumber + ", email=" + email + ", profileImagePath=" + profileImagePath
-        + ", address=" + address + ", recordStatus=" + recordStatus + ", version=" + version + "]";
-  }
-
   public MultipartFile getFile() {
     return file;
   }
@@ -224,6 +209,32 @@ public class PlayerUpdateRequest implements Serializable {
 
   public void setSavedImagePath(String savedImagePath) {
     this.savedImagePath = savedImagePath;
+  }
+
+  public long getTeamId() {
+    return teamId;
+  }
+
+  public void setTeamId(long teamId) {
+    this.teamId = teamId;
+  }
+
+  public String getTeamName() {
+    return teamName;
+  }
+
+  public void setTeamName(String teamName) {
+    this.teamName = teamName;
+  }
+
+  @Override
+  public String toString() {
+    return "PlayerUpdateRequest [id=" + id + ", playerNumber=" + playerNumber + ", eventId=" + eventId + ", eventName="
+        + eventName + ", teamId=" + teamId + ", teamName=" + teamName + ", height=" + height + ", weight=" + weight
+        + ", categoryId=" + categoryId + ", categorySetupName=" + categorySetupName + ", personId=" + personId
+        + ", fullName=" + fullName + ", nic=" + nic + ", contactNumber=" + contactNumber + ", email=" + email
+        + ", profileImagePath=" + profileImagePath + ", address=" + address + ", recordStatus=" + recordStatus
+        + ", version=" + version + ", file=" + file + ", savedImagePath=" + savedImagePath + "]";
   }
 
 

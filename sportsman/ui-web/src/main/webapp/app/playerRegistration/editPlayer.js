@@ -6,6 +6,7 @@ define(['app'], function (app) {
 	                                            'CommonStorageFactory',
 	                                            'CategoryServiceFactory',
 	                                            'EventServiceFactory',
+	                                            'TeamServiceFactory',
 	                                            'NotificationServiceFactory',
 	                                            'PubSub','Constants','Page','ModalDialogServiceFactory','CommonServiceFactory',
 	    function ($scope, $rootScope,$location,$filter, 
@@ -13,6 +14,7 @@ define(['app'], function (app) {
 	    										CommonStorageFactory,
 	    										CategoryServiceFactory,
 	                                   		    EventServiceFactory,
+	                                   		    TeamServiceFactory,
 	    										NotificationServiceFactory,
 	    										PubSub,Constants,Page,ModalDialogServiceFactory,CommonServiceFactory) {
 			
@@ -27,13 +29,27 @@ define(['app'], function (app) {
 	        $scope.buttonVisible = true;
 	        
 	        $scope.initializeEditPlayerPage = function() {
+	        	$scope.activeStatus ='Active';
 	        	$scope.imageUrl=$rootScope.uiBaseUrl + '/assets/app/images/avatar_2x.png';
 	        	$scope.playerUserUpdateRequest={};
-	        	 loadEvents();
+	        	loadEvents();
+	        	loadTeams();
 	        	var queryString = $location.search();
 	        	playerId=queryString["id"]
 	        	loadEditedPlayer(playerId);
 	        };
+	        
+	        $scope.setValueRecordStatus = function(recordStatus) {
+	        	setRecordStatus(recordStatus);
+	        };
+	        
+	        function setRecordStatus(recordStatus){
+	        	if(recordStatus=='A'){
+	    			$scope.activeStatus = 'Active';
+	    		}else{
+	    			$scope.activeStatus = 'Inactive';
+	    		}  
+	    	 }
 	        
 	        function loadEvents(){
 	      	  var response=EventServiceFactory.getActiveEvents(baseUrl);	
@@ -46,6 +62,19 @@ define(['app'], function (app) {
 	  	            	console.error('Error while getting events ' + data.message);
 	  	        })
 	        }
+	        
+	        
+	        function loadTeams(){
+		      	  var response=TeamServiceFactory.getActiveTeams(baseUrl);	
+		      	  response.success(function(data, status, headers, config) {	
+		        		if(data.apiResponseResults.dtoList){
+		        			$scope.teams=data.apiResponseResults.dtoList;	
+		        		} 
+		  	        }).error(function(data, status, headers, config){
+		  	            	NotificationServiceFactory.error(data.message);
+		  	            	console.error('Error while getting events ' + data.message);
+		  	        })
+		    }
 	        
 	        $scope.getEventTypes=function(eventId){
 	          	var eventTypeListRequest={id:eventId};
@@ -129,6 +158,7 @@ define(['app'], function (app) {
 	    	        	  $scope.playerUserUpdateRequest=data.apiResponseResults.dto;
 	    	        	  $scope.imageUrl=baseUrl + '/commonservice/findfile?fn=' + data.apiResponseResults.dto.profileImagePath;
 	    	        	  $scope.getEventTypes(data.apiResponseResults.dto.eventId);
+	    	        	  setRecordStatus(data.apiResponseResults.dto.recordStatus);
 	        			
 	              }).error(function(data, status, headers, config){
 	              	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD'));
@@ -174,7 +204,7 @@ define(['app'], function (app) {
 		        }
 		        
 		        
-		        var myDropzone = new Dropzone("#fileUploadBtn", { 
+		        var myDropzone = new Dropzone("#fileUploadBtnEdit", { 
 		      	  url: "#",
 		      	  maxFilesize:0.5,
 		      	  uploadMultiple:false,
@@ -193,7 +223,7 @@ define(['app'], function (app) {
 		          	    // Using a closure.
 		                  var _this = this;
 		            	  
-		                  var myEl = angular.element(document.querySelector('#fileRemoveBtn'));
+		                  var myEl = angular.element(document.querySelector('#fileRemoveBtnEdit'));
 		      	        myEl.bind("click", function(){
 		      	        	 _this.removeAllFiles();
 		      	        	  $scope.$apply(function(){

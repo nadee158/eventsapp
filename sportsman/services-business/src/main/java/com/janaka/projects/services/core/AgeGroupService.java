@@ -26,4 +26,6 @@ public interface AgeGroupService {
   public ObjectRetrievalResponse<AgeGroupDTO> getAgeGroupById(ObjectRetrievalRequest request);
 
   public TabularDataResponseModel<AgeGroupDTO> getAgeGroups(TabularDataRequestModel request);
+
+  public long getActiveCount();
 }

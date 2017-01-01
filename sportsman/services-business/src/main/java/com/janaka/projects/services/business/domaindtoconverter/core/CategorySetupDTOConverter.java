@@ -13,12 +13,14 @@ import com.janaka.projects.entitymanagement.domain.core.AgeGroup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetupItem;
 import com.janaka.projects.entitymanagement.domain.core.Event;
+import com.janaka.projects.entitymanagement.domain.core.GradeBelt;
 import com.janaka.projects.entitymanagement.enums.Gender;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
 
 public class CategorySetupDTOConverter {
 
-  public static CategorySetup convertRequestToDomain(CategoryCreationRequest request, Event event, AgeGroup ageGroup) {
+  public static CategorySetup convertRequestToDomain(CategoryCreationRequest request, Event event, AgeGroup ageGroup,
+      GradeBelt gradeBelt) {
     if (!(request == null)) {
       CategorySetup categorySetup = new CategorySetup();
       categorySetup.setCategorySetupItems(constructCategorySetupItems(categorySetup, request.getCategorySetupItems()));
@@ -26,7 +28,7 @@ public class CategorySetupDTOConverter {
       categorySetup.setEvent(event);
       categorySetup.setAgeGroup(ageGroup);
 
-      categorySetup.setGradeOrBelt(request.getGradeOrBelt());
+      categorySetup.setGradeOrBelt(gradeBelt);
 
 
       if (StringUtils.isNoneEmpty(request.getGender())) {
@@ -73,7 +75,8 @@ public class CategorySetupDTOConverter {
       dto.setFromAge(categorySetup.getAgeGroup().getFromAge());
       dto.setAgeGroupId(categorySetup.getAgeGroup().getId());
       dto.setGender(categorySetup.getGender().toString());
-      dto.setGradeOrBelt(categorySetup.getGradeOrBelt());
+      dto.setGradeOrBeltId(categorySetup.getGradeOrBelt().getId());
+      dto.setGradeOrBeltName(categorySetup.getGradeOrBelt().getGradeBeltName());
       dto.setId(categorySetup.getId());
       dto.setToAge(categorySetup.getAgeGroup().getToAge());
       dto.setEventName(categorySetup.getEvent().getEventName());
@@ -105,7 +108,7 @@ public class CategorySetupDTOConverter {
 
 
   public static CategorySetup updateDomainFromRequest(CategoryUpdateRequest request, CategorySetup categorySetupFromDb,
-      Event event, AgeGroup ageGroup) {
+      Event event, AgeGroup ageGroup, GradeBelt gradeBelt) {
     categorySetupFromDb.setAgeGroup(ageGroup);
     if (!(categorySetupFromDb.getCategorySetupItems() == null)) {
       categorySetupFromDb.getCategorySetupItems().clear();
@@ -117,7 +120,7 @@ public class CategorySetupDTOConverter {
     if (StringUtils.isNoneEmpty(request.getGender())) {
       categorySetupFromDb.setGender(Gender.valueOf(request.getGender()));
     }
-    categorySetupFromDb.setGradeOrBelt(request.getGradeOrBelt());
+    categorySetupFromDb.setGradeOrBelt(gradeBelt);
     if (StringUtils.isNoneEmpty(request.getRecordStatus())) {
       categorySetupFromDb.setRecordStatus(RecordStatus.fromRecordStatusCode(request.getRecordStatus()));
     }

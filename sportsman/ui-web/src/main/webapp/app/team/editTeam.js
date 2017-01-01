@@ -2,45 +2,57 @@
 
 define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstrap, moment) {
 
-  app.controller('EditAgeGroupController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
+  app.controller('EditTeamController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
                                           'NotificationServiceFactory',
                                           'Page', 
-                                          'AgeGroupServiceFactory',
+                                          'TeamServiceFactory',
                                           'CommonServiceFactory',
                                           'ModalDialogServiceFactory',
                                   function($scope, $rootScope, $log, $sce, $filter, $location,
                                 		  NotificationServiceFactory,
                                 		  Page, 
-                                		  AgeGroupServiceFactory,
+                                		  TeamServiceFactory,
                                 		  CommonServiceFactory,
                                 		  ModalDialogServiceFactory) {
-	  Page.setTitle("Edit Age Group");
+	  Page.setTitle("Edit Team");
 	  
 	  var $translate = $filter('translate');
 	  
 	  var baseUrl=$rootScope.baseUrl;
 	  
-	  var ageGroupId = 0;
+	  var teamId = 0;
 	  
 	  
-	  $scope.initializeAgeGroupPage = function() {
+	  $scope.initializeTeamPage = function() {
 		  $scope.activeStatus ='Active';
 		  var queryString = $location.search();
-		  ageGroupId=queryString["id"]
-		  loadAgeGroup(ageGroupId);
+		  teamId=queryString["id"]
+		  loadTeam(teamId);
       };
       
-      function loadAgeGroup(ageGroupId){
-      	var ObjectRetrievalRequest={id:ageGroupId};
+      $scope.setValueRecordStatus = function(recordStatus) {
+      	setRecordStatus(recordStatus);
+      };
+      
+      function setRecordStatus(recordStatus){
+      	if(recordStatus=='A'){
+  			$scope.activeStatus = 'Active';
+  		}else{
+  			$scope.activeStatus = 'Inactive';
+  		}  
+  	 }
+      
+      function loadTeam(teamId){
+      	var ObjectRetrievalRequest={id:teamId};
       	
-      	var response=AgeGroupServiceFactory.getAgeGroupById(ObjectRetrievalRequest,baseUrl);		         
+      	var response=TeamServiceFactory.getTeamById(ObjectRetrievalRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
 	      	
 	        	  var objectRetrievalResponse=data;
     			  var dto=data.apiResponseResults.dto;
-	        	
-	        	  $scope.ageGroupUpdateRequest=dto;
+    			  setRecordStatus(dto.recordStatus);
+	        	  $scope.teamUpdateRequest=dto;
     			
           }).error(function(data, status, headers, config){
           	NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_LOADING_RECORD'));
@@ -49,24 +61,14 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       }
       
        
-    $scope.updateAgeGroup= function() {
+    $scope.updateTeam= function() {
     
-    	angular.forEach($scope.ageGroupSetupForm.$error.required, function(field) {
+    	angular.forEach($scope.teamSetupForm.$error.required, function(field) {
       	    field.$setDirty();
       	});
     	
-      	if($scope.ageGroupSetupForm.$valid) {
+      	if($scope.teamSetupForm.$valid) {
       		
-      		if($scope.ageGroupUpdateRequest.toAge<=$scope.ageGroupUpdateRequest.fromAge){
-      			ModalDialogServiceFactory.alert(
-              		  $translate('common.notification.message.NOTIFY_FORM_VALIDATION_ERRORS'), 
-              		  'To age must be less than from age!', 
-              		  '', 
-              		  $translate('common.button.text.OK'), 
-              		  null, 
-              		  null
-                );
-      		}else{
       			ModalDialogServiceFactory.confirmBox(
               		  $translate('common.notification.message.CONFIRM_SUBMIT_TITLE'), 
               		  $translate('common.notification.message.CONFIRM_SUMIT_CONTENT'), 
@@ -74,11 +76,10 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
               		  $translate('common.button.text.SUBMIT'), 
               		  $translate('common.button.text.CANCEL'), 
               		  submitEvent, 
-              		  $scope.ageGroupUpdateRequest, 
+              		  $scope.teamUpdateRequest, 
               		  null, 
               		  null
                 );
-      		}
       		
       		
       	    
@@ -97,10 +98,10 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 
       
       
-      function submitEvent(ageGroupUpdateRequest){
+      function submitEvent(teamUpdateRequest){
     	
       	//Do something
-      	var response=AgeGroupServiceFactory.updateAgeGroup(ageGroupUpdateRequest,baseUrl);		         
+      	var response=TeamServiceFactory.updateTeam(teamUpdateRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
 	        	if(data.apiResponseStatus){
@@ -109,7 +110,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 		      			
 		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
 		      			
-		      			$location.path("/listagegroups");
+		      			$location.path("/listteams");
 		      		}else{
 		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.apiResponseResults.message));
 		      			
@@ -139,7 +140,8 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       };
       
       function resetFormInner(){
-    	  $scope.ageGroupUpdateRequest=new Object();
+    	  $scope.teamUpdateRequest=new Object();
+    	  loadTeam(teamId);
       }
       
       $scope.exitForm = function() {
@@ -157,7 +159,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       };
       
       function exitFormInner(){
-    	  $location.path("/home");
+    	  $location.path("/listteams");
       }
 	  
    

@@ -1,55 +1,39 @@
  <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Edit Age Group
+        Edit Grade Belt
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Edit Age Group</li>
+        <li><a href="#home"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Edit Grade Belt</li>
       </ol>
     </section>
 
  			<!-- Main content -->
     <section class="content">
 
-	  <div class="box box-primary" ng-cloak class="md-inline-form" ng-controller="EditAgeGroupController" ng-init="initializeAgeGroupPage()">
+	  <div class="box box-primary" ng-cloak class="md-inline-form" ng-controller="EditGradeBeltController" ng-init="initializeGradeBeltPage()">
 	
-		<form name="ageGroupSetupForm" id="ageGroupSetupForm">
+		<form name="gradeBeltSetupForm" id="gradeBeltSetupForm">
 			<md-content layout-padding>	
 		        <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>From Age</label>
-			           	<input ng-model="ageGroupUpdateRequest.fromAge" name="fromAge" type="number" step="any" min="1"
-                              max="120" required />
-			           	<span ng-show="ageGroupSetupForm.fromAge.$dirty"> 
-							<span ng-show="ageGroupSetupForm.fromAge.$error.required">
+			           	<label translate>Grade Belt Name</label>
+			           	<input ng-model="gradeBeltUpdateRequest.gradeBeltName" name="gradeBeltName"  required />
+			           	<span ng-show="gradeBeltSetupForm.gradeBeltName.$dirty"> 
+							<span ng-show="gradeBeltSetupForm.gradeBeltName.$error.required">
 								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
 							</span>
-							<span ng-show="ageGroupSetupForm.fromAge.$error['max']">
-								<span class="md-input-validation-message" translate>Age must be less than 100!</span>
-							</span>	
-							<span ng-show="ageGroupSetupForm.fromAge.$error['min']">
-								<span class="md-input-validation-message" translate>Age must be greater than 1!</span>
-							</span>					
 						</span>			       
 			         </md-input-container>
 			   </div>
-			   <div layout-gt-sm="row">
-			         <md-input-container class="md-block" flex-gt-sm>
-			           	<label translate>To Age</label>
-			           	<input ng-model="ageGroupUpdateRequest.toAge" name="toAge" type="number" step="any" min="1"
-                              max="100" required />
-			           	<span ng-show="ageGroupSetupForm.toAge.$dirty"> 
-							<span ng-show="ageGroupSetupForm.toAge.$error.required">
-								<span class="md-input-validation-message" translate>common.validation.message.THIS_FIELD_IS_REQUIRED</span>
-							</span>
-							<span ng-show="ageGroupSetupForm.toAge.$error['max']">
-								<span class="md-input-validation-message" translate>Age must be less than 100!</span>
-							</span>	
-							<span ng-show="ageGroupSetupForm.toAge.$error['min']">
-								<span class="md-input-validation-message" translate>Age must be greater than 1!</span>
-							</span>					
-						</span>			       
+			   
+			    <div layout-gt-sm="row">
+			         <md-input-container class="md-block" flex-gt-sm>			           	
+			           	<md-switch ng-model="gradeBeltUpdateRequest.recordStatus" aria-label="Active Status"  
+			           	    ng-true-value="'A'" ng-false-value="'I'" class="md-warn" ng-change="setValueRecordStatus(gradeBeltUpdateRequest.recordStatus)">
+			           	   <label translate>Active Status : {{activeStatus}}</label>
+			           	</md-switch>
 			         </md-input-container>
 		        </div>
 		        
@@ -57,7 +41,7 @@
 		        <div layout-gt-sm="row">
 		        	<md-button class="md-raised md-warn" ng-click="exitForm()">Exit</md-button>
 		        	<md-button class="md-raised md-warn" ng-click="resetForm()">Reset</md-button>
-		        	<md-button class="md-raised md-primary" ng-click="updateAgeGroup()">Update</md-button>
+		        	<md-button class="md-raised md-primary" ng-click="updateGradeBelt()">Update</md-button>
 		        </div>
 		        
 		        

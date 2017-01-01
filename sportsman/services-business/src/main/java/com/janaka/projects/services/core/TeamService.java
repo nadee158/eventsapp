@@ -23,4 +23,6 @@ public interface TeamService {
   public ObjectRetrievalResponse<TeamDTO> getTeamById(ObjectRetrievalRequest request);
 
   public TabularDataResponseModel<TeamDTO> getTeams(TabularDataRequestModel request);
+
+  public long getActiveCount();
 }

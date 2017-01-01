@@ -29,8 +29,10 @@ import com.janaka.projects.dtos.responses.core.PlayerUpdateResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.CategorySetupRepository;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.PersonRepository;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.PlayerRepository;
+import com.janaka.projects.entitymanagement.dataaccessobjects.core.TeamRepository;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.Player;
+import com.janaka.projects.entitymanagement.domain.core.Team;
 import com.janaka.projects.entitymanagement.domain.usermanagement.Person;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
 import com.janaka.projects.entitymanagement.specifications.core.PlayerSpecifications;
@@ -50,6 +52,9 @@ public class PlayerServiceImpl extends BusinessService implements PlayerService 
 
   @Autowired
   private CategorySetupRepository categorySetupRepository;
+
+  @Autowired
+  private TeamRepository teamRepository;
 
 
   @Override
@@ -127,8 +132,9 @@ public class PlayerServiceImpl extends BusinessService implements PlayerService 
       if (StringUtils.isNotEmpty(request.getNic())) {
         person = personRepository.findByNic(request.getNic());
       }
+      Team team = teamRepository.findOne(request.getTeamId());
       CategorySetup categorySetup = categorySetupRepository.findOne(request.getCategoryId());
-      Player player = PlayerDTOConverter.updateDomainFromRequest(request, categorySetup, playerFromDB, person);
+      Player player = PlayerDTOConverter.updateDomainFromRequest(request, categorySetup, playerFromDB, person, team);
       Player persisted = playerRepository.save(player);
       response.setId(persisted.getId());
       response.setPlayerDTO(PlayerDTOConverter.convertDomainToDTO(persisted));
@@ -147,7 +153,8 @@ public class PlayerServiceImpl extends BusinessService implements PlayerService 
       person = personRepository.findByNic(request.getIcPassport());
     }
     CategorySetup categorySetup = categorySetupRepository.findOne(request.getCategoryId());
-    Player player = PlayerDTOConverter.convertRequestToDomain(request, categorySetup, person);
+    Team team = teamRepository.findOne(request.getTeamId());
+    Player player = PlayerDTOConverter.convertRequestToDomain(request, categorySetup, person, team);
     Player persisted = playerRepository.save(player);
     PlayerCreationResponse response = new PlayerCreationResponse();
     response.setId(persisted.getId());
@@ -218,6 +225,11 @@ public class PlayerServiceImpl extends BusinessService implements PlayerService 
 
     }
     return null;
+  }
+
+  @Override
+  public long getActiveCount() {
+    return playerRepository.count(PlayerSpecifications.isNotDeleted());
   }
 
 

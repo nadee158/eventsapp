@@ -2,39 +2,39 @@
 
 define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstrap, moment) {
 
-  app.controller('AddAgeGroupController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
+  app.controller('AddGradeBeltController', ['$scope', '$rootScope', '$log', '$sce', '$filter', '$location',
                                           'NotificationServiceFactory',
                                           'SecurityServiceFactory','Page', 
-                                          'AgeGroupServiceFactory',
+                                          'GradeBeltServiceFactory',
                                           'CommonServiceFactory',
                                           'ModalDialogServiceFactory',
                                   function($scope, $rootScope, $log, $sce, $filter, $location,
                                 		  NotificationServiceFactory,
                                 		  SecurityServiceFactory,Page, 
-                                		  AgeGroupServiceFactory,
+                                		  GradeBeltServiceFactory,
                                 		  CommonServiceFactory,
                                 		  ModalDialogServiceFactory) {
-	  Page.setTitle("Age Group");
+	  Page.setTitle("Grade Belt Setup");
 	  
 	  var $translate = $filter('translate');
 	  
 	  var baseUrl=$rootScope.baseUrl;
 	  
 	  
-	  $scope.initializeAgeGroupPage = function() {
+	  $scope.initializeGradeBeltPage = function() {
 		  $scope.activeStatus ='Active';
       };
       
        
-    $scope.createAgeGroup= function() {
+    $scope.createGradeBelt= function() {
     
-    	angular.forEach($scope.ageGroupSetupForm.$error.required, function(field) {
+    	angular.forEach($scope.gradeBeltSetupForm.$error.required, function(field) {
       	    field.$setDirty();
       	});
     	
-      	if($scope.ageGroupSetupForm.$valid) {
+      	if($scope.gradeBeltSetupForm.$valid) {
       		
-      		if($scope.ageGroupCreationRequest.toAge<=$scope.ageGroupCreationRequest.fromAge){
+      		if($scope.gradeBeltCreationRequest.toAge<=$scope.gradeBeltCreationRequest.fromAge){
       			ModalDialogServiceFactory.alert(
               		  $translate('common.notification.message.NOTIFY_FORM_VALIDATION_ERRORS'), 
               		  'To age must be less than from age!', 
@@ -51,7 +51,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
               		  $translate('common.button.text.SUBMIT'), 
               		  $translate('common.button.text.CANCEL'), 
               		  submitEvent, 
-              		  $scope.ageGroupCreationRequest, 
+              		  $scope.gradeBeltCreationRequest, 
               		  null, 
               		  null
                 );
@@ -74,10 +74,10 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 
       
       
-      function submitEvent(ageGroupCreationRequest){
+      function submitEvent(gradeBeltCreationRequest){
     	
       	//Do something
-      	var response=AgeGroupServiceFactory.createAgeGroup(ageGroupCreationRequest,baseUrl);		         
+      	var response=GradeBeltServiceFactory.createGradeBelt(gradeBeltCreationRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
 	        	if(data.apiResponseStatus){
@@ -86,7 +86,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 		      			
 		      			NotificationServiceFactory.info($translate('common.notification.message.SUCCESSFULLY_SAVED'));
 		      			
-		      			$location.path("/listagegroups");
+		      			$location.path("/listgradebelts");
 		      		}else{
 		      			NotificationServiceFactory.error($translate('common.notification.message.ERROR_WHILE_SAVING_RECORD') + ' ' + $translate(data.apiResponseResults.message));
 		      			
@@ -116,7 +116,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       };
       
       function resetFormInner(){
-    	  $scope.ageGroupCreationRequest=new Object();
+    	  $scope.gradeBeltCreationRequest=new Object();
       }
       
       $scope.exitForm = function() {
@@ -134,7 +134,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
       };
       
       function exitFormInner(){
-    	  $location.path("/home");
+    	  $location.path("/listgradebelts");
       }
 	  
    

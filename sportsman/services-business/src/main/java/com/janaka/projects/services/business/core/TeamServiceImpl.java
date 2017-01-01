@@ -21,6 +21,7 @@ import com.janaka.projects.dtos.responses.core.TeamResponse;
 import com.janaka.projects.entitymanagement.dataaccessobjects.core.TeamRepository;
 import com.janaka.projects.entitymanagement.domain.core.Team;
 import com.janaka.projects.entitymanagement.enums.RecordStatus;
+import com.janaka.projects.entitymanagement.specifications.core.TeamSpecifications;
 import com.janaka.projects.services.business.common.BusinessService;
 import com.janaka.projects.services.business.domaindtoconverter.core.TeamDTOConverter;
 import com.janaka.projects.services.core.TeamService;
@@ -128,6 +129,11 @@ public class TeamServiceImpl extends BusinessService implements TeamService {
       response.setRecordsTotal(domainResponse.getRecordsTotal());
     }
     return response;
+  }
+
+  @Override
+  public long getActiveCount() {
+    return teamRepository.count(TeamSpecifications.isNotDeleted());
   }
 
 

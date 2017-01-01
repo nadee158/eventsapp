@@ -90,7 +90,7 @@ public class PlayerController {
 
 
 
-  @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.DELETE)
+  @RequestMapping(value = ServiceEndpoints.DELETE, method = RequestMethod.POST)
   public CustomResponseEntity<ApiResponseObject<?>> deletePlayer(@RequestBody ObjectDeletionRequest request) {
     logger.error("request : " + request);
     ObjectDeletionResponse response = playerService.deletePlayer(request);
@@ -118,6 +118,11 @@ public class PlayerController {
     return playerService.getPlayers(request);
   }
 
-
+  @RequestMapping(value = ServiceEndpoints.COUNT, method = RequestMethod.GET)
+  public CustomResponseEntity<ApiResponseObject<?>> getActiveCount() {
+    long count = playerService.getActiveCount();
+    return new CustomResponseEntity<ApiResponseObject<?>>(new ApiResponseObject<Long>(HttpStatus.OK, count),
+        HttpStatus.OK);
+  }
 
 }

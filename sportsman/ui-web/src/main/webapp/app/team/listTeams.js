@@ -2,16 +2,16 @@
 
 define(['app'], function (app) {
   
-  app.controller('ListAgeGroupController', ['$scope','$compile','$rootScope','$location','$filter', 'DTOptionsBuilder','DTColumnBuilder', 
+  app.controller('ListTeamController', ['$scope','$compile','$rootScope','$location','$filter', 'DTOptionsBuilder','DTColumnBuilder', 
                                                'CommonStorageFactory','NotificationServiceFactory','PubSub','Constants','Page',
-                                               'ModalDialogServiceFactory','AgeGroupServiceFactory','CommonServiceFactory',
+                                               'ModalDialogServiceFactory','TeamServiceFactory','CommonServiceFactory',
                                               function($scope,$compile,$rootScope,$location,$filter, DTOptionsBuilder,DTColumnBuilder,
                                                 CommonStorageFactory,NotificationServiceFactory,PubSub,Constants,Page,
-                                                ModalDialogServiceFactory,AgeGroupServiceFactory,CommonServiceFactory) {
+                                                ModalDialogServiceFactory,TeamServiceFactory,CommonServiceFactory) {
 	  
 	  var $translate = $filter('translate');
 		
-	  Page.setTitle('List Age Groups');
+	  Page.setTitle('List Teams');
 		
       var baseUrl=$rootScope.baseUrl;
     
@@ -27,7 +27,7 @@ define(['app'], function (app) {
 
       vm.dtOptions = DTOptionsBuilder.newOptions()
        .withOption('ajax', {
-           url: baseUrl + '/agegroupservice/getall',
+           url: baseUrl + '/teamservice/getall',
            type: 'POST',
            data: function ( d ) {
         	   // The returned object has 'email' as property, but the server entity has 'emailAddress'
@@ -45,7 +45,7 @@ define(['app'], function (app) {
        .withOption('processing', true)
        .withOption('serverSide', true)
        .withOption('saveState', true)
-       .withOption('order', [4, 'asc'])
+       .withOption('order', [2, 'asc'])
        .withPaginationType('full_numbers')
        .withOption('createdRow', function(row, data, dataIndex) {
               $compile(angular.element(row).contents())($scope);
@@ -54,8 +54,7 @@ define(['app'], function (app) {
        .withDisplayLength(10);
   
       vm.dtColumns = [
-          DTColumnBuilder.newColumn('fromAge').withTitle('From Age'),//0
-          DTColumnBuilder.newColumn('toAge').withTitle('To Age'),//1
+          DTColumnBuilder.newColumn('teamName').withTitle('Team Name'),//0
           DTColumnBuilder.newColumn('recordStatus').withTitle('Record Status'),//2
           DTColumnBuilder.newColumn('id').withTitle("Age Group Id").notVisible().notSortable().withOption('searchable', false),//4
           DTColumnBuilder.newColumn(null).withTitle($translate('common.label.text.ACTIONS')).withOption('searchable', false).notSortable().withOption('width','20%')//4
@@ -71,7 +70,7 @@ define(['app'], function (app) {
       
       
       $scope.edit = function(id) {
-          $location.path('/editagegroup').search({id: id});
+          $location.path('/editteam').search({id: id});
       };
       
       
@@ -101,7 +100,7 @@ define(['app'], function (app) {
       
       function deleteRecord(objectDeletionRequest) {
     	  
-    	  var response=AgeGroupServiceFactory.deleteAgeGroup(objectDeletionRequest,baseUrl);		         
+    	  var response=TeamServiceFactory.deleteTeam(objectDeletionRequest,baseUrl);		         
           
 	        response.success(function(data, status, headers, config) {
     			

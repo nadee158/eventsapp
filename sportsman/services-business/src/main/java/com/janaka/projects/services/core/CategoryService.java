@@ -29,4 +29,6 @@ public interface CategoryService {
 
   public ObjectListResponse<CategoryDTO> getCategoryByEventId(ObjectRetrievalRequest request);
 
+  public long getActiveCount();
+
 }

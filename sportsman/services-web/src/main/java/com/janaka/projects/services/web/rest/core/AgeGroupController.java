@@ -80,6 +80,13 @@ public class AgeGroupController {
     return ageGroupService.getAgeGroups(request);
   }
 
+  @RequestMapping(value = ServiceEndpoints.COUNT, method = RequestMethod.GET)
+  public CustomResponseEntity<ApiResponseObject<?>> getActiveCount() {
+    long count = ageGroupService.getActiveCount();
+    return new CustomResponseEntity<ApiResponseObject<?>>(new ApiResponseObject<Long>(HttpStatus.OK, count),
+        HttpStatus.OK);
+  }
+
 
 
 }

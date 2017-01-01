@@ -51,5 +51,7 @@ public interface SecurityUserService {
   public SecurityUserUpdateResponse updateSecurityUserProfile(AuditContext auditContext,
       SecurityContext securityContext, SecurityUserProfileUpdateRequest request);
 
+  public long getActiveCount();
+
 
 }

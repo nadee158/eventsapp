@@ -88,6 +88,12 @@ public class CategoryController {
         new ApiResponseObject<ObjectListResponse<CategoryDTO>>(HttpStatus.OK, response), HttpStatus.OK);
   }
 
+  @RequestMapping(value = ServiceEndpoints.COUNT, method = RequestMethod.GET)
+  public CustomResponseEntity<ApiResponseObject<?>> getActiveCount() {
+    long count = categoryService.getActiveCount();
+    return new CustomResponseEntity<ApiResponseObject<?>>(new ApiResponseObject<Long>(HttpStatus.OK, count),
+        HttpStatus.OK);
+  }
 
 
 }

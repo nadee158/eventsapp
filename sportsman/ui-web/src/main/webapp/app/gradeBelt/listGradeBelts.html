@@ -1,6 +1,17 @@
+ <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Grade/Belt List
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#home"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Grade/Belt List</li>
+      </ol>
+    </section>
+
 <section class="content">    
 			
-	<div ng-controller="ListAgeGroupController as listUsers" ng-init="initializeListUsersPage()">
+	<div ng-controller="ListGradeBeltController as listUsers" ng-init="initializeListUsersPage()">
 	
 	    <table datatable="" dt-instance="listUsers.dtInstance" dt-options="listUsers.dtOptions" dt-columns="listUsers.dtColumns" class="mdl-data-table" width="100%"></table>
 	    <input type="hidden" ng-model="formKey" />

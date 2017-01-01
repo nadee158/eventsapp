@@ -11,72 +11,144 @@
     </section>
 
  			<!-- Main content -->
-    <section class="content">
+    <section class="content"  ng-controller="DashboardController" ng-init="initializeDashboardController()">
 
       <!-- Small boxes (Stat box) -->
       <div class="row">
+        
+        
+        <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <div class="small-box bg-orange">
             <div class="inner">
-              <h3>2</h3>
-
-              <p>Events</p>
+              <h3>{{ageGroupCount}}</h3>
+              <p>Age Groups</p>
             </div>
             <div class="icon">
-              <i class="ion ion-bag"></i>
+              <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#listagegroups" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        <!-- ./col -->
+        
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>3</h3>
-
-              <p>Category setups</p>
+              <h3>{{teamCount}}</h3>
+              <p>Teams</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#listteams" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
+        
+        
+        
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>10</h3>
-
-              <p>Player Registrations</p>
+              <h3>{{gradeBeltCount}}</h3>
+              <p>Grade/Belts</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#listgradebelts" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        
+         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-red">
+          <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>1</h3>
-
-              <p>Administrator</p>
+              <h3>{{eventsCount}}</h3>
+              <p>Events</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#listevents" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
-      </div>
+        
+        
+         </div>
       <!-- /.row -->
+        
+        <div class="row">
+        
+	        <!-- ./col -->
+	        <div class="col-lg-3 col-xs-6">
+	          <!-- small box -->
+	          <div class="small-box bg-blue">
+	            <div class="inner">
+	              <h3>{{categoryCount}}</h3>
+	              <p>Category setups</p>
+	            </div>
+	            <div class="icon">
+	              <i class="ion ion-stats-bars"></i>
+	            </div>
+	            <a href="#listcategories" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+	          </div>
+	        </div>
+	        <!-- ./col -->
+	        
+	        <div class="col-lg-3 col-xs-6">
+	          <!-- small box -->
+	          <div class="small-box bg-yellow">
+	            <div class="inner">
+	              <h3>{{playerCount}}</h3>
+	              <p>Player Registrations</p>
+	            </div>
+	            <div class="icon">
+	              <i class="ion ion-person-add"></i>
+	            </div>
+	            <a href="#listplayers" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+	          </div>
+	        </div>
+	        <!-- ./col -->
+        
+	        <div class="col-lg-3 col-xs-6">
+	          <!-- small box -->
+	          <div class="small-box bg-red">
+	            <div class="inner">
+	              <h3>{{userCount}}</h3>
+	              <p>System Users</p>
+	            </div>
+	            <div class="icon">
+	              <i class="ion ion-person-add"></i>
+	            </div>
+	            <a href="#listsecurityusers" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+	          </div>
+	        </div>
+	        <!-- ./col -->
+        
+	        <div class="col-lg-3 col-xs-6">
+	          <!-- small box -->
+	          <div class="small-box bg-purple">
+	            <div class="inner">
+	              <h3>{{userRoleCount}}</h3>
+	              <p>User Roles</p>
+	            </div>
+	            <div class="icon">
+	              <i class="ion ion-stats-bars"></i>
+	            </div>
+	            <a href="#listuserroles" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+	          </div>
+	        </div>
+	        
+        </div>
+        
+     
 
     </section>
 <!-- /.content -->

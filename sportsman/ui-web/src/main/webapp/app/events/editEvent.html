@@ -4,7 +4,7 @@
         Edit Event Setup
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#home"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Edit Event Setup</li>
       </ol>
     </section>
@@ -100,7 +100,7 @@
 		        <div layout-gt-sm="row">
 			         <md-input-container class="md-block" flex-gt-sm>			           	
 			           	<md-switch ng-model="eventUpdateRequest.recordStatus" aria-label="Active Status"  
-			           	    ng-true-value="'N'" ng-false-value="'A'" class="md-warn" ng-change="setValueRecordStatus(eventUpdateRequest.recordStatus)">
+			           	    ng-true-value="'A'" ng-false-value="'I'" class="md-warn" ng-change="setValueRecordStatus(eventUpdateRequest.recordStatus)">
 			           	   <label translate>Active Status : {{activeStatus}}</label>
 			           	</md-switch>
 			         </md-input-container>

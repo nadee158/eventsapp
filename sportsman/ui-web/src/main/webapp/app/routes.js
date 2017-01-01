@@ -7,6 +7,14 @@ define([], function()
 				templateUrl: 'app/dashboard/dashboard.html',
 				dependencies: [
 				    '../app/dashboard/dashboard',
+				    '../common/services/gradeBelt/grade-belt-service',
+				    '../common/services/team/team-service',
+				    '../common/services/events/event-service',
+				    '../common/services/agegroup/age-group-service',
+				    '../common/services/category/category-service',
+				    '../common/services/player/player-service',
+				    '../common/services/usermanagement/security-user-service',
+				    '../common/services/usermanagement/user-role-service'
 				],
 				access: {
 				    isFree: false
@@ -171,6 +179,7 @@ define([], function()
                 	              '../app/category/categorysetup',
                 	              '../common/services/events/event-service',
                 	              '../common/services/agegroup/age-group-service',
+                	              '../common/services/gradeBelt/grade-belt-service',
                 	              '../common/services/category/category-service'],
                 	              access:{
                 	            	  isFree:false
@@ -180,6 +189,7 @@ define([], function()
                 	dependencies:[
                 	              '../app/playerRegistration/playerregistration',
                 	              '../common/services/events/event-service',
+                	              '../common/services/team/team-service',
                 	              '../common/services/category/category-service',
                 	              '../common/services/player/player-service'],
                 	              access:{
@@ -189,6 +199,7 @@ define([], function()
                 	templateUrl:'app/playerRegistration/listPlayers.html',
                 	dependencies:[
                 	              '../app/playerRegistration/listPlayers',
+                	              '../common/services/team/team-service',
                 	              '../common/services/player/player-service'],
                 	              access:{
                 	            	  isFree:false
@@ -198,6 +209,7 @@ define([], function()
                 	dependencies:[
                 	              '../app/playerRegistration/editPlayer',
                 	              '../common/services/events/event-service',
+                	              '../common/services/team/team-service',
                 	              '../common/services/category/category-service',
                 	              '../common/services/player/player-service'],
                 	              access:{
@@ -241,6 +253,7 @@ define([], function()
                 	templateUrl:'app/category/listCategories.html',
                 	dependencies:[
                 	              '../app/category/listCategories',
+                	              '../common/services/gradeBelt/grade-belt-service',
                 	              '../common/services/category/category-service'],
                 	              access:{
                 	            	  isFree:false
@@ -250,6 +263,7 @@ define([], function()
                 	dependencies:[
                 	              '../app/category/updateCategory',
                 	              '../common/services/events/event-service',
+                	              '../common/services/gradeBelt/grade-belt-service',
                 	              '../common/services/agegroup/age-group-service',
                 	              '../common/services/category/category-service'],
                 	              access:{

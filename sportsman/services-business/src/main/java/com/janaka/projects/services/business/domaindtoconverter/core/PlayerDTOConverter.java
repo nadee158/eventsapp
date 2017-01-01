@@ -8,12 +8,14 @@ import com.janaka.projects.dtos.requests.core.PlayerCreationRequest;
 import com.janaka.projects.dtos.requests.core.PlayerUpdateRequest;
 import com.janaka.projects.entitymanagement.domain.core.CategorySetup;
 import com.janaka.projects.entitymanagement.domain.core.Player;
+import com.janaka.projects.entitymanagement.domain.core.Team;
 import com.janaka.projects.entitymanagement.domain.usermanagement.Person;
+import com.janaka.projects.entitymanagement.enums.RecordStatus;
 
 public class PlayerDTOConverter {
 
-  public static Player convertRequestToDomain(PlayerCreationRequest request, CategorySetup categorySetup,
-      Person person) {
+  public static Player convertRequestToDomain(PlayerCreationRequest request, CategorySetup categorySetup, Person person,
+      Team team) {
     if (!(request == null)) {
       Player player = new Player();
       player.setCategorySetup(categorySetup);
@@ -24,7 +26,7 @@ public class PlayerDTOConverter {
         player.setPerson(constructPerson(request));
       }
       player.setPlayerNumber(request.getPlayerNumber());
-      player.setTeam(request.getTeam());
+      player.setTeam(team);
       player.setWeight(request.getWeight());
       return player;
     }
@@ -59,10 +61,11 @@ public class PlayerDTOConverter {
       dto.setPersonId(player.getPerson().getId());
       dto.setPlayerNumber(player.getPlayerNumber());
       dto.setProfileImagePath(player.getPerson().getProfileImagePath());
-      dto.setTeam(player.getTeam());
+      dto.setTeamId(player.getTeam().getId());
+      dto.setTeamName(player.getTeam().getTeamName());
       dto.setWeight(player.getWeight());
       dto.setVersion(player.getVersion());
-      dto.setRecordStatus(player.getRecordStatus().toString());
+      dto.setRecordStatus(player.getRecordStatus().getRecordStatusCode());
       dto.setEventName(player.getCategorySetup().getEvent().getEventName());
       dto.setEventId(player.getCategorySetup().getEvent().getId());
       return dto;
@@ -71,14 +74,17 @@ public class PlayerDTOConverter {
   }
 
   public static Player updateDomainFromRequest(PlayerUpdateRequest request, CategorySetup categorySetup, Player player,
-      Person person) {
+      Person person, Team team) {
     if (!(request == null)) {
       player.setCategorySetup(categorySetup);
       player.setHeight(request.getHeight());
       player.setPerson(constructPerson(person, request));
       player.setPlayerNumber(request.getPlayerNumber());
-      player.setTeam(request.getTeam());
+      player.setTeam(team);
       player.setWeight(request.getWeight());
+      if (StringUtils.isNotEmpty(request.getRecordStatus())) {
+        player.setRecordStatus(RecordStatus.fromRecordStatusCode(request.getRecordStatus()));
+      }
       return player;
     }
     return null;

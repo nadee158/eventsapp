@@ -30,6 +30,18 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 		  loadAgeGroup(ageGroupId);
       };
       
+      $scope.setValueRecordStatus = function(recordStatus) {
+        	setRecordStatus(recordStatus);
+        };
+        
+        function setRecordStatus(recordStatus){
+        	if(recordStatus=='A'){
+    			$scope.activeStatus = 'Active';
+    		}else{
+    			$scope.activeStatus = 'Inactive';
+    		}  
+    	 }
+      
       function loadAgeGroup(ageGroupId){
       	var ObjectRetrievalRequest={id:ageGroupId};
       	
@@ -39,7 +51,7 @@ define(['app','nvd3', 'ui_bootstrap', 'moment'], function (app, nvd3, ui_bootstr
 	      	
 	        	  var objectRetrievalResponse=data;
     			  var dto=data.apiResponseResults.dto;
-	        	
+    			  setRecordStatus(dto.recordStatus)
 	        	  $scope.ageGroupUpdateRequest=dto;
     			
           }).error(function(data, status, headers, config){

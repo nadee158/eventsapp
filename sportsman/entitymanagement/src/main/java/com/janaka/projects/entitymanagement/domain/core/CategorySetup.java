@@ -53,8 +53,9 @@ public class CategorySetup extends AuditEntity implements Serializable {
   @Column(name = "gender")
   private Gender gender;
 
-  @Column(name = "grade_or_belt")
-  private String gradeOrBelt = StringUtils.EMPTY;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "grade_or_belt_id", referencedColumnName = "id", nullable = false)
+  private GradeBelt gradeOrBelt;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
@@ -87,11 +88,12 @@ public class CategorySetup extends AuditEntity implements Serializable {
     this.gender = gender;
   }
 
-  public String getGradeOrBelt() {
+
+  public GradeBelt getGradeOrBelt() {
     return gradeOrBelt;
   }
 
-  public void setGradeOrBelt(String gradeOrBelt) {
+  public void setGradeOrBelt(GradeBelt gradeOrBelt) {
     this.gradeOrBelt = gradeOrBelt;
   }
 
